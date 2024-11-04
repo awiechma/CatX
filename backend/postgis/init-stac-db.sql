@@ -10,13 +10,29 @@ CREATE TABLE IF NOT EXISTS collections (
     collection_id TEXT PRIMARY KEY,
     title TEXT,
     description TEXT NOT NULL,
-    keywords TEXT [],
     license TEXT,
-    providers JSONB,
     extent JSONB NOT NULL,
     summaries JSONB,
     links JSONB [] NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS providers (
+    collection_id TEXT REFERENCES collections(collection_id) ON DELETE CASCADE,
+    provider TEXT NOT NULL,
+    PRIMARY KEY(collection_id, provider)
+);
+
+CREATE VIEW providers_view AS
+    SELECT provider, COUNT(*) FROM providers GROUP BY provider ORDER BY COUNT(*);
+
+CREATE TABLE IF NOT EXISTS keywords (
+    collection_id TEXT REFERENCES collections(collection_id) ON DELETE CASCADE,
+    keyword TEXT NOT NULL,
+    PRIMARY KEY(collection_id, keyword)
+);
+
+CREATE VIEW keywords_view AS
+    SELECT keyword, COUNT(*) FROM keywords GROUP BY keyword ORDER BY COUNT(*);
 
 CREATE TABLE IF NOT EXISTS items (
     type TEXT NOT NULL,
@@ -37,12 +53,11 @@ CREATE TABLE IF NOT EXISTS properties (
     description TEXT,
     datetime TIMESTAMP WITH TIME ZONE,
     mlm_name TEXT NOT NULL,
-    mlm_tasks TEXT [] NOT NULL,
     mlm_architecture TEXT NOT NULL,
     mlm_framework TEXT,
     mlm_framework_version TEXT,
     mlm_memory_size INTEGER,
-    mlm_total_parameters INTEGER, 
+    mlm_total_parameters INTEGER,
     mlm_pretrained BOOLEAN,
     mlm_pretrained_source TEXT,
     mlm_batch_size_suggestion INTEGER,
@@ -55,3 +70,13 @@ CREATE TABLE IF NOT EXISTS properties (
     mlm_hyperparameters JSONB,
     PRIMARY KEY (collection_id, item_id)
 );
+
+CREATE TABLE IF NOT EXISTS mlm_tasks(
+    item_id TEXT REFERENCES items(item_id) ON DELETE CASCADE,
+    collection_id TEXT REFERENCES collections(collection_id),
+    task TEXT NOT NULL,
+    PRIMARY KEY(collection_id, item_id, task)
+);
+
+CREATE VIEW mlm_tasks_view AS
+    SELECT task, COUNT(*) FROM mlm_tasks GROUP BY task ORDER BY COUNT(*);

@@ -1,6 +1,6 @@
 # STAC-kompatible PostgreSQL-Datenbank
 
-Diese Datenbank ist für die Speicherung von STAC-Daten (SpatioTemporal Asset Catalog) konzipiert und nutzt PostGIS für die Verarbeitung geografischer Daten. Die Datenbank enthält die folgenden Tabellen: `collections`, `items`, `properties` und `users`.
+Diese Datenbank ist für die Speicherung von STAC-Daten (SpatioTemporal Asset Catalog) konzipiert und nutzt PostGIS für die Verarbeitung geografischer Daten. Die Datenbank enthält die folgenden Tabellen: `collections`, `providers`, `keywords`, `items`, `properties`, `mlm_tasks` und `users`.
 
 ## Tabellenübersicht
 
@@ -16,14 +16,32 @@ Die Tabelle `collections` speichert Informationen über verschiedene Sammlungen 
 | `collection_id`   | TEXT                   | Die eindeutige ID der Sammlung (Primärschlüssel).                  |
 | `title`           | TEXT                   | Der Titel der Sammlung.                                            |
 | `description`     | TEXT                   | Eine Beschreibung der Sammlung.                                    |
-| `keywords`        | TEXT[]                 | Eine Liste von Schlüsselwörtern, die die Sammlung beschreiben.    |
 | `license`         | TEXT                   | Die Lizenz, unter der die Daten bereitgestellt werden.            |
-| `providers`       | JSONB                  | Informationen zu den Anbietern der Daten.                          |
 | `extent`          | JSONB                  | Der räumliche und zeitliche Umfang der Sammlung.                   |
 | `summaries`       | JSONB                  | Zusammenfassende Informationen über die Sammlung.                  |
 | `links`           | JSONB[]                | Eine Liste von Links zu weiteren Ressourcen.                       |
 
-### 2. `items`
+### 2. `providers`
+
+Die Tabelle `providers` speichert Informationen über die Anbieter von Daten in den Sammlungen.
+
+| Spalte            | Datentyp                | Beschreibung                                                        |
+|-------------------|------------------------|--------------------------------------------------------------------|
+| `collection_id`   | TEXT                   | Die ID der Sammlung (Fremdschlüssel).                             |
+| `provider`        | TEXT                   | Der Name des Anbieters der Daten.                                  |
+| PRIMARY KEY       | (collection_id, provider) | Kombinierter Primärschlüssel für Sammlung und Anbieter.            |
+
+### 3. `keywords`
+
+Die Tabelle `keywords` speichert Schlüsselwörter, die die Sammlungen beschreiben.
+
+| Spalte            | Datentyp                | Beschreibung                                                        |
+|-------------------|------------------------|--------------------------------------------------------------------|
+| `collection_id`   | TEXT                   | Die ID der Sammlung (Fremdschlüssel).                             |
+| `keyword`         | TEXT                   | Das Schlüsselwort.                                                |
+| PRIMARY KEY       | (collection_id, keyword) | Kombinierter Primärschlüssel für Sammlung und Schlüsselwort.       |
+
+### 4. `items`
 
 Die Tabelle `items` speichert Informationen über individuelle Elemente in den Sammlungen.
 
@@ -37,9 +55,9 @@ Die Tabelle `items` speichert Informationen über individuelle Elemente in den S
 | `geometry`        | GEOMETRY(Point, 4326)  | Der geografische Punkt des Elements.                               |
 | `bbox`            | FLOAT8[]               | Die Bounding Box des Elements.                                     |
 | `assets`          | JSONB                  | Informationen über die verfügbaren Assets (z.B. Bilddateien).      |
-| `links`           | JSONB                  | Eine Liste von Links zu weiteren Ressourcen für das Element.       |
+| `links`           | JSONB[]                | Eine Liste von Links zu weiteren Ressourcen für das Element.       |
 
-### 3. `properties`
+### 5. `properties`
 
 Die Tabelle `properties` speichert zusätzliche Eigenschaften und Metadaten zu den Elementen.
 
@@ -50,7 +68,6 @@ Die Tabelle `properties` speichert zusätzliche Eigenschaften und Metadaten zu d
 | `description`              | TEXT                   | Eine Beschreibung des Elements.                                    |
 | `datetime`                 | TIMESTAMP WITH TIME ZONE | Der Zeitstempel des Elements.                                      |
 | `mlm_name`                 | TEXT                   | Der Name des maschinellen Lernmodells (MLM).                       |
-| `mlm_tasks`                | TEXT[]                 | Eine Liste der Aufgaben, die das Modell erfüllt.                   |
 | `mlm_architecture`         | TEXT                   | Die Architektur des Modells (z.B. CNN, RNN).                       |
 | `mlm_framework`            | TEXT                   | Das Framework, in dem das Modell implementiert ist (z.B. TensorFlow, PyTorch). |
 | `mlm_framework_version`    | TEXT                   | Die Version des verwendeten Frameworks.                             |
@@ -67,7 +84,18 @@ Die Tabelle `properties` speichert zusätzliche Eigenschaften und Metadaten zu d
 | `mlm_output`               | JSONB                  | Informationen zu den Ausgaben des Modells.                        |
 | `mlm_hyperparameters`      | JSONB                  | Die Hyperparameter des Modells.                                    |
 
-### 4. `users`
+### 6. `mlm_tasks`
+
+Die Tabelle `mlm_tasks` speichert die spezifischen Aufgaben, die von den Modellen in den Elementen ausgeführt werden.
+
+| Spalte            | Datentyp                | Beschreibung                                                        |
+|-------------------|------------------------|--------------------------------------------------------------------|
+| `item_id`         | TEXT                   | Die ID des Elements (Fremdschlüssel).                             |
+| `collection_id`   | TEXT                   | Die ID der Sammlung, zu der dieses Element gehört (Fremdschlüssel).|
+| `task`            | TEXT                   | Die spezifische Aufgabe des Modells (z.B. "Klassifikation").      |
+| PRIMARY KEY       | (collection_id, item_id, task) | Kombinierter Primärschlüssel für Sammlung, Element und Aufgabe. |
+
+### 7. `users`
 
 Die Tabelle `users` speichert Nutzerdaten für die Authentifizierung in der Anwendung.
 
