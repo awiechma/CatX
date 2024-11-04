@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgis/postgis:15-3.3
+    environment:
+      POSTGRES_DB: stac_db
+      POSTGRES_USER: stac_user     
+      POSTGRES_PASSWORD: stac_password
+    volumes:
+      - ./postgis/postgres_data:/var/lib/postgresql/data
+      - ./postgis/init-stac-db.sql:/docker-entrypoint-initdb.d/init-stac-db.sql 
+      - ./postgis/init-user-db.sql:/docker-entrypoint-initdb.d/init-user-db.sql
+    ports:
+      - "5432:5432"
+
+  adminer:
+    image: adminer:latest
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+  postgres_data:
