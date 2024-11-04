@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgis/postgis:15-3.3
+    image: postgis/postgis:latest
     environment:
       POSTGRES_DB: stac_db
       POSTGRES_USER: stac_user     
