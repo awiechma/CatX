@@ -22,4 +22,4 @@ if [[ ! -f "$SQL_FILE" ]]; then
 fi
 
 # Load the SQL file into the PostgreSQL container
-docker exec -i "$DB_HOST" psql -U "$DB_USER" -d "$DB_NAME" -f "$SQL_FILE"
+cat "$SQL_FILE" | docker exec -i "$DB_HOST" psql -U "$DB_USER" -d "$DB_NAME"
