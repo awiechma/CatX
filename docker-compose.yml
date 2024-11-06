@@ -15,6 +15,14 @@ services:
     ports:
       - "5432:5432"
 
+  catalogue:
+    build: ./backend
+    container_name: catalogue
+    ports:
+      - 3000:3000
+    volumes:
+      - ./backend:/app/
+
   adminer:
     image: adminer:latest
     restart: always
