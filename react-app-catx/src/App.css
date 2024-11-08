@@ -1,42 +1,134 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Styling für die Navbar */
+.navbar {
+  background-color: #f8faf8;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 1rem;
+  font-family: Arial, sans-serif;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Logo und Brand-Name Styling */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  color: #343a40;
+  font-weight: bold;
+  text-decoration: none;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.navbar-brand img {
+  margin-right: 0.5rem;
+  border-radius: 5px;
+}
+
+/* Navbar-Links Styling */
+.nav-link {
+  color: #343a40;
+  font-size: 1.2rem;
+  font-weight: 500;
+  transition: color 0.2s ease-in-out;
+}
+
+.nav-link:hover {
+  color: #648cb7;
+}
+
+/* Aktiver Link */
+.nav-link.active {
+  color: #477bb3;
+}
+
+/* Toggler Button Styling für Mobilgeräte */
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler-icon {
+  filter: brightness(0) invert(1);
+}
+
+/* Dropdown Menü */
+.nav-item.dropdown .dropdown-menu {
+  border-radius: 0.5rem;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-item {
+  color: #343a40;
+  font-size: 1rem;
+}
+
+.dropdown-item:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Responsive Anpassungen */
+@media (max-width: 992px) {
+  .navbar-nav {
+    text-align: center;
   }
-  to {
-    transform: rotate(360deg);
+}
+
+/* Container für die Suchleiste */
+.SearchBar-container {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  position: absolute;
+  top: 13.5%;
+  right: 3%;
+}
+
+/* Suchfeld Styling */
+.form-control {
+  border: 2px solid #ced4da;
+  border-radius: 4px;
+  padding: 0.5rem 0.5rem;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  width: 80%;
+}
+
+.form-control:focus {
+  border-color: #80bdff;
+  box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.25);
+}
+
+/* Button Styling */
+.btn-outline-success {
+  border-color: #4985aa;
+  color: #488f97;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  margin-left: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-success:hover {
+  background-color: #536dc0;
+  color: white;
+}
+
+/* Für kleinere Bildschirme */
+@media (max-width: 576px) {
+  .SearchBar-container {
+    padding: 0.5rem;
+    flex-direction: column;
+    width: 100%;
   }
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  .form-control {
+    width: 100%;
+    margin-bottom: 0.5rem;
   }
-}
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+  .btn-outline-success {
+    width: 100%;
+  }
 }
