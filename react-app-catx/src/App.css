@@ -69,7 +69,7 @@
   }
 }
 
-/* Container für die Suchleiste */
+/* Container für die Suchleiste hier auch später Filter rein! */
 .SearchBar-container {
   display: flex;
   justify-content: center;
@@ -78,7 +78,7 @@
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   margin: auto;
   position: absolute;
   top: 13.5%;
@@ -87,12 +87,19 @@
 
 /* Suchfeld Styling */
 .form-control {
+  flex: 1;
   border: 2px solid #ced4da;
   border-radius: 4px;
   padding: 0.5rem 0.5rem;
   font-size: 1rem;
   transition: border-color 0.3s ease;
   width: 80%;
+}
+
+.searchbar-whitespace {
+  width: 100%;
+  max-width: 600px;
+
 }
 
 .form-control:focus {
@@ -102,7 +109,7 @@
 
 /* Button Styling */
 .btn-outline-success {
-  border-color: #4985aa;
+  border-color: #4985aa !important;
   color: #488f97;
   font-weight: bold;
   padding: 0.5rem 1rem;
@@ -111,7 +118,7 @@
 }
 
 .btn-outline-success:hover {
-  background-color: #536dc0;
+  background-color: #536dc0 !important;
   color: white;
 }
 
@@ -131,4 +138,57 @@
   .btn-outline-success {
     width: 100%;
   }
+}
+
+/* .list-group-item {
+  align-items: right;
+}
+
+.list-group {
+  text-align: right;
+} */
+
+/* Container für die rechte Ausrichtung */
+.right-aligned-container {
+  position: absolute;
+  top: 40%;
+  /* Vertikale Positionierung je nach Bedarf anpassen */
+  right: 1rem;
+  /* Abstand vom rechten Rand */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+
+
+/* Stil für die Listenelemente */
+.right-aligned-container h3 {
+  margin-bottom: 0.5rem;
+  /* Optionaler Abstand zwischen h3 und Liste */
+}
+
+/* Anpassung für mobile Bildschirme */
+@media (max-width: 768px) {
+  .right-aligned-container {
+    align-items: flex-start;
+    /* Zurück zur linken Ausrichtung auf kleinen Bildschirmen */
+    margin-right: 0;
+  }
+}
+
+.start-search {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 350px;
+  margin: auto;
+  position: absolute;
+  top: 13.5%;
+  left: 3%;
+  font-weight: bold;
 }

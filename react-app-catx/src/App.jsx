@@ -1,36 +1,35 @@
 import React from "react";
-import Button from "./components/Button"; // Importiere deine Button-Komponente
+import Button from "./components/Button";
 import Navbar from "./components/Navbar";
 import SearchBar from "./components/SearchBar";
 import './App.css';
-
-/*function App() {
-    return (
-        <div>
-            <h1>Willkommen zur App!</h1>
-            {/* Verwende den Button aus Button.jsx mit der color-Prop }
-            /*
-            <Button color="primary">Klicken</Button>
-            <Button color="danger">Warnung</Button>
-            <Button color="success">Erfolg</Button>
-        </div>
-    );
-} */
-
-
-
+import ListGroup from "./components/ListGroup";
 
 
 function App() {
-  return (
-    <div>
-      <Navbar />
-      <SearchBar />
-      <h1>Welcome to the catalog for EO ML models! <br></br>Have fun!</h1>
-      {/* Weitere Komponenten oder Inhalte können hier hinzugefügt werden */}
-    </div>
+    return (
+        <div>
+            <Navbar />
+            {<div className="start-search">
+                <p>Looking for something?
+                    <br></br>START SEARCH HERE ►
+                </p>
+            </div>}
 
-  );
+            <SearchBar />
+            <h1>Welcome to the catalog for EO ML models! <br></br>Have fun!</h1>
+            {
+                <div className="left-aligned-container">
+
+                </div>}
+            {<div className="right-aligned-container">
+                <h3>Recently added:</h3>
+                <ListGroup />
+            </div>
+            }
+        </div>
+
+    );
 }
 
 export default App;
