@@ -1,11 +1,12 @@
+// import all the components used in the app
 import React from "react";
+import './App.css';
 import Button from "./components/Button";
 import Navbar from "./components/Navbar";
 import SearchBar from "./components/SearchBar";
-import './App.css';
 import ListGroup from "./components/ListGroup";
 
-
+// homepage layout
 function App() {
     return (
         <div>
@@ -15,16 +16,36 @@ function App() {
                     <br></br>START SEARCH HERE ►
                 </p>
             </div>}
-
             <SearchBar />
-            <h1>Welcome to the catalog for EO ML models! <br></br>Have fun!</h1>
-            {
-                <div className="left-aligned-container">
-
+            {    
+            <div className="left-aligned-container">      
+               { <div className="left-aligned-container-view">
+                  <p>Specify your search?</p>
+                   <Button text="View" className="btn-view" onClick={() => alert("Submit clicked")} /> 
+                  </div> 
+                  }
+                   {                
+                <div className="left-aligned-container-add">
+                  <p>Add models?</p>
+                  <Button text="Add" className="btn-add" onClick={() => alert("Submit clicked")} /> 
+                  </div> 
+                  }
+                   {                
+                <div className="left-aligned-container-account">
+                  <p>No account?</p>
+                  <Button text="Log in / Sign in" className="btn-account" onClick={() => alert("Submit clicked")} /> 
+                  </div> 
+                  }
+                   {                
+                <div className="left-aligned-container-help">
+                  <p>Need help?</p>
+                  <Button text="Help" className="btn-help" onClick={() => alert("Submit clicked")} /> 
+                  </div> 
+                  }
                 </div>}
             {<div className="right-aligned-container">
                 <h3>Recently added:</h3>
-                <ListGroup />
+                <ListGroup className="list-recently-added"/>
             </div>
             }
         </div>

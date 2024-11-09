@@ -1,4 +1,4 @@
-/* Styling für die Navbar */
+/* Styling for Navbar */
 .navbar {
   background-color: #f8faf8;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -6,7 +6,7 @@
   font-family: Arial, sans-serif;
 }
 
-/* Logo und Brand-Name Styling */
+/* our CatX-Logo in Navbar */
 .navbar-brand {
   display: flex;
   align-items: center;
@@ -32,12 +32,12 @@
   color: #648cb7;
 }
 
-/* Aktiver Link */
+/* active Link */
 .nav-link.active {
-  color: #477bb3;
+  color: #477bb3 !important;
 }
 
-/* Toggler Button Styling für Mobilgeräte */
+/* Toggler Button Styling for mobile devices */
 .navbar-toggler {
   border: none;
 }
@@ -46,7 +46,7 @@
   filter: brightness(0) invert(1);
 }
 
-/* Dropdown Menü */
+/* Dropdown menu */
 .nav-item.dropdown .dropdown-menu {
   border-radius: 0.5rem;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
@@ -62,18 +62,18 @@
   color: white;
 }
 
-/* Responsive Anpassungen */
+/* Responsive design */
 @media (max-width: 992px) {
   .navbar-nav {
     text-align: center;
   }
 }
 
-/* Container für die Suchleiste hier auch später Filter rein! */
+/* Container for Searchbar*/
 .SearchBar-container {
   display: flex;
   justify-content: center;
-  padding: 1rem;
+  padding: 1.63rem;
   background-color: #f8f9fa;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -85,44 +85,38 @@
   right: 3%;
 }
 
-/* Suchfeld Styling */
-.form-control {
-  flex: 1;
-  border: 2px solid #ced4da;
-  border-radius: 4px;
-  padding: 0.5rem 0.5rem;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-  width: 80%;
-}
-
+/* Input for Searchbar */
 .searchbar-whitespace {
-  width: 100%;
-  max-width: 600px;
-
+  width: 200%;       
+  max-width: 800px; 
+  padding: 0.5rem 14rem; 
+  font-size: 1.1rem; 
+  border: 1px solid #2668ab;
+  border-radius: 4px;
+  box-sizing: border-box;
+  outline: none;
 }
 
-.form-control:focus {
-  border-color: #80bdff;
-  box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.25);
+.searchbar-whitespace::placeholder {
+  padding-right: 5rem;  
 }
 
-/* Button Styling */
-.btn-outline-success {
+/* Searchbutton Styling  */
+.btn-outline-searchbar {
   border-color: #4985aa !important;
-  color: #488f97;
+  color: #2418ac !important;
   font-weight: bold;
   padding: 0.5rem 1rem;
   margin-left: 0.5rem;
   transition: all 0.3s ease;
 }
 
-.btn-outline-success:hover {
+.btn-outline-searchbar:hover {
   background-color: #536dc0 !important;
-  color: white;
+  color: white !important;
 }
 
-/* Für kleinere Bildschirme */
+/* for smaller devices 
 @media (max-width: 576px) {
   .SearchBar-container {
     padding: 0.5rem;
@@ -138,45 +132,69 @@
   .btn-outline-success {
     width: 100%;
   }
-}
-
-/* .list-group-item {
-  align-items: right;
-}
-
-.list-group {
-  text-align: right;
 } */
 
-/* Container für die rechte Ausrichtung */
+/* container on the right side for list */
 .right-aligned-container {
   position: absolute;
-  top: 40%;
-  /* Vertikale Positionierung je nach Bedarf anpassen */
+  top: 48%;
   right: 1rem;
-  /* Abstand vom rechten Rand */
-  display: flex;
-  flex-direction: column;
+  display: flex !important;
+  flex-direction: column !important;
   align-items: flex-end;
+  padding: 1rem;
+  justify-content: center;
+  right: 3%;
+  background-color: #f8f9fa;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+  position: absolute;
+  font-weight: bold;
+
 }
 
-
-
-/* Stil für die Listenelemente */
+/* style for heading */
 .right-aligned-container h3 {
-  margin-bottom: 0.5rem;
-  /* Optionaler Abstand zwischen h3 und Liste */
+  padding: 1rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+   
 }
 
-/* Anpassung für mobile Bildschirme */
+/* list in the container */
+.list-recently-added{
+  display: flex;
+  justify-content: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: #f8f9fa;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 350px;
+  margin: auto;
+  position: absolute;
+  top: 30%;
+  left: 3%;
+  font-weight: bold;
+  flex-direction: column; 
+}
+
+/* mobile devices 
 @media (max-width: 768px) {
   .right-aligned-container {
     align-items: flex-start;
-    /* Zurück zur linken Ausrichtung auf kleinen Bildschirmen */
     margin-right: 0;
   }
-}
+} */
 
+/* Container for text to start search */
 .start-search {
   display: flex;
   justify-content: center;
@@ -192,3 +210,165 @@
   left: 3%;
   font-weight: bold;
 }
+
+
+/*Homepage Button View*/
+.left-aligned-container-view {
+  display: flex;
+  justify-content: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: #f8f9fa;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 350px;
+  margin: auto;
+  position: absolute;
+  top: 30%;
+  left: 3%;
+  font-weight: bold;
+  flex-direction: column; 
+}
+
+.btn-view{
+  color: rgb(0, 0, 0) !important;               
+  background-color: #ffffff !important;  
+  border: 1px solid #007bff !important;  
+  padding: 0.75rem 1.5rem;    
+  border-radius: 4px;         
+  font-size: 1rem;            
+  font-weight: bold;          
+  cursor: pointer;           
+  transition: background-color 0.3s, border-color 0.3s; 
+}
+
+/* Hover-effect for button */
+.btn-view:hover {
+  background-color: #0056b3 !important;  
+  border-color: #0056b3 !important;      
+  color: #ffffff !important;
+}
+
+/*Homepage Button Add*/
+.left-aligned-container-add {
+  display: flex;
+  justify-content: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: #f8f9fa;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 350px;
+  margin: auto;
+  position: absolute;
+  top: 48%;
+  left: 3%;
+  font-weight: bold;
+  flex-direction: column; 
+}
+
+.btn-add{
+  color: rgb(0, 0, 0) !important;               
+  background-color: #ffffff !important;  
+  border: 1px solid #007bff !important;  
+  padding: 0.75rem 1.5rem;    
+  border-radius: 4px;         
+  font-size: 1rem;           
+  font-weight: bold;          
+  cursor: pointer;           
+  transition: background-color 0.3s, border-color 0.3s; 
+}
+
+/* Hover-effect for button */
+.btn-add:hover {
+  background-color: #0056b3 !important;  
+  border-color: #0056b3 !important;      
+  color: #ffffff !important;
+}
+
+/*Homepage Button Account*/
+.left-aligned-container-account {
+  display: flex;
+  justify-content: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: #f8f9fa;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 350px;
+  margin: auto;
+  position: absolute;
+  top: 66%;
+  left: 3%;
+  font-weight: bold;
+  flex-direction: column; 
+}
+
+.btn-account{
+  color: rgb(0, 0, 0) !important;               
+  background-color: #ffffff !important;  
+  border: 1px solid #007bff !important;  
+  padding: 0.75rem 1.5rem;    
+  border-radius: 4px;         
+  font-size: 1rem;            
+  font-weight: bold;          
+  cursor: pointer;           
+  transition: background-color 0.3s, border-color 0.3s; 
+}
+
+/* Hover-effect for button */
+.btn-account:hover {
+  background-color: #0056b3 !important;  
+  border-color: #0056b3 !important;      
+  color: #ffffff !important;
+}
+
+/*Homepage Button Help*/
+.left-aligned-container-help {
+  display: flex;
+  justify-content: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: #f8f9fa;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 350px;
+  margin: auto;
+  position: absolute;
+  top: 84%;
+  left: 3%;
+  font-weight: bold;
+  flex-direction: column; 
+}
+
+.btn-help{
+  color: rgb(0, 0, 0) !important;               
+  background-color: #ffffff !important;  
+  border: 1px solid #007bff !important;  
+  padding: 0.75rem 1.5rem;    
+  border-radius: 4px;         
+  font-size: 1rem;            
+  font-weight: bold;          
+  cursor: pointer;           
+  transition: background-color 0.3s, border-color 0.3s; 
+}
+
+/* Hover-effect for button */
+.btn-help:hover {
+  background-color: #0056b3 !important;  
+  border-color: #0056b3 !important;      
+  color: #ffffff !important;
+}
+
