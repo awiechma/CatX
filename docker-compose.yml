@@ -16,12 +16,12 @@ services:
       - "5432:5432"
 
   catalogue:
-    build: ./backend
+    build: ./backend/node
     container_name: catalogue
     ports:
       - 3000:3000
     volumes:
-      - ./backend:/app/
+      - ./backend/node:/app/
 
   adminer:
     image: adminer:latest
