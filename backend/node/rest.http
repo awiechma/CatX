@@ -1,0 +1,20 @@
+### Use with VS Code extension REST Client
+
+
+### Request a token
+# @name postLogin
+POST http://localhost:3000/api/token
+Content-Type: application/json
+
+{
+  "username": "test_user",
+  "password": "password"
+}
+
+###
+@token = {{postLogin.response.body.token}}
+###
+
+### Access protected route
+GET http://localhost:3000/api/protected
+Authorization: Bearer {{token}}
