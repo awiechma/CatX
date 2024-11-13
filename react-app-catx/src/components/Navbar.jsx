@@ -6,7 +6,7 @@ const Navbar = () => {
   return (
     <nav className="navbar fixed-top navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#" style={{ fontSize: '1.5rem', marginRight: '1rem', marginLeft: '1rem'}}>
+        <a className="navbar-brand" href="#" style={{ fontSize: '1.5rem', marginRight: '1rem', marginLeft: '1rem' }}>
           <img src="./public/CatX_Logo.png" alt="Logo" width="35" height="35" className="d-inline-block align-text-top" style={{ fontSize: '1.5rem', marginRight: '1rem' }} />
           CatX
         </a>
@@ -16,7 +16,7 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link active" to="/" style={{ fontSize: '1.5rem', marginRight: '1rem' }}>Home</Link>
+              <Link className="nav-link" to="/" style={{ fontSize: '1.5rem', marginRight: '1rem' }}>Home</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/view" style={{ fontSize: '1.5rem', marginRight: '1rem' }}>View</Link>

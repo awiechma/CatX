@@ -1,6 +1,6 @@
 /* Styling for Navbar */
 .navbar {
-  background-color: #f8faf8;
+  background-color: #f8f9fa !important;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   padding: 0.5rem 1rem;
   font-family: Arial, sans-serif;
@@ -22,19 +22,19 @@
 
 /* Navbar-Links Styling */
 .nav-link {
-  color: #343a40;
+  color: #61696e;
   font-size: 1.2rem;
   font-weight: 500;
   transition: color 0.2s ease-in-out;
 }
 
 .nav-link:hover {
-  color: #648cb7;
+  color: #94b5ce !important;
 }
 
 /* active Link */
 .nav-link.active {
-  color: #477bb3 !important;
+  color: #94b5ce !important;
 }
 
 /* Toggler Button Styling for mobile devices */
@@ -74,7 +74,7 @@
   display: flex;
   justify-content: center;
   padding: 1.63rem;
-  background-color: #f8f9fa;
+  background-color: #dfe8ef;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   width: 100%;
@@ -87,24 +87,24 @@
 
 /* Input for Searchbar */
 .searchbar-whitespace {
-  width: 200%;       
-  max-width: 800px; 
-  padding: 0.5rem 14rem; 
-  font-size: 1.1rem; 
-  border: 1px solid #2668ab;
+  width: 200%;
+  max-width: 800px;
+  padding: 0.5rem 14rem;
+  font-size: 1.1rem;
+  border: 1px solid #94b5ce;
   border-radius: 4px;
   box-sizing: border-box;
   outline: none;
 }
 
 .searchbar-whitespace::placeholder {
-  padding-right: 5rem;  
+  padding-right: 5rem;
 }
 
 /* Searchbutton Styling  */
 .btn-outline-searchbar {
-  border-color: #4985aa !important;
-  color: #2418ac !important;
+  border-color: #94b5ce !important;
+  color: #000000 !important;
   font-weight: bold;
   padding: 0.5rem 1rem;
   margin-left: 0.5rem;
@@ -112,7 +112,7 @@
 }
 
 .btn-outline-searchbar:hover {
-  background-color: #536dc0 !important;
+  background-color: #94b5ce !important;
   color: white !important;
 }
 
@@ -145,7 +145,7 @@
   padding: 1rem;
   justify-content: center;
   right: 3%;
-  background-color: #f8f9fa;
+  background-color: #dfe8ef;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   width: 100%;
@@ -162,11 +162,11 @@
   position: absolute;
   top: 0;
   left: 0;
-   
+
 }
 
 /* list in the container */
-.list-recently-added{
+.list-recently-added {
   display: flex;
   justify-content: center;
   padding-left: 1rem;
@@ -183,7 +183,7 @@
   top: 30%;
   left: 3%;
   font-weight: bold;
-  flex-direction: column; 
+  flex-direction: column;
 }
 
 /* mobile devices 
@@ -220,7 +220,7 @@
   padding-right: 1rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  background-color: #f8f9fa;
+  background-color: #dfe8ef;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   width: 100%;
@@ -230,25 +230,25 @@
   top: 30%;
   left: 3%;
   font-weight: bold;
-  flex-direction: column; 
+  flex-direction: column;
 }
 
-.btn-view{
-  color: rgb(0, 0, 0) !important;               
-  background-color: #ffffff !important;  
-  border: 1px solid #007bff !important;  
-  padding: 0.75rem 1.5rem;    
-  border-radius: 4px;         
-  font-size: 1rem;            
-  font-weight: bold;          
-  cursor: pointer;           
-  transition: background-color 0.3s, border-color 0.3s; 
+.btn-view {
+  color: rgb(0, 0, 0) !important;
+  background-color: #ffffff !important;
+  border: 1px solid #94b5ce !important;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
 }
 
 /* Hover-effect for button */
 .btn-view:hover {
-  background-color: #0056b3 !important;  
-  border-color: #0056b3 !important;      
+  background-color: #94b5ce !important;
+  border-color: #94b5ce !important;
   color: #ffffff !important;
 }
 
@@ -260,7 +260,7 @@
   padding-right: 1rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  background-color: #f8f9fa;
+  background-color: #dfe8ef;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   width: 100%;
@@ -270,25 +270,25 @@
   top: 48%;
   left: 3%;
   font-weight: bold;
-  flex-direction: column; 
+  flex-direction: column;
 }
 
-.btn-add{
-  color: rgb(0, 0, 0) !important;               
-  background-color: #ffffff !important;  
-  border: 1px solid #007bff !important;  
-  padding: 0.75rem 1.5rem;    
-  border-radius: 4px;         
-  font-size: 1rem;           
-  font-weight: bold;          
-  cursor: pointer;           
-  transition: background-color 0.3s, border-color 0.3s; 
+.btn-add {
+  color: rgb(0, 0, 0) !important;
+  background-color: #ffffff !important;
+  border: 1px solid #94b5ce !important;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
 }
 
 /* Hover-effect for button */
 .btn-add:hover {
-  background-color: #0056b3 !important;  
-  border-color: #0056b3 !important;      
+  background-color: #94b5ce !important;
+  border-color: #94b5ce !important;
   color: #ffffff !important;
 }
 
@@ -300,7 +300,7 @@
   padding-right: 1rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  background-color: #f8f9fa;
+  background-color: #dfe8ef;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   width: 100%;
@@ -310,25 +310,25 @@
   top: 66%;
   left: 3%;
   font-weight: bold;
-  flex-direction: column; 
+  flex-direction: column;
 }
 
-.btn-account{
-  color: rgb(0, 0, 0) !important;               
-  background-color: #ffffff !important;  
-  border: 1px solid #007bff !important;  
-  padding: 0.75rem 1.5rem;    
-  border-radius: 4px;         
-  font-size: 1rem;            
-  font-weight: bold;          
-  cursor: pointer;           
-  transition: background-color 0.3s, border-color 0.3s; 
+.btn-account {
+  color: rgb(0, 0, 0) !important;
+  background-color: #ffffff !important;
+  border: 1px solid #94b5ce !important;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
 }
 
 /* Hover-effect for button */
 .btn-account:hover {
-  background-color: #0056b3 !important;  
-  border-color: #0056b3 !important;      
+  background-color: #94b5ce !important;
+  border-color: #94b5ce !important;
   color: #ffffff !important;
 }
 
@@ -340,7 +340,7 @@
   padding-right: 1rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  background-color: #f8f9fa;
+  background-color: #dfe8ef;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   width: 100%;
@@ -350,25 +350,24 @@
   top: 84%;
   left: 3%;
   font-weight: bold;
-  flex-direction: column; 
+  flex-direction: column;
 }
 
-.btn-help{
-  color: rgb(0, 0, 0) !important;               
-  background-color: #ffffff !important;  
-  border: 1px solid #007bff !important;  
-  padding: 0.75rem 1.5rem;    
-  border-radius: 4px;         
-  font-size: 1rem;            
-  font-weight: bold;          
-  cursor: pointer;           
-  transition: background-color 0.3s, border-color 0.3s; 
+.btn-help {
+  color: rgb(0, 0, 0) !important;
+  background-color: #ffffff !important;
+  border: 1px solid #94b5ce !important;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
 }
 
 /* Hover-effect for button */
 .btn-help:hover {
-  background-color: #0056b3 !important;  
-  border-color: #0056b3 !important;      
+  background-color: #94b5ce !important;
+  border-color: #94b5ce !important;
   color: #ffffff !important;
 }
-
