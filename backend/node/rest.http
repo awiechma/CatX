@@ -15,6 +15,33 @@ Content-Type: application/json
 @token = {{postLogin.response.body.token}}
 ###
 
+### Get Collections
+POST http://localhost:3000/api/collections
+Content-Type: application/json
+
+{
+  "limit": 10,
+  "offset": 0
+}
+
+### Get keywords
+POST http://localhost:3000/api/keywords
+Content-Type: application/json
+
+{
+  "limit": 10,
+  "offset": 0
+}
+
 ### Access protected route
-GET http://localhost:3000/api/protected
+POST http://localhost:3000/api/collections
 Authorization: Bearer {{token}}
+
+### get items
+POST http://localhost:3000/api/items
+Content-Type: application/json
+
+{
+  "limit": 10,
+  "offset": 0
+}

@@ -49,11 +49,54 @@ app.post('/api/token', async (req, res) => {
   }
 });
 
+app.post('/api/providers', (req, res) => {
+  const { limit = 20, offset = 0 } = req.body || {}; //default limit and offset
+  db.query('SELECT * FROM providers_view LIMIT $1 OFFSET $2', [limit, offset])
+    .then(result => {
+      const providers = result.rows;
+      res.status(200).json(providers);
+    })
+    .catch(error => {
+      console.error('Error during provider export:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    });
+})
+//passport.authenticate('jwt', { session: false })  
+app.post('/api/keywords', async (req, res) => {
+  const { limit = 20, offset = 0 } = req.body || {}; //default limit and offset
+  db.query('SELECT * FROM keywords_view LIMIT $1 OFFSET $2', [limit, offset])
+    .then(result => {
+      const keywords = result.rows
+      res.status(200).json(keywords)
+    }).catch(error => {
+      console.error('Error during keyword export:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    });
+});
 // Protected route that requires a valid JWT token to access
-app.get('/api/protected', passport.authenticate('jwt', { session: false }), (req, res) => {
-  res.json({ message: 'This is a protected route!', user: req.user });
+app.post('/api/collections', async (req, res) => {
+  const { limit = 20, offset = 0 } = req.body || {}; //default limit and offset
+  db.query('SELECT *, ARRAY(SELECT keyword FROM keywords k WHERE c.collection_id = k.collection_id) AS keywords, ARRAY(SELECT provider FROM providers p WHERE c.collection_id = p.collection_id) as providers FROM collections c LIMIT $1 OFFSET $2', [limit, offset])
+    .then(result => {
+      const collections = result.rows
+      res.status(200).json(collections)
+    }).catch(error => {
+      console.error('Error during collection export:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    })
 });
 
+app.post('/api/items', async (req, res) => {
+  const { limit = 20, offset = 0 } = req.body || {}; //default limit and offset)
+  db.query('SELECT *, ARRAY(SELECT task FROM mlm_tasks t WHERE i.collection = t.collection AND i.id = t.id) AS \"mlm:tasks\", (SELECT json_agg(x) FROM (SELECT description, datetime, \"mlm:name\", \"mlm:architecture\", \"mlm:framework\", \"mlm:framework_version\", \"mlm:memory_size\", \"mlm:total_parameters\", \"mlm:pretrained\", \"mlm:pretrained_source\",  \"mlm:batch_size_suggestion\", \"mlm:accelerator\", \"mlm:accelerator_constrained\", \"mlm:accelerator_summary\",  \"mlm:accelerator_count\", \"mlm:input\", \"mlm:output\", \"mlm:hyperparameters\" FROM properties p WHERE i.collection = p.collection AND i.id = p.id) x) AS properties FROM items i LIMIT $1 OFFSET $2', [limit, offset])
+    .then(result => {
+      const items = result.rows
+      res.status(200).json(items)
+    }).catch(error => {
+      console.error('Error during item export:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    })
+})
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

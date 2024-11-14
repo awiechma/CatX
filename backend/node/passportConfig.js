@@ -12,7 +12,6 @@ const options = {
 passport.use(
     new JwtStrategy(options, async (jwt_payload, done) => {
         try {
-            console.log(jwt_payload)
             // Query the database to find the user by the ID in the JWT payload
             const result = await db.query('SELECT * FROM users WHERE user_id = $1', [jwt_payload.userId]);
             const user = result.rows[0];

@@ -1,5 +1,5 @@
 -- Insert data into collections
-INSERT INTO collections (type, stac_version, stac_extensions, collection_id, title, description, license, extent, summaries, links)
+INSERT INTO collections (type, stac_version, stac_extensions, id, title, description, license, extent, summaries, links)
 VALUES
 ('collection', '1.0.0', ARRAY['stac', 'mlm'], 'mlm-collection-1', 'Machine Learning Models Collection 1', 
  'A collection of machine learning models for various tasks.', 'CC BY 4.0', 
@@ -11,14 +11,14 @@ VALUES
  '{"model_count": 15}', ARRAY[ JSONB('{"rel": "self", "href": "/collections/mlm-collection-2"}') ]);
 
 -- Insert data into providers
-INSERT INTO providers (collection_id, provider)
+INSERT INTO providers (id, provider)
 VALUES
 ('mlm-collection-1', 'Provider A'),
 ('mlm-collection-1', 'Provider B'),
 ('mlm-collection-2', 'Provider C');
 
 -- Insert data into keywords
-INSERT INTO keywords (collection_id, keyword)
+INSERT INTO keywords (id, keyword)
 VALUES
 ('mlm-collection-1', 'machine learning'),
 ('mlm-collection-1', 'deep learning'),
@@ -28,7 +28,7 @@ VALUES
 ('mlm-collection-2', 'object detection');
 
 -- Insert data into items
-INSERT INTO items (type, stac_version, stac_extensions, item_id, collection_id, geometry, bbox, assets, links)
+INSERT INTO items (type, stac_version, stac_extensions, id, collection, geometry, bbox, assets, links)
 VALUES
 ('item', '1.0.0', ARRAY['stac', 'mlm'], 'mlm-item-1', 'mlm-collection-1', 
  ST_SetSRID(ST_MakePoint(-100, 40), 4326), 
@@ -47,10 +47,10 @@ VALUES
  ARRAY[ JSONB('{"rel": "self", "href": "/items/mlm-item-3"}') ]);
 
 -- Insert data into properties
-INSERT INTO properties (item_id, collection_id, description, datetime, mlm_name, mlm_architecture, mlm_framework, 
- mlm_framework_version, mlm_memory_size, mlm_total_parameters, mlm_pretrained, mlm_pretrained_source, 
- mlm_batch_size_suggestion, mlm_accelerator, mlm_accelerator_constrained, mlm_accelerator_summary, 
- mlm_accelerator_count, mlm_input, mlm_output, mlm_hyperparameters)
+INSERT INTO properties (id, collection, description, datetime, "mlm:name", "mlm:architecture", "mlm:framework", 
+ "mlm:framework_version", "mlm:memory_size", "mlm:total_parameters", "mlm:pretrained", "mlm:pretrained_source", 
+ "mlm:batch_size_suggestion", "mlm:accelerator", "mlm:accelerator_constrained", "mlm:accelerator_summary", 
+ "mlm:accelerator_count", "mlm:input", "mlm:output", "mlm:hyperparameters")
 VALUES
 ('mlm-item-1', 'mlm-collection-1', 'A model for sentiment analysis.', '2023-01-01T12:00:00Z', 
  'Sentiment Model', 'Transformer', 'TensorFlow', '2.4.1', 16384, 110000000, TRUE, 
@@ -68,8 +68,8 @@ VALUES
  'TPU v3', 2, '{"image": "input image"}', '{"boxes": [{"class": "car", "confidence": 0.98}]}', 
  '{"learning_rate": 0.0005, "epochs": 20}');
 
--- Insert data into mlm_tasks
-INSERT INTO mlm_tasks (item_id, collection_id, task)
+-- Insert data into "mlm:tasks
+INSERT INTO mlm_tasks (id, collection, task)
 VALUES
 ('mlm-item-1', 'mlm-collection-1', 'sentiment analysis'),
 ('mlm-item-2', 'mlm-collection-1', 'image classification'),
