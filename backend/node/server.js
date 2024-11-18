@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(passport.initialize());
 
 // Setup rotating log stream for logging HTTP requests
-const rotatingLogStream = rfs.createStream('access.log', {
+const rotatingLogStream = rfs.createStream('http.log', {
   interval: '1d',
   path: LOG_DIR
 });
@@ -80,7 +80,8 @@ app.post('/api/providers', (req, res) => {
       SELECT
         *
       FROM providers_view
-      LIMIT $1 OFFSET $2
+      LIMIT $1
+      OFFSET $2
     `,
     values: [limit, offset],
   }
@@ -103,7 +104,8 @@ app.post('/api/keywords', async (req, res) => {
       SELECT 
         *
       FROM keywords_view
-      LIMIT $1 OFFSET $2
+      LIMIT $1
+      OFFSET $2
     `,
     values: [limit, offset],
   }
@@ -123,42 +125,10 @@ app.post('/api/collections', async (req, res) => {
   const { limit = 20, offset = 0 } = req.body || {};
   const query = {
     text: `
-      SELECT
-        stac_version,
-        stac_extensions,
-        type,
-        id,
-        title,
-        description,
-        license,
-        extent,
-        item_assets,
-        summaries,
-        (
-          SELECT ARRAY_AGG(k.keyword)
-          FROM keywords k
-          WHERE c.id = k.id
-        ) AS keywords,
-        (
-          SELECT ARRAY_AGG(p.provider)
-          FROM providers p
-          WHERE c.id = p.id
-        ) AS providers,
-        (
-          SELECT ARRAY_AGG(
-            jsonb_build_object(
-              'href', CONCAT('/api/items/', i.id),
-              'rel', 'item'
-            )
-          )
-          FROM items i
-          WHERE c.id = i.collection
-        ) || jsonb_build_object(
-          'href', CONCAT('/api/collections/', c.id),
-          'rel', 'self'
-        ) AS links
-      FROM collections c
-      LIMIT $1 OFFSET $2
+      SELECT *
+      FROM collections_complete_view
+      LIMIT $1
+      OFFSET $2
     `,
     values: [limit, offset],
   };
@@ -179,52 +149,8 @@ app.post('/api/items', async (req, res) => {
   const { limit = 20, offset = 0 } = req.body;
   const query = {
     text: `
-      SELECT 
-        stac_version,
-        stac_extensions,
-        type,
-        id,
-        collection,
-        geometry,
-        bbox,
-        (
-          SELECT json_agg(x)
-          FROM (
-            SELECT 
-              p.description,
-              p.datetime,
-              p.start_datetime,
-              p.end_datetime,
-              p."mlm:name",
-              (
-                SELECT json_agg(t.task)
-                FROM mlm_tasks t
-                WHERE i.collection = t.collection
-                  AND i.id = t.id
-              ) AS "mlm:tasks",
-              p."mlm:architecture",
-              p."mlm:framework",
-              p."mlm:framework_version",
-              p."mlm:memory_size",
-              p."mlm:total_parameters",
-              p."mlm:pretrained",
-              p."mlm:pretrained_source",
-              p."mlm:batch_size_suggestion",
-              p."mlm:accelerator",
-              p."mlm:accelerator_constrained",
-              p."mlm:accelerator_summary",
-              p."mlm:accelerator_count",
-              p."mlm:input",
-              p."mlm:output",
-              p."mlm:hyperparameters"
-            FROM properties p
-            WHERE i.collection = p.collection
-              AND i.id = p.id
-          ) x
-        ) AS properties,
-        assets,
-        links
-      FROM items i
+      SELECT * 
+      FROM items_complete_view
       LIMIT $1
       OFFSET $2
     `,
@@ -239,13 +165,20 @@ app.post('/api/items', async (req, res) => {
     })
 });
 
+/**
+ * Endpoint to upload a collection to the database
+ * Requires a valid JWT token containing the username
+ */
 app.post('/api/collections/upload', passport.authenticate('jwt', { session: false }), async (req, res) => {
   const user = req.user.username
+  // Destructure the request body
   const { stac_version = null, stac_extensions = null, type = null, id = null, title = null, description = null, license = null, extent = null, summaries = null, providers = null, keywords = null } = req.body;
 
   try {
+    //  Begin a transaction
     await db.query('BEGIN');
 
+    // Insert the collection
     const insertCollectionQuery = {
       text: `
         INSERT INTO collections (stac_version, stac_extensions, type, id, title, description, license, extent, summaries, CREATION_USER, UPDATE_USER)
@@ -255,6 +188,7 @@ app.post('/api/collections/upload', passport.authenticate('jwt', { session: fals
     }
     await db.query(insertCollectionQuery);
 
+    // Insert the providers
     if (providers) {
       const insertProviderQuery = {
         text: `
@@ -267,6 +201,7 @@ app.post('/api/collections/upload', passport.authenticate('jwt', { session: fals
       }
     }
 
+    //  Insert the keywords
     if (keywords) {
       const insertKeywordQuery = {
         text: `
@@ -279,16 +214,22 @@ app.post('/api/collections/upload', passport.authenticate('jwt', { session: fals
       }
     }
 
+    // Commit the transaction
     await db.query('COMMIT');
-    res.status(200).json({ message: 'Collection uploaded successfully' });
+    res.status(200).json({ message: 'Collection %s uploaded successfully', id });
   } catch (error) {
     await db.query('ROLLBACK');
     res.status(500).json({ message: 'Internal server error' });
   }
 })
 
+/**
+ * Endpoint to upload an item to the database
+ * Requires a valid JWT token containing the username
+ */
 app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), async (req, res) => {
   const user = req.user.username;
+  // Destructure the request body
   const {
     stac_version = null,
     stac_extensions = null,
@@ -301,6 +242,7 @@ app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), 
     assets = null,
     links = null,
   } = req.body;
+  // Destructure the properties
   const {
     description = null,
     datetime = null,
@@ -327,8 +269,10 @@ app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), 
 
 
   try {
+    // Begin a transaction
     await db.query('BEGIN');
 
+    // Insert the item
     const insertItemsQuery = {
       text: `
       INSERT INTO items (
@@ -360,6 +304,7 @@ app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), 
     };
     await db.query(insertItemsQuery);
 
+    // Insert the properties
     const insertPropertiesQuery = {
       text: `
       INSERT INTO properties (
@@ -417,6 +362,7 @@ app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), 
     };
     await db.query(insertPropertiesQuery);
 
+    // Insert the tasks
     if (mlmTasks) {
       const insertTasksQuery = {
         text: `
@@ -436,8 +382,9 @@ app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), 
       }
     }
 
+    // Commit the transaction
     await db.query('COMMIT');
-    res.status(200).json({ message: 'Item uploaded successfully' });
+    res.status(200).json({ message: 'Item %s uploaded successfully', id });
   } catch (error) {
     await db.query('ROLLBACK');
     res.status(500).json({ message: 'Internal server error' });

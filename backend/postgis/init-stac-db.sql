@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS items (
     stac_extensions TEXT [],
     id TEXT NOT NULL UNIQUE,
     collection TEXT REFERENCES collections(id) ON DELETE CASCADE,
-    geometry GEOMETRY NOT NULL,
+    geometry JSONB NOT NULL,
     bbox FLOAT8 [],
     assets JSONB NOT NULL,
     links JSONB [] NOT NULL,
@@ -130,3 +130,110 @@ GROUP BY
     task
 ORDER BY
     COUNT(*);
+
+CREATE VIEW collections_complete_view AS
+SELECT
+    stac_version,
+    stac_extensions,
+    type,
+    id,
+    title,
+    description,
+    license,
+    extent,
+    item_assets,
+    summaries,
+    (
+        SELECT
+            ARRAY_AGG(k.keyword)
+        FROM
+            keywords k
+        WHERE
+            c.id = k.id
+    ) AS keywords,
+    (
+        SELECT
+            ARRAY_AGG(p.provider)
+        FROM
+            providers p
+        WHERE
+            c.id = p.id
+    ) AS providers,
+    (
+        SELECT
+            ARRAY_AGG(
+                jsonb_build_object(
+                    'href',
+                    CONCAT('/api/items/', i.id),
+                    'rel',
+                    'item'
+                )
+            )
+        FROM
+            items i
+        WHERE
+            c.id = i.collection
+    ) || jsonb_build_object(
+        'href',
+        CONCAT('/api/collections/', c.id),
+        'rel',
+        'self'
+    ) AS links
+FROM
+    collections c;
+
+CREATE VIEW items_complete_view AS
+SELECT
+    stac_version,
+    stac_extensions,
+    type,
+    id,
+    collection,
+    geometry,
+    bbox,
+    (
+        SELECT
+            json_agg(x)
+        FROM
+            (
+                SELECT
+                    p.description,
+                    p.datetime,
+                    p.start_datetime,
+                    p.end_datetime,
+                    p."mlm:name",
+                    (
+                        SELECT
+                            json_agg(t.task)
+                        FROM
+                            mlm_tasks t
+                        WHERE
+                            i.collection = t.collection
+                            AND i.id = t.id
+                    ) AS "mlm:tasks",
+                    p."mlm:architecture",
+                    p."mlm:framework",
+                    p."mlm:framework_version",
+                    p."mlm:memory_size",
+                    p."mlm:total_parameters",
+                    p."mlm:pretrained",
+                    p."mlm:pretrained_source",
+                    p."mlm:batch_size_suggestion",
+                    p."mlm:accelerator",
+                    p."mlm:accelerator_constrained",
+                    p."mlm:accelerator_summary",
+                    p."mlm:accelerator_count",
+                    p."mlm:input",
+                    p."mlm:output",
+                    p."mlm:hyperparameters"
+                FROM
+                    properties p
+                WHERE
+                    i.collection = p.collection
+                    AND i.id = p.id
+            ) x
+    ) AS properties,
+    assets,
+    links
+FROM
+    items i;
