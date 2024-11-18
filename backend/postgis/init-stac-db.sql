@@ -12,27 +12,55 @@ CREATE TABLE IF NOT EXISTS collections (
     description TEXT NOT NULL,
     license TEXT,
     extent JSONB NOT NULL,
+    item_assets JSONB,
     summaries JSONB,
-    links JSONB [] NOT NULL
+    CREATION_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    CREATION_USER TEXT NOT NULL,
+    UPDATE_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    UPDATE_USER TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS providers (
     id TEXT REFERENCES collections(id) ON DELETE CASCADE,
     provider TEXT NOT NULL,
+    CREATION_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    CREATION_USER TEXT NOT NULL,
+    UPDATE_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    UPDATE_USER TEXT NOT NULL,
     PRIMARY KEY(id, provider)
 );
 
 CREATE VIEW providers_view AS
-    SELECT provider, COUNT(*) FROM providers GROUP BY provider ORDER BY COUNT(*);
+SELECT
+    provider,
+    COUNT(*)
+FROM
+    providers
+GROUP BY
+    provider
+ORDER BY
+    COUNT(*);
 
 CREATE TABLE IF NOT EXISTS keywords (
     id TEXT REFERENCES collections(id) ON DELETE CASCADE,
     keyword TEXT NOT NULL,
+    CREATION_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    CREATION_USER TEXT NOT NULL,
+    UPDATE_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    UPDATE_USER TEXT NOT NULL,
     PRIMARY KEY(id, keyword)
 );
 
 CREATE VIEW keywords_view AS
-    SELECT keyword, COUNT(*) FROM keywords GROUP BY keyword ORDER BY COUNT(*);
+SELECT
+    keyword,
+    COUNT(*)
+FROM
+    keywords
+GROUP BY
+    keyword
+ORDER BY
+    COUNT(*);
 
 CREATE TABLE IF NOT EXISTS items (
     type TEXT NOT NULL,
@@ -40,10 +68,14 @@ CREATE TABLE IF NOT EXISTS items (
     stac_extensions TEXT [],
     id TEXT NOT NULL UNIQUE,
     collection TEXT REFERENCES collections(id) ON DELETE CASCADE,
-    geometry GEOMETRY(Point, 4326) NOT NULL,
+    geometry GEOMETRY NOT NULL,
     bbox FLOAT8 [],
     assets JSONB NOT NULL,
     links JSONB [] NOT NULL,
+    CREATION_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    CREATION_USER TEXT NOT NULL,
+    UPDATE_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    UPDATE_USER TEXT NOT NULL,
     PRIMARY KEY(collection, id)
 );
 
@@ -52,6 +84,8 @@ CREATE TABLE IF NOT EXISTS properties (
     collection TEXT REFERENCES collections(id),
     description TEXT,
     datetime TIMESTAMP WITH TIME ZONE,
+    start_datetime TIMESTAMP WITH TIME ZONE,
+    end_datetime TIMESTAMP WITH TIME ZONE,
     "mlm:name" TEXT NOT NULL,
     "mlm:architecture" TEXT NOT NULL,
     "mlm:framework" TEXT,
@@ -65,9 +99,13 @@ CREATE TABLE IF NOT EXISTS properties (
     "mlm:accelerator_constrained" BOOLEAN,
     "mlm:accelerator_summary" TEXT,
     "mlm:accelerator_count" INTEGER,
-    "mlm:input" JSONB,
-    "mlm:output" JSONB,
-    "mlm:hyperparameters" JSONB,
+    "mlm:input" JSONB [],
+    "mlm:output" JSONB [],
+    "mlm:hyperparameters" JSONB [],
+    CREATION_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    CREATION_USER TEXT NOT NULL,
+    UPDATE_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    UPDATE_USER TEXT NOT NULL,
     PRIMARY KEY (collection, id)
 );
 
@@ -75,8 +113,20 @@ CREATE TABLE IF NOT EXISTS mlm_tasks(
     id TEXT REFERENCES items(id) ON DELETE CASCADE,
     collection TEXT REFERENCES collections(id),
     task TEXT NOT NULL,
+    CREATION_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    CREATION_USER TEXT NOT NULL,
+    UPDATE_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    UPDATE_USER TEXT NOT NULL,
     PRIMARY KEY(collection, id, task)
 );
 
 CREATE VIEW mlm_tasks_view AS
-    SELECT task, COUNT(*) FROM mlm_tasks GROUP BY task ORDER BY COUNT(*);
+SELECT
+    task,
+    COUNT(*)
+FROM
+    mlm_tasks
+GROUP BY
+    task
+ORDER BY
+    COUNT(*);

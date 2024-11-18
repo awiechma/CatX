@@ -6,9 +6,9 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
-/* pool.on('connect', () => {
-  console.log('Connected to the database');
-}); */
+pool.on('query', (query) => {
+  console.log(query);
+});
 
 module.exports = {
   query: (text, params) => pool.query(text, params),
