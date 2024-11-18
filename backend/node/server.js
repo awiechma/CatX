@@ -1,20 +1,34 @@
-const express = require('express');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const express = require('express'); //for api
+const bcrypt = require('bcryptjs'); //for encrypting password
+const jwt = require('jsonwebtoken'); //for token generation
+const morgan = require('morgan') //for logging
+const rfs = require('rotating-file-stream') //for writing log to files
 const passport = require('./passportConfig'); // Import configured Passport instance
 const db = require('./db'); // Database connection
-require('dotenv').config();
 
-const app = express();
+require('dotenv').config(); // Load environment variables
 const PORT = process.env.PORT || 3000;
+const LOG_DIR = process.env.LOG_DIR || './logs';
 
 // Middleware to parse JSON data
+const app = express();
 app.use(express.json());
 
 // Initialize Passport middleware
 app.use(passport.initialize());
 
-// Endpoint for logging in and receiving a JWT token
+// Create a rotating write stream
+const rotatingLogStream = rfs.createStream('access.log', {
+  interval: '1d', // Rotate daily
+  path: LOG_DIR
+});
+// Setup morgan to log in 'combined' format and write to the log file
+app.use(morgan('combined', { stream: rotatingLogStream }));
+
+// Optional: Log traffic to the console as well
+app.use(morgan('combined'));
+
+// Endpoint for login and receiving a JWT token
 app.post('/api/token', async (req, res) => {
   const { username, password } = req.body;
 
@@ -76,7 +90,7 @@ app.post('/api/keywords', async (req, res) => {
 // Protected route that requires a valid JWT token to access
 app.post('/api/collections', async (req, res) => {
   const { limit = 20, offset = 0 } = req.body || {}; //default limit and offset
-  db.query('SELECT *, ARRAY(SELECT keyword FROM keywords k WHERE c.collection_id = k.collection_id) AS keywords, ARRAY(SELECT provider FROM providers p WHERE c.collection_id = p.collection_id) as providers FROM collections c LIMIT $1 OFFSET $2', [limit, offset])
+  db.query('SELECT *, ARRAY(SELECT keyword FROM keywords k WHERE c.id = k.id) AS keywords, ARRAY(SELECT provider FROM providers p WHERE c.id = p.id) as providers FROM collections c LIMIT $1 OFFSET $2', [limit, offset])
     .then(result => {
       const collections = result.rows
       res.status(200).json(collections)
@@ -88,7 +102,7 @@ app.post('/api/collections', async (req, res) => {
 
 app.post('/api/items', async (req, res) => {
   const { limit = 20, offset = 0 } = req.body || {}; //default limit and offset)
-  db.query('SELECT *, ARRAY(SELECT task FROM mlm_tasks t WHERE i.collection = t.collection AND i.id = t.id) AS \"mlm:tasks\", (SELECT json_agg(x) FROM (SELECT description, datetime, \"mlm:name\", \"mlm:architecture\", \"mlm:framework\", \"mlm:framework_version\", \"mlm:memory_size\", \"mlm:total_parameters\", \"mlm:pretrained\", \"mlm:pretrained_source\",  \"mlm:batch_size_suggestion\", \"mlm:accelerator\", \"mlm:accelerator_constrained\", \"mlm:accelerator_summary\",  \"mlm:accelerator_count\", \"mlm:input\", \"mlm:output\", \"mlm:hyperparameters\" FROM properties p WHERE i.collection = p.collection AND i.id = p.id) x) AS properties FROM items i LIMIT $1 OFFSET $2', [limit, offset])
+  db.query('SELECT *, (SELECT json_agg(x) FROM (SELECT description, datetime, \"mlm:name\", ARRAY(SELECT task FROM mlm_tasks t WHERE i.collection = t.collection AND i.id = t.id) AS \"mlm:tasks\",  \"mlm:architecture\", \"mlm:framework\", \"mlm:framework_version\", \"mlm:memory_size\", \"mlm:total_parameters\", \"mlm:pretrained\", \"mlm:pretrained_source\",  \"mlm:batch_size_suggestion\", \"mlm:accelerator\", \"mlm:accelerator_constrained\", \"mlm:accelerator_summary\",  \"mlm:accelerator_count\", \"mlm:input\", \"mlm:output\", \"mlm:hyperparameters\" FROM properties p WHERE i.collection = p.collection AND i.id = p.id) x) AS properties FROM items i LIMIT $1 OFFSET $2', [limit, offset])
     .then(result => {
       const items = result.rows
       res.status(200).json(items)
@@ -101,3 +115,4 @@ app.post('/api/items', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
