@@ -71,7 +71,6 @@ CREATE TABLE IF NOT EXISTS items (
     geometry JSONB NOT NULL,
     bbox FLOAT8 [],
     assets JSONB NOT NULL,
-    links JSONB [] NOT NULL,
     CREATION_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     CREATION_USER TEXT NOT NULL,
     UPDATE_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -133,16 +132,16 @@ ORDER BY
 
 CREATE VIEW collections_complete_view AS
 SELECT
-    stac_version,
-    stac_extensions,
-    type,
-    id,
-    title,
-    description,
-    license,
-    extent,
-    item_assets,
-    summaries,
+    c.stac_version,
+    c.stac_extensions,
+    c.type,
+    c.id,
+    c.title,
+    c.description,
+    c.license,
+    c.extent,
+    c.item_assets,
+    c.summaries,
     (
         SELECT
             ARRAY_AGG(k.keyword)
@@ -159,20 +158,13 @@ SELECT
         WHERE
             c.id = p.id
     ) AS providers,
-    (
-        SELECT
-            ARRAY_AGG(
-                jsonb_build_object(
-                    'href',
-                    CONCAT('/api/items/', i.id),
-                    'rel',
-                    'item'
-                )
-            )
-        FROM
-            items i
-        WHERE
-            c.id = i.collection
+    jsonb_agg(
+        jsonb_build_object(
+            'href',
+            CONCAT('/api/items/', i.id),
+            'rel',
+            'item'
+        )
     ) || jsonb_build_object(
         'href',
         CONCAT('/api/collections/', c.id),
@@ -180,60 +172,109 @@ SELECT
         'self'
     ) AS links
 FROM
-    collections c;
+    collections c
+    LEFT JOIN items i ON c.id = i.collection
+GROUP BY
+    c.stac_version,
+    c.stac_extensions,
+    c.type,
+    c.id,
+    c.title,
+    c.description,
+    c.license,
+    c.extent,
+    c.item_assets,
+    c.summaries;
 
 CREATE VIEW items_complete_view AS
 SELECT
-    stac_version,
-    stac_extensions,
-    type,
-    id,
-    collection,
-    geometry,
-    bbox,
-    (
-        SELECT
-            json_agg(x)
-        FROM
-            (
-                SELECT
-                    p.description,
-                    p.datetime,
-                    p.start_datetime,
-                    p.end_datetime,
-                    p."mlm:name",
-                    (
-                        SELECT
-                            json_agg(t.task)
-                        FROM
-                            mlm_tasks t
-                        WHERE
-                            i.collection = t.collection
-                            AND i.id = t.id
-                    ) AS "mlm:tasks",
-                    p."mlm:architecture",
-                    p."mlm:framework",
-                    p."mlm:framework_version",
-                    p."mlm:memory_size",
-                    p."mlm:total_parameters",
-                    p."mlm:pretrained",
-                    p."mlm:pretrained_source",
-                    p."mlm:batch_size_suggestion",
-                    p."mlm:accelerator",
-                    p."mlm:accelerator_constrained",
-                    p."mlm:accelerator_summary",
-                    p."mlm:accelerator_count",
-                    p."mlm:input",
-                    p."mlm:output",
-                    p."mlm:hyperparameters"
-                FROM
-                    properties p
-                WHERE
-                    i.collection = p.collection
-                    AND i.id = p.id
-            ) x
+    i.stac_version,
+    i.stac_extensions,
+    i.type,
+    i.id,
+    i.collection,
+    i.geometry,
+    i.bbox,
+    jsonb_strip_nulls(
+        jsonb_agg(
+            jsonb_build_object(
+                'description',
+                p.description,
+                'datetime',
+                p.datetime,
+                'start_datetime',
+                p.start_datetime,
+                'end_datetime',
+                p.end_datetime,
+                'mlm:name',
+                p."mlm:name",
+                'mlm:tasks',
+                (
+                    SELECT
+                        jsonb_agg(t.task)
+                    FROM
+                        mlm_tasks t
+                    WHERE
+                        i.collection = t.collection
+                        AND i.id = t.id
+                ),
+                'mlm:architecture',
+                p."mlm:architecture",
+                'mlm:framework',
+                p."mlm:framework",
+                'mlm:framework_version',
+                p."mlm:framework_version",
+                'mlm:memory_size',
+                p."mlm:memory_size",
+                'mlm:total_parameters',
+                p."mlm:total_parameters",
+                'mlm:pretrained',
+                p."mlm:pretrained",
+                'mlm:pretrained_source',
+                p."mlm:pretrained_source",
+                'mlm:batch_size_suggestion',
+                p."mlm:batch_size_suggestion",
+                'mlm:accelerator',
+                p."mlm:accelerator",
+                'mlm:accelerator_constrained',
+                p."mlm:accelerator_constrained",
+                'mlm:accelerator_summary',
+                p."mlm:accelerator_summary",
+                'mlm:accelerator_count',
+                p."mlm:accelerator_count",
+                'mlm:input',
+                p."mlm:input",
+                'mlm:output',
+                p."mlm:output",
+                'mlm:hyperparameters',
+                p."mlm:hyperparameters"
+            )
+        )
     ) AS properties,
-    assets,
-    links
+    i.assets,
+    jsonb_agg(
+        jsonb_build_object(
+            'href',
+            CONCAT('/api/items/', i.id),
+            'rel',
+            'self'
+        )
+    ) || jsonb_build_object(
+        'href',
+        CONCAT('/api/collections/', i.collection),
+        'rel',
+        'collection'
+    ) AS links
 FROM
-    items i;
+    items i
+    LEFT JOIN properties p ON i.collection = p.collection
+    AND i.id = p.id
+GROUP BY
+    i.stac_version,
+    i.stac_extensions,
+    i.type,
+    i.id,
+    i.collection,
+    i.geometry,
+    i.bbox,
+    i.assets;

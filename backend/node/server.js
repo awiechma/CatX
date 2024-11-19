@@ -216,7 +216,7 @@ app.post('/api/collections/upload', passport.authenticate('jwt', { session: fals
 
     // Commit the transaction
     await db.query('COMMIT');
-    res.status(200).json({ message: 'Collection %s uploaded successfully', id });
+    res.status(200).json({ message: 'Collection uploaded successfully' });
   } catch (error) {
     await db.query('ROLLBACK');
     res.status(500).json({ message: 'Internal server error' });
@@ -239,8 +239,7 @@ app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), 
     geometry = null,
     bbox = null,
     properties = null,
-    assets = null,
-    links = null,
+    assets = null
   } = req.body;
   // Destructure the properties
   const {
@@ -284,10 +283,9 @@ app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), 
         geometry,
         bbox,
         assets,
-        links,
         creation_user,
         update_user
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $10)
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $9)
     `,
       values: [
         stac_version,
@@ -298,7 +296,6 @@ app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), 
         geometry,
         bbox,
         assets,
-        links,
         user,
       ],
     };
@@ -384,7 +381,7 @@ app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), 
 
     // Commit the transaction
     await db.query('COMMIT');
-    res.status(200).json({ message: 'Item %s uploaded successfully', id });
+    res.status(200).json({ message: 'Item uploaded successfully' });
   } catch (error) {
     await db.query('ROLLBACK');
     res.status(500).json({ message: 'Internal server error' });
