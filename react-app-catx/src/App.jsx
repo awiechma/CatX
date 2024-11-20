@@ -5,6 +5,9 @@ import Button from "./components/Button";
 import Navbar from "./components/Navbar";
 import SearchBar from "./components/SearchBar";
 import ListGroup from "./components/ListGroup";
+import { Route } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 
 // homepage layout
 function App() {
@@ -21,25 +24,33 @@ function App() {
             <div className="left-aligned-container">      
                { <div className="left-aligned-container-view">
                   <p>Specify your search?</p>
-                   <Button text="View" className="btn-view" onClick={() => alert("Submit clicked")} /> 
+                  <Link to="/view" className="btn-view">
+                   <Button text="View" /> 
+                   </Link>
                   </div> 
                   }
                    {                
                 <div className="left-aligned-container-add">
                   <p>Add models?</p>
-                  <Button text="Add" className="btn-add" onClick={() => alert("Submit clicked")} /> 
+                  <Link to="/add" className="btn-add">
+                  <Button text="Add"/> 
+                  </Link>
                   </div> 
                   }
                    {                
                 <div className="left-aligned-container-account">
                   <p>No account?</p>
-                  <Button text="Log in / Sign in" className="btn-account" onClick={() => alert("Submit clicked")} /> 
+                  <Link to="/account" className="btn-account">
+                  <Button text="Log in"/> 
+                  </Link>
                   </div> 
                   }
                    {                
                 <div className="left-aligned-container-help">
                   <p>Need help?</p>
-                  <Button text="Help" className="btn-help" onClick={() => alert("Submit clicked")} /> 
+                  <Link to="/help" className="btn-help">
+                  <Button text="Help" /> 
+                  </Link>
                   </div> 
                   }
                 </div>}

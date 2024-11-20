@@ -1,0 +1,19 @@
+.FilterableListGroup-container {
+    margin-top: 10%;
+}
+
+.search-with-filter-container{
+    /*display: flex;*/
+    justify-content: center;
+    padding: 1.63rem;
+    background-color: #dfe8ef;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    position: absolute;
+    top: 13.5%;
+    right: 3%;
+    left: 3%;
+}
