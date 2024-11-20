@@ -32,6 +32,35 @@ const rotatingLogStream = rfs.createStream('http.log', {
 // Use morgan middleware for logging
 app.use(morgan('combined', { stream: rotatingLogStream }));
 
+
+/**
+ * Endpoint for Creating new Users
+ */
+
+app.post('/api/register', async (req,res) =>{
+  const {username, full_name, email, password} = req.body;
+  const hashedPassword = bcrypt.hashSync(password);
+  console.log(hashedPassword)
+  if (!username || !password || !full_name || !email) {
+    return res.status(400).json({ message: 'You did not fill in all required fields.' });
+  };
+
+  try {
+    // Insert the user
+    const insertUserQuery = {
+      text: `
+        INSERT INTO users (username, full_name, email, password_hash, CREATION_USER, UPDATE_USER)
+        VALUES ($1, $2, $3, $4, $1, $1)
+      `,
+      values: [username, full_name, email, hashedPassword]
+    }
+    await db.query(insertUserQuery);
+    res.status(200).json({"name": username})
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 /**
  * Endpoint for user login and receiving a JWT token
  */
