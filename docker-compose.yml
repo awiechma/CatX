@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgres:
     container_name: postgres
@@ -9,22 +7,23 @@ services:
       POSTGRES_USER: stac_user     
       POSTGRES_PASSWORD: stac_password
     volumes:
-      - ./postgis/postgres_data:/var/lib/postgresql/data
-      - ./postgis/init-stac-db.sql:/docker-entrypoint-initdb.d/init-stac-db.sql 
-      - ./postgis/init-user-db.sql:/docker-entrypoint-initdb.d/init-user-db.sql
+      - ./backend/postgis/postgres_data:/var/lib/postgresql/data
+      - ./backend/postgis/init-stac-db.sql:/docker-entrypoint-initdb.d/init-stac-db.sql 
+      - ./backend/postgis/init-user-db.sql:/docker-entrypoint-initdb.d/init-user-db.sql
     ports:
       - "5432:5432"
 
   catalogue:
-    build: ./backend
+    build: ./backend/node
     container_name: catalogue
     ports:
       - 3000:3000
     volumes:
-      - ./backend:/app/
+      - ./backend/node:/app/
 
   adminer:
     image: adminer:latest
+    container_name: db-viewer
     restart: always
     ports:
       - 8080:8080
