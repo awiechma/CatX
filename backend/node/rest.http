@@ -16,41 +16,18 @@ Content-Type: application/json
 ###
 
 ### Get Collections
-POST http://localhost:3000/api/collections
-Content-Type: application/json
-
-{
-  "limit": 10,
-  "offset": 0
-}
+GET http://localhost:3000/api/collections?limit=10&offset=0
 
 ### Get keywords
-POST http://localhost:3000/api/keywords
-Content-Type: application/json
+GET http://localhost:3000/api/keywords?limit=10&offset=0
 
-{
-  "limit": 10,
-  "offset": 0
-}
-
-### Access protected route
-POST http://localhost:3000/api/collections
-Authorization: Bearer {{token}}
-
-### get items
-POST http://localhost:3000/api/items
-Content-Type: application/json
-
-{
-  "limit": 10,
-  "offset": 0
-}
+### Get items
+GET http://localhost:3000/api/items?limit=10&offset=0
 
 
 ### get example collection from github
 # @name collectionGitHub
 GET https://raw.githubusercontent.com/stac-extensions/mlm/refs/heads/main/examples/collection.json
-
 ###
 @collection = {{collectionGitHub.response.body.*}}
 ###
@@ -66,7 +43,6 @@ Content-Type: application/json
 ###
 # @name itemGitHub
 GET https://raw.githubusercontent.com/stac-extensions/mlm/refs/heads/main/examples/item_basic.json
-
 ###
 @item = {{itemGitHub.response.body.*}}
 

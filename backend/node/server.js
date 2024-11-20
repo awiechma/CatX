@@ -73,8 +73,9 @@ app.post('/api/token', async (req, res) => {
  * Endpoint to retrieve providers from the database
  * Accepts optional limit and offset parameters in the request body for pagination
  */
-app.post('/api/providers', (req, res) => {
-  const { limit = 20, offset = 0 } = req.body || {};
+app.get('/api/providers', (req, res) => {
+  const limit = req.params.limit || 20;
+  const offset = req.params.offset || 0;
   const query = {
     text: `
       SELECT
@@ -97,8 +98,9 @@ app.post('/api/providers', (req, res) => {
  * Endpoint to retrieve keywords from the database
  * Accepts optional limit and offset parameters in the request body for pagination
  */
-app.post('/api/keywords', async (req, res) => {
-  const { limit = 20, offset = 0 } = req.body || {};
+app.get('/api/keywords', async (req, res) => {
+  const limit = req.params.limit || 20;
+  const offset = req.params.offset || 0;
   const query = {
     text: `
       SELECT 
@@ -121,8 +123,9 @@ app.post('/api/keywords', async (req, res) => {
  * Protected route to retrieve collections from the database
  * Requires a valid JWT token to access
  */
-app.post('/api/collections', async (req, res) => {
-  const { limit = 20, offset = 0 } = req.body || {};
+app.get('/api/collections', async (req, res) => {
+  const limit = req.params.limit || 20;
+  const offset = req.params.offset || 0;
   const query = {
     text: `
       SELECT *
@@ -145,8 +148,9 @@ app.post('/api/collections', async (req, res) => {
  * Endpoint to retrieve items from the database
  * Accepts optional limit and offset parameters in the request body for pagination
  */
-app.post('/api/items', async (req, res) => {
-  const { limit = 20, offset = 0 } = req.body;
+app.get('/api/items', async (req, res) => {
+  const limit = req.params.limit || 20;
+  const offset = req.params.offset || 0;
   const query = {
     text: `
       SELECT * 
