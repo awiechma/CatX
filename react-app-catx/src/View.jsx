@@ -1,17 +1,24 @@
-// import all the components used in the app
-import React from "react";
+import React, { useState } from "react";
 import "./View.css";
-import Button from "./components/Button";
-import Navbar from "./components/Navbar";
 import SearchBar from "./components/SearchBar";
 import FilterableListGroup from "./components/FilterableListGroup";
 
 const View = () => {
+    // state for searching
+    const [searchQuery, setSearchQuery] = useState(""); 
+
     return (
-        <div className="FilterableListGroup-container">
-            <FilterableListGroup></FilterableListGroup>
+        <div className="search-filter-container">
+            {/* SearchBar */}
+            <SearchBar onSearch={(query) => setSearchQuery(query)} />
+
+            {/* FilterableListGroup */}
+            <div className="FilterableListGroup-container">
+                <FilterableListGroup searchQuery={searchQuery} />
+            </div>
         </div>
     );
 };
 
 export default View;
+
