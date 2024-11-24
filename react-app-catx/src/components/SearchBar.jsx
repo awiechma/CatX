@@ -1,29 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-// Creates a search bar with a search button
-const SearchBar = ({ onSearch }) => {
-    const [searchTerm, setSearchTerm] = useState("");
+const SearchBar = ({ onSearch, initialSearchTerm = "" }) => {
+    // Create a state variable to hold the search term, with an optional initial value
+    const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
+    const navigate = useNavigate();
 
+    // Create a state variable to hold the search term, with an optional initial value
+    useEffect(() => {
+        setSearchTerm(initialSearchTerm);
+    }, [initialSearchTerm]);
+
+    // This function handles the change in the input field
     const handleInputChange = (e) => {
-        setSearchTerm(e.target.value);
-        onSearch(e.target.value); // Real time search
+        const value = e.target.value;
+        setSearchTerm(value);
+        if (onSearch) {
+            onSearch(value); 
+        }
     };
 
+    // This function handles the form submission (when the user clicks "Search")
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSearch(searchTerm); // sending
+        if (searchTerm.trim() !== "") {
+            if (onSearch) {
+                onSearch(searchTerm);
+            }
+            navigate("/view", { state: { searchQuery: searchTerm } });
+        } else {
+            alert("Please enter a search term.");
+        }
     };
 
     return (
         <div className="SearchBar-container">
             <form className="d-flex" role="search" onSubmit={handleSubmit}>
                 <input
-                    className="searchbar-whitespace"
+                    className="form-control me-2"
                     type="search"
                     placeholder="Search"
                     aria-label="Search"
                     value={searchTerm}
                     onChange={handleInputChange}
+                    style={{ width: '630px' }} 
                 />
                 <button className="btn btn-outline-searchbar" type="submit">
                     Search

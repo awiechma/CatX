@@ -47,6 +47,7 @@
 }
 
 /* Dropdown menu */
+/*
 .nav-item.dropdown .dropdown-menu {
   border-radius: 0.5rem;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
@@ -59,16 +60,16 @@
 
 .dropdown-item:hover {
   background-color: #007bff;
-  color: white;
+  color: white; 
 }
 
-/* Responsive design */
+/* Responsive design 
 @media (max-width: 992px) {
   .navbar-nav {
     text-align: center;
   }
 }
-
+*/
 /* Container for Searchbar*/
 .SearchBar-container {
   display: flex;
