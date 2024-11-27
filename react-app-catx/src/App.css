@@ -1,0 +1,374 @@
+/* Styling for Navbar */
+.navbar {
+  background-color: #f8f9fa !important;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 1rem;
+  font-family: Arial, sans-serif;
+}
+
+/* our CatX-Logo in Navbar */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  color: #343a40;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.navbar-brand img {
+  margin-right: 0.5rem;
+  border-radius: 5px;
+}
+
+/* Navbar-Links Styling */
+.nav-link {
+  color: #61696e;
+  font-size: 1.2rem;
+  font-weight: 500;
+  transition: color 0.2s ease-in-out;
+}
+
+.nav-link:hover {
+  color: #94b5ce !important;
+}
+
+/* active Link */
+.nav-link.active {
+  color: #94b5ce !important;
+}
+
+/* Toggler Button Styling for mobile devices */
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler-icon {
+  filter: brightness(0) invert(1);
+}
+
+/* Dropdown menu */
+/*
+.nav-item.dropdown .dropdown-menu {
+  border-radius: 0.5rem;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-item {
+  color: #343a40;
+  font-size: 1rem;
+}
+
+.dropdown-item:hover {
+  background-color: #007bff;
+  color: white; 
+}
+
+/* Responsive design 
+@media (max-width: 992px) {
+  .navbar-nav {
+    text-align: center;
+  }
+}
+*/
+/* Container for Searchbar*/
+.SearchBar-container {
+  display: flex;
+  justify-content: center;
+  padding: 1.63rem;
+  background-color: #dfe8ef;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+  position: absolute;
+  top: 13.5%;
+  right: 3%;
+}
+
+/* Input for Searchbar */
+.searchbar-whitespace {
+  width: 200%;
+  max-width: 800px;
+  padding: 0.5rem 14rem;
+  font-size: 1.1rem;
+  border: 1px solid #94b5ce;
+  border-radius: 4px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.searchbar-whitespace::placeholder {
+  padding-right: 5rem;
+}
+
+/* Searchbutton Styling  */
+.btn-outline-searchbar {
+  border-color: #94b5ce !important;
+  color: #000000 !important;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  margin-left: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-searchbar:hover {
+  background-color: #94b5ce !important;
+  color: white !important;
+}
+
+/* for smaller devices 
+@media (max-width: 576px) {
+  .SearchBar-container {
+    padding: 0.5rem;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .form-control {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .btn-outline-success {
+    width: 100%;
+  }
+} */
+
+/* container on the right side for list */
+.right-aligned-container {
+  position: absolute;
+  top: 48%;
+  right: 1rem;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end;
+  padding: 1rem;
+  justify-content: center;
+  right: 3%;
+  background-color: #dfe8ef;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+  position: absolute;
+  font-weight: bold;
+
+}
+
+/* style for heading */
+.right-aligned-container h3 {
+  padding: 1rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+}
+
+/* list in the container */
+.list-recently-added {
+  display: flex;
+  justify-content: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: #f8f9fa;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 350px;
+  margin: auto;
+  position: absolute;
+  top: 30%;
+  left: 3%;
+  font-weight: bold;
+  flex-direction: column;
+}
+
+/* mobile devices 
+@media (max-width: 768px) {
+  .right-aligned-container {
+    align-items: flex-start;
+    margin-right: 0;
+  }
+} */
+
+/* Container for text to start search */
+.start-search {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 350px;
+  margin: auto;
+  position: absolute;
+  top: 13.5%;
+  left: 3%;
+  font-weight: bold;
+}
+
+
+/*Homepage Button View*/
+.left-aligned-container-view {
+  display: flex;
+  justify-content: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: #dfe8ef;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 350px;
+  margin: auto;
+  position: absolute;
+  top: 30%;
+  left: 3%;
+  font-weight: bold;
+  flex-direction: column;
+}
+
+.btn-view {
+  color: rgb(0, 0, 0) !important;
+  background-color: #ffffff !important;
+  border: 1px solid #94b5ce !important;
+  padding: 0.25rem 7.5rem !important;
+  border-radius: 4px ;
+  font-size: 1rem ;
+  font-weight: bold ;
+  cursor: pointer ;
+  transition: background-color 0.3s, border-color 0.3s !important;
+}
+
+/* Hover-effect for button */
+.btn-view:hover {
+  background-color: #94b5ce !important;
+  border-color: #94b5ce !important;
+  color: #ffffff !important;
+}
+
+/*Homepage Button Add*/
+.left-aligned-container-add {
+  display: flex;
+  justify-content: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: #dfe8ef;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 350px;
+  margin: auto;
+  position: absolute;
+  top: 48%;
+  left: 3%;
+  font-weight: bold;
+  flex-direction: column;
+}
+
+.btn-add {
+  color: rgb(0, 0, 0) !important;
+  background-color: #ffffff !important;
+  border: 1px solid #94b5ce !important;
+  padding: 0.25rem 7.5rem ;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Hover-effect for button */
+.btn-add:hover {
+  background-color: #94b5ce !important;
+  border-color: #94b5ce !important;
+  color: #ffffff !important;
+}
+
+/*Homepage Button Account*/
+.left-aligned-container-account {
+  display: flex;
+  justify-content: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: #dfe8ef;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 350px;
+  margin: auto;
+  position: absolute;
+  top: 66%;
+  left: 3%;
+  font-weight: bold;
+  flex-direction: column;
+}
+
+.btn-account {
+  color: rgb(0, 0, 0) !important;
+  background-color: #ffffff !important;
+  border: 1px solid #94b5ce !important;
+  padding: 0.25rem 7.5rem ;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Hover-effect for button */
+.btn-account:hover {
+  background-color: #94b5ce !important;
+  border-color: #94b5ce !important;
+  color: #ffffff !important;
+}
+
+/*Homepage Button Help*/
+.left-aligned-container-help {
+  display: flex;
+  justify-content: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: #dfe8ef;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 350px;
+  margin: auto;
+  position: absolute;
+  top: 84%;
+  left: 3%;
+  font-weight: bold;
+  flex-direction: column;
+}
+
+.btn-help {
+  color: rgb(0, 0, 0) !important;
+  background-color: #ffffff !important;
+  border: 1px solid #94b5ce !important;
+  padding: 0.25rem 7.5rem ;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Hover-effect for button */
+.btn-help:hover {
+  background-color: #94b5ce !important;
+  border-color: #94b5ce !important;
+  color: #ffffff !important;
+}
