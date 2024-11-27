@@ -1,5 +1,15 @@
 ### Use with VS Code extension REST Client
 
+### Post User
+POST http://localhost:3000/api/register
+Content-Type: application/json
+
+{
+  "username": "Andi",
+  "full_name": "AstraAndi",
+  "email": "Astraistlecker@Astra.com",
+  "password": "LeckerBierchen"
+}
 
 ### Request a token
 # @name postLogin
@@ -7,8 +17,8 @@ POST http://localhost:3000/api/token
 Content-Type: application/json
 
 {
-  "username": "test_user",
-  "password": "password123"
+  "username": "Andi",
+  "password": "LeckerBierchen"
 }
 
 ###
