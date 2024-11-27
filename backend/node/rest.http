@@ -1,0 +1,64 @@
+### Use with VS Code extension REST Client
+
+### Post User
+POST http://localhost:3000/api/register
+Content-Type: application/json
+
+{
+  "username": "Andi",
+  "full_name": "AstraAndi",
+  "email": "Astraistlecker@Astra.com",
+  "password": "LeckerBierchen"
+}
+
+### Request a token
+# @name postLogin
+POST http://localhost:3000/api/token
+Content-Type: application/json
+
+{
+  "username": "Andi",
+  "password": "LeckerBierchen"
+}
+
+###
+@token = {{postLogin.response.body.token}}
+###
+
+### Get Collections
+GET http://localhost:3000/api/collections?limit=10&offset=0
+
+### Get keywords
+GET http://localhost:3000/api/keywords?limit=10&offset=0
+
+### Get items
+GET http://localhost:3000/api/items?limit=10&offset=0
+
+
+### get example collection from github
+# @name collectionGitHub
+GET https://raw.githubusercontent.com/stac-extensions/mlm/refs/heads/main/examples/collection.json
+###
+@collection = {{collectionGitHub.response.body.*}}
+###
+
+
+### post collection
+POST http://localhost:3000/api/collections/upload
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{{collection}}
+
+###
+# @name itemGitHub
+GET https://raw.githubusercontent.com/stac-extensions/mlm/refs/heads/main/examples/item_basic.json
+###
+@item = {{itemGitHub.response.body.*}}
+
+### post item
+POST http://localhost:3000/api/items/upload
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{{item}}
