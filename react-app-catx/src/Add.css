@@ -1,0 +1,48 @@
+.heading-add-page{
+    padding-top: 10%;
+    padding-left: 2%;
+}
+
+.formular-form{
+    padding-top: 2%;
+    padding-left: 2%;
+    padding-right: 3%;
+}
+
+.add-tag-button{
+    color: rgb(0, 0, 0) !important;
+    background-color: #ffffff !important;
+    border: 1px solid #94b5ce !important;
+    padding: 0.25rem 1rem !important;
+    border-radius: 4px ;
+    font-size: 1rem ;
+    cursor: pointer ;
+    transition: background-color 0.3s, border-color 0.3s !important;
+  }
+
+.add-tag-button:hover {
+    background-color: #94b5ce !important;
+    color: white !important;
+  }
+
+.upload-button{
+    color: rgb(0, 0, 0) !important;
+    background-color: #ffffff !important;
+    border: 1px solid #94b5ce !important;
+    padding: 0.25rem 1rem !important;
+    border-radius: 4px ;
+    font-size: 1rem ;
+    cursor: pointer ;
+    transition: background-color 0.3s, border-color 0.3s !important;
+}
+
+.upload-button:hover {
+    background-color: #892626 !important;
+    color: white !important;
+    border: 1px solid #892626 !important;
+  }
+
+.button-container-add {
+    right: 3% !important; 
+    outline: #94b5ce !important;
+}
