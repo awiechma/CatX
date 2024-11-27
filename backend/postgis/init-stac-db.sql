@@ -1,8 +1,3 @@
--- Aktiviert die PostGIS-Erweiterungen
-CREATE EXTENSION IF NOT EXISTS postgis;
-
-CREATE EXTENSION IF NOT EXISTS postgis_topology;
-
 CREATE TABLE IF NOT EXISTS collections (
     type TEXT NOT NULL,
     stac_version TEXT NOT NULL,
