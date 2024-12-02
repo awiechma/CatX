@@ -1,0 +1,22 @@
+/* Navigation stays central */
+.sticky-navigation {
+    position: sticky;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+}
+
+/*
+.sticky-navigation:hover {
+    background-color: #94b5ce !important;
+    border-color: #94b5ce !important;
+    color: #ffffff !important;
+}
+*/
+
+/* Margin for left and right */
+.col-4,
+.col-8 {
+    padding-left: 3rem;
+    padding-right: 3rem;
+}
