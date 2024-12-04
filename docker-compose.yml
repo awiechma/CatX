@@ -18,16 +18,12 @@ services:
     container_name: node
     ports:
       - 3000:3000
-    volumes:
-      - ./backend/node:/app/
 
   react:
     build: ./react-app-catx/
     container_name: react
     ports:
       - 5173:5173
-    volumes:
-      - ./react-app-catx:/app/
 
   adminer:
     image: adminer:latest
