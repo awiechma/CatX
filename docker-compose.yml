@@ -20,7 +20,6 @@ services:
       - 3000:3000
     volumes:
       - ./backend/node:/app/
-    command: npm start
 
   react:
     build: ./react-app-catx/
@@ -29,7 +28,6 @@ services:
       - 5173:5173
     volumes:
       - ./react-app-catx:/app/
-    command: npm run dev
 
   adminer:
     image: adminer:latest
