@@ -8,7 +8,7 @@ const Navbar = () => {
       <div className="container-fluid">
         <a className="navbar-brand" href="#" style={{ fontSize: '1.5rem', marginRight: '1rem', marginLeft: '1rem' }}>
           <img src="./CatX_Logo.png" alt="Logo" width="35" height="35" className="d-inline-block align-text-top" style={{ fontSize: '1.5rem', marginRight: '1rem' }} />
-          CatX
+          Cat<a style={{ fontFamily: 'Times New Roman' }}> &chi;</a>
         </a>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>

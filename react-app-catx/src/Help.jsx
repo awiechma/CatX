@@ -4,13 +4,15 @@ import './Help.css';
 import Button from "./components/Button";
 import Navbar from "./components/Navbar";
 import SearchBar from "./components/SearchBar";
+import ScrollSpy from "./components/Scrollspy";
 
 
 const Help = () => {
     return (
         <div>
-            <h1>Help Page</h1>
-            <p>This is the Help page content.</p>
+            <Navbar />
+            <SearchBar />
+            <ScrollSpy />
         </div>
     );
 };
