@@ -13,13 +13,17 @@ services:
     ports:
       - "5432:5432"
 
-  catalogue:
+  node:
     build: ./backend/node
-    container_name: catalogue
+    container_name: node
     ports:
       - 3000:3000
-    volumes:
-      - ./backend/node:/app/
+
+  react:
+    build: ./react-app-catx/
+    container_name: react
+    ports:
+      - 5173:5173
 
   adminer:
     image: adminer:latest
