@@ -61,7 +61,7 @@ app.post('/api/register', async (req,res) =>{
       values: [username, full_name, email, hashedPassword]
     }
     await db.query(insertUserQuery);
-    res.status(200).json({"name": username})
+    res.status(200).json({ message: 'Registration Successful'})
   } catch (error) {
     res.status(500).json({ message: 'Internal server error' });
   }

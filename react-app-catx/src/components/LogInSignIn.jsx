@@ -7,10 +7,17 @@ const LogInSignIn = () => {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
 
+    const [regUsername, setRegUsername] = useState("");
+    const [fullName, setFullName] = useState("");
+    const [email, setEmail] = useState("");
+    const [regPassword, setRegPassword] = useState("");
+    const [regSuccess, setRegSuccess] = useState(null);
+    const [regError, setRegError] = useState(null);
+
     const handleLogin = async (e) => {
-        e.preventDefault(); // Verhindert das automatische Neuladen der Seite
-        setError(null); // Zurücksetzen von Fehlern
-        setSuccess(null); // Zurücksetzen von Erfolgsmeldungen
+        e.preventDefault();
+        setError(null);
+        setSuccess(null);
 
         try {
             const response = await fetch("http://localhost:3000/api/token", {
@@ -37,6 +44,40 @@ const LogInSignIn = () => {
         }
     };
 
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        setRegError(null);
+        setRegSuccess(null);
+
+        try {
+            const response = await fetch("http://localhost:3000/api/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    username: regUsername,
+                    full_name: fullName,
+                    email,
+                    password: regPassword,
+                }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                setRegError(errorData.message || "Registration failed");
+                return;
+            }
+
+            const data = await response.json();
+            console.log("Registration successful:", data);
+            setRegSuccess("Registration successful! You can now log in.");
+        } catch (err) {
+            console.error("Error during registration", err);
+            setRegError("Something went wrong. Please try again.");
+        }
+    };
+
     return (
         <div>
             <section className="vh-100" style={{ marginTop: '3rem' }}>
@@ -50,30 +91,27 @@ const LogInSignIn = () => {
                                 </div>
                                 <div className="form-outline mb-4">
                                     <input
-                                        type="username"
-                                        id="form3Example3"
+                                        type="text"
+                                        id="loginUsername"
                                         className="form-control form-control-lg"
-                                        placeholder="Enter a valid username"
+                                        placeholder="Enter your username"
                                         value={username}
                                         onChange={(e) => setUsername(e.target.value)}
                                     />
-                                    <label className="form-label" htmlFor="form3Example3">Username</label>
+                                    <label className="form-label" htmlFor="loginUsername">Username</label>
                                 </div>
                                 <div className="form-outline mb-3">
                                     <input
                                         type="password"
-                                        id="form3Example4"
+                                        id="loginPassword"
                                         className="form-control form-control-lg"
                                         placeholder="Enter password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                     />
-                                    <label className="form-label" htmlFor="form3Example4">Password</label>
+                                    <label className="form-label" htmlFor="loginPassword">Password</label>
                                 </div>
-                                {/* Fehlernachricht */}
                                 {error && <p style={{ color: "red" }}>{error}</p>}
-
-                                {/* Erfolgsmeldung */}
                                 {success && (
                                     <div style={{
                                         backgroundColor: "green",
@@ -96,48 +134,69 @@ const LogInSignIn = () => {
 
                         {/* Registration Fields */}
                         <div className="col-md-9 col-lg-6 col-xl-5 offset-xl-1" style={{ marginTop: '10rem' }}>
-                            <form>
+                            <form onSubmit={handleRegister}>
                                 <div className="divider d-flex align-items-center my-4">
                                     <p className="text-center fw-bold mx-3 mb-0">Registration</p>
                                 </div>
                                 <div className="form-outline mb-4">
                                     <input
                                         type="text"
-                                        id="form3Example1"
+                                        id="registerFullName"
                                         className="form-control form-control-lg"
                                         placeholder="Enter your full name"
+                                        value={fullName}
+                                        onChange={(e) => setFullName(e.target.value)}
                                     />
-                                    <label className="form-label" htmlFor="form3Example1">Name</label>
+                                    <label className="form-label" htmlFor="registerFullName">Full Name</label>
                                 </div>
                                 <div className="form-outline mb-4">
                                     <input
                                         type="text"
-                                        id="form3Example5"
+                                        id="registerUsername"
                                         className="form-control form-control-lg"
                                         placeholder="Enter your username"
+                                        value={regUsername}
+                                        onChange={(e) => setRegUsername(e.target.value)}
                                     />
-                                    <label className="form-label" htmlFor="form3Example5">Username</label>
+                                    <label className="form-label" htmlFor="registerUsername">Username</label>
                                 </div>
                                 <div className="form-outline mb-4">
                                     <input
                                         type="email"
-                                        id="form3Example6"
+                                        id="registerEmail"
                                         className="form-control form-control-lg"
                                         placeholder="Enter your email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
                                     />
-                                    <label className="form-label" htmlFor="form3Example6">Email</label>
+                                    <label className="form-label" htmlFor="registerEmail">Email</label>
                                 </div>
                                 <div className="form-outline mb-3">
                                     <input
                                         type="password"
-                                        id="form3Example7"
+                                        id="registerPassword"
                                         className="form-control form-control-lg"
                                         placeholder="Enter your password"
+                                        value={regPassword}
+                                        onChange={(e) => setRegPassword(e.target.value)}
                                     />
-                                    <label className="form-label" htmlFor="form3Example7">Password</label>
+                                    <label className="form-label" htmlFor="registerPassword">Password</label>
                                 </div>
+                                {regError && <p style={{ color: "red" }}>{regError}</p>}
+                                {regSuccess && (
+                                    <div style={{
+                                        backgroundColor: "green",
+                                        color: "white",
+                                        padding: "10px",
+                                        borderRadius: "5px",
+                                        marginBottom: "10px",
+                                        textAlign: "center",
+                                    }}>
+                                        {regSuccess}
+                                    </div>
+                                )}
                                 <div className="text-center text-lg-start mt-4 pt-2">
-                                    <button type="button" className="register-button">
+                                    <button type="submit" className="register-button">
                                         Register
                                     </button>
                                 </div>
