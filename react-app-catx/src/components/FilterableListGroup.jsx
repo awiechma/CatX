@@ -1,23 +1,54 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "/src/View.css";
-
-// example data to test filter/ search function
-const data = [
-    { id: 1, name: "Apple", tags: ["Red", "Green"], details: "Apples are nutritious fruits.", link: "https://www.uni-muenster.de/Geoinformatics/", date: "today", developer: "shortcut" },
-    { id: 2, name: "Banana", tags: ["Yellow"], details: "Bananas are rich in potassium." },
-    { id: 3, name: "Cherry", tags: ["Red"], details: "Cherries are small and sweet." },
-    { id: 4, name: "Date", tags: ["Brown"], details: "Dates are often dried and sweet." },
-    { id: 5, name: "Elderberry", tags: [""], details: "Elderberries are used in syrups and jams." },
-];
 
 // example tags
 const tags = ["Red", "Yellow", "Green", "Brown"];
 
-// search functionality
 const FilterableListGroup = ({ searchQuery }) => {
+    const [data, setData] = useState([]); // State to store fetched data
+    const [fullJson, setFullJson] = useState(null); // Store the full JSON for the JSON view
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [selectedTags, setSelectedTags] = useState([]);
     const [selectedItem, setSelectedItem] = useState(null); // State to store the selected item for detail view
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(
+                    "https://raw.githubusercontent.com/stac-extensions/mlm/refs/heads/main/examples/item_basic.json"
+                );
+                if (!response.ok) {
+                    throw new Error(`HTTP Error: ${response.status}`);
+                }
+                const jsonData = await response.json();
+
+                // Save the full JSON for the JSON view
+                setFullJson(jsonData);
+
+                // Transform fetched data into a suitable format
+                setData([
+                    {
+                        id: 1,
+                        name: jsonData.id || "Unknown",
+                        tags: jsonData.keywords || [],
+                        details: jsonData.description || "No description provided.",
+                        link: jsonData.links?.[0]?.href || "No link",
+                        date: jsonData.properties?.datetime || "Unknown date",
+                        developer: "Shortcut",
+                        raw: jsonData,
+                    },
+                ]);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     const toggleTag = (tag) => {
         setSelectedTags((prevSelected) =>
@@ -40,6 +71,14 @@ const FilterableListGroup = ({ searchQuery }) => {
     const goBack = () => {
         setSelectedItem(null); // Reset the selected item to go back to the list
     };
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
 
     return (
         <div className="p-4">
@@ -72,7 +111,7 @@ const FilterableListGroup = ({ searchQuery }) => {
                                     className="mb-2 p-2 border rounded cursor-pointer hover:bg-gray-100"
                                     onClick={() => handleItemClick(item)} // Make the list item clickable
                                 >
-                                    {item.name}{" "}
+                                    {item.name} {" "}
                                     <span className="text-sm text-gray-500">
                                         ({item.tags.join(", ")})
                                     </span>
@@ -84,44 +123,72 @@ const FilterableListGroup = ({ searchQuery }) => {
                     </ul>
                 </>
             ) : (
-                <div>
-
-                    <h1 className="text-xl font-bold">{selectedItem.name}</h1>
-                    <p className="text-gray-700 mt-2">{selectedItem.details}</p><br></br>
-                    <p className="text-gray-700 mt-2">
-                        <strong>Link:</strong>{" "}
-                        <a href={selectedItem.link} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
-                            {selectedItem.link}
-                        </a>
-                    </p>
-                    <p className="text-gray-700 mt-2">
-                        <strong>Date:</strong> {selectedItem.date}
-                    </p>
-                    <p className="text-gray-700 mt-2">
-                        <strong>Developer:</strong> {selectedItem.developer}
-                    </p>
-                    <p className="text-sm text-gray-500">
-                        <strong>Tags:</strong> {selectedItem.tags.join(", ") || "None"}
-                    </p> <br></br>
+                <div className="grid grid-cols-2 gap-4">
+                    {/* Back-Button */}
                     <button
                         onClick={goBack}
                         className="back-button">
                         Back to List
                     </button>
+                    {/* Left Side: Detailed Info */}
+                    <div className="left-side-container-view-page">
+                        <h1 className="text-xl font-bold mb-2">Detailed Info</h1>
+                        <ul className="list-disc pl-4">
+                            <li><strong>Type:</strong> {selectedItem.raw.type || "Not available"}</li>
+                            <li><strong>ID:</strong> {selectedItem.raw.id || "Not available"}</li>
+                            <li><strong>Collection:</strong> {selectedItem.raw.collection || "Not available"}</li>
+                            <li><strong>Geometry:</strong> {JSON.stringify(selectedItem.raw.geometry, null, 2) || "Not available"}</li>
+                            <li><strong>Description:</strong> {selectedItem.raw.properties?.description || "Not available"}</li>
+                            <li><strong>Datetime:</strong> {selectedItem.raw.properties?.datetime || "Not available"}</li>
+                            <li><strong>Start Datetime:</strong> {selectedItem.raw.properties?.start_datetime || "Not available"}</li>
+                            <li><strong>End Datetime:</strong> {selectedItem.raw.properties?.end_datetime || "Not available"}</li>
+                            <li><strong>mlm:name:</strong> {selectedItem.raw.properties?.["mlm:name"] || "Not available"}</li>
+                            <li><strong>mlm:task:</strong> {selectedItem.raw.properties?.["mlm:tasks"]?.join(", ") || "Not available"}</li>
+                            <li><strong>mlm:architecture:</strong> {selectedItem.raw.properties?.["mlm:architecture"] || "Not available"}</li>
+                            <li><strong>mlm:input:</strong> {JSON.stringify(selectedItem.raw.properties?.["mlm:input"], null, 2) || "Not available"}</li>
+                            <li><strong>mlm:output:</strong> {JSON.stringify(selectedItem.raw.properties?.["mlm:output"], null, 2) || "Not available"}</li>
+                        </ul>
+                        <h2 className="text-lg font-bold mt-4">Assets</h2>
+                        <ul className="list-disc pl-4">
+                            {Object.entries(selectedItem.raw.assets || {}).map(([key, asset]) => (
+                                <li key={key}>
+                                    <strong>{key}:</strong>
+                                    <ul className="list-disc pl-4">
+                                        <li>
+                                            <strong>Href:</strong>{" "}
+                                            {asset.href ? (
+                                                <a
+                                                    href={asset.href}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-blue-500 hover:underline"
+                                                >
+                                                    {asset.href}
+                                                </a>
+                                            ) : (
+                                                "Not available"
+                                            )}
+                                        </li>
+                                        <li><strong>Title:</strong> {asset.title || "Not available"}</li>
+                                        <li><strong>Description:</strong> {asset.description || "Not available"}</li>
+                                    </ul>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
                     {/* Right Side: JSON View */}
                     <div className="json-preview-right-side">
-                        <h2 className="text-lg font-bold mb-2">JSON View</h2>
+                        <h2 className="text-xl font-bold mb-2">JSON View</h2>
                         <textarea
                             readOnly
-                            value={JSON.stringify(selectedItem, null, 2)} // Pretty print JSON
+                            value={JSON.stringify(fullJson, null, 2)} // Pretty print JSON
                             className="w-full h-64 p-2 border rounded bg-white"
                         />
                     </div>
                 </div>
 
-            )
-
-            }
+            )}
         </div>
     );
 };
