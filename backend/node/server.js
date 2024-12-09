@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const rfs = require('rotating-file-stream');
 const passport = require('./passportConfig');
 const db = require('./db');
+const cors = require('cors');
 
 // Load environment variables from .env file
 require('dotenv').config();
@@ -32,6 +33,11 @@ const rotatingLogStream = rfs.createStream('http.log', {
 // Use morgan middleware for logging
 app.use(morgan('combined', { stream: rotatingLogStream }));
 
+// Erlaube CORS für alle Ursprünge (kann eingeschränkt werden)
+app.use(cors({
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+}));
 
 /**
  * Endpoint for Creating new Users
@@ -55,7 +61,7 @@ app.post('/api/register', async (req, res) => {
       values: [username, full_name, email, hashedPassword]
     }
     await db.query(insertUserQuery);
-    res.status(200).json({ "name": username })
+    res.status(200).json({ message: 'Registration Successful'})
   } catch (error) {
     res.status(500).json({ message: 'Internal server error' });
   }
