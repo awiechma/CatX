@@ -37,8 +37,8 @@ app.use(morgan('combined', { stream: rotatingLogStream }));
  * Endpoint for Creating new Users
  */
 
-app.post('/api/register', async (req,res) =>{
-  const {username, full_name, email, password} = req.body;
+app.post('/api/register', async (req, res) => {
+  const { username, full_name, email, password } = req.body;
   const hashedPassword = bcrypt.hashSync(password);
   console.log(hashedPassword)
   if (!username || !password || !full_name || !email) {
@@ -55,7 +55,7 @@ app.post('/api/register', async (req,res) =>{
       values: [username, full_name, email, hashedPassword]
     }
     await db.query(insertUserQuery);
-    res.status(200).json({"name": username})
+    res.status(200).json({ "name": username })
   } catch (error) {
     res.status(500).json({ message: 'Internal server error' });
   }
@@ -148,11 +148,29 @@ app.get('/api/keywords', async (req, res) => {
     });
 });
 
+
+app.get('/stac', async (req, res) => {
+  const query = {
+    text: `
+      SELECT *
+      FROM catalog_complete_view
+    `
+  }
+
+  db.query(query)
+    .then(({ rows: catalog }) => res.status(200).json((catalog.length > 0) ? catalog[0] : {}))
+    .catch(error => {
+      console.error('Error during collection export', error);
+      res.status(500).json({ message: 'Internal server error' });
+    });
+})
+
+
 /**
  * Protected route to retrieve collections from the database
  * Requires a valid JWT token to access
  */
-app.get('/api/collections', async (req, res) => {
+app.get('/stac/collections', async (req, res) => {
   const limit = req.params.limit || 20;
   const offset = req.params.offset || 0;
   const query = {
@@ -171,6 +189,80 @@ app.get('/api/collections', async (req, res) => {
       console.error('Error during collection export', error);
       res.status(500).json({ message: 'Internal server error' });
     });
+});
+
+/**
+ * Protected route to retrieve just one collection from the database
+ */
+app.get('/stac/collections/:cid', async (req, res) => {
+  const collection_id = req.params.cid;
+  const query = {
+    text: `
+      SELECT *
+      FROM collections_complete_view
+      WHERE id = $1
+    `,
+    values: [collection_id],
+  };
+
+  db.query(query)
+    .then(({ rows: collections }) => res.status(200).json((collections.length > 0) ? collections[0] : {}))
+    .catch(error => {
+      console.error('Error during collection export', error);
+      res.status(500).json({ message: 'Internal server error' });
+    });
+});
+
+/**
+ * Endpoint to retrieve items of one collection from the database
+ * Accepts optional limit and offset parameters in the request body for pagination
+ */
+app.get('/stac/collections/:cid/items', async (req, res) => {
+  const limit = req.params.limit || 20;
+  const offset = req.params.offset || 0;
+  const collection_id = req.params.cid;
+  const query = {
+    text: `
+      SELECT * 
+      FROM items_complete_view
+      WHERE collection = $3
+      LIMIT $1
+      OFFSET $2
+    `,
+    values: [limit, offset, collection_id]
+  };
+
+  db.query(query)
+    .then(({ rows: items }) => res.status(200).json(items))
+    .catch(error => {
+      console.error('Error during item export:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    })
+});
+
+/**
+ * Endpoint to retrieve items of one collection from the database
+ * Accepts optional limit and offset parameters in the request body for pagination
+ */
+app.get('/stac/collections/:cid/items/:iid', async (req, res) => {
+  const collection_id = req.params.cid;
+  const item_id = req.params.iid;
+  const query = {
+    text: `
+      SELECT * 
+      FROM items_complete_view
+      WHERE collection = $1
+      AND id = $2
+    `,
+    values: [collection_id, item_id]
+  };
+
+  db.query(query)
+    .then(({ rows: items }) => res.status(200).json((items.length > 0) ? items : {}))
+    .catch(error => {
+      console.error('Error during item export:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    })
 });
 
 /**
