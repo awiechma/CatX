@@ -239,10 +239,10 @@
   background-color: #ffffff !important;
   border: 1px solid #94b5ce !important;
   padding: 0.25rem 7.5rem !important;
-  border-radius: 4px ;
-  font-size: 1rem ;
-  font-weight: bold ;
-  cursor: pointer ;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s !important;
 }
 
@@ -278,7 +278,7 @@
   color: rgb(0, 0, 0) !important;
   background-color: #ffffff !important;
   border: 1px solid #94b5ce !important;
-  padding: 0.25rem 7.5rem ;
+  padding: 0.25rem 7.5rem;
   border-radius: 4px;
   font-size: 1rem;
   font-weight: bold;
@@ -318,7 +318,7 @@
   color: rgb(0, 0, 0) !important;
   background-color: #ffffff !important;
   border: 1px solid #94b5ce !important;
-  padding: 0.25rem 7.5rem ;
+  padding: 0.25rem 7.5rem;
   border-radius: 4px;
   font-size: 1rem;
   font-weight: bold;
@@ -358,7 +358,7 @@
   color: rgb(0, 0, 0) !important;
   background-color: #ffffff !important;
   border: 1px solid #94b5ce !important;
-  padding: 0.25rem 7.5rem ;
+  padding: 0.25rem 7.5rem;
   border-radius: 4px;
   font-size: 1rem;
   font-weight: bold;
@@ -371,4 +371,46 @@
   background-color: #94b5ce !important;
   border-color: #94b5ce !important;
   color: #ffffff !important;
+}
+
+/* App Container */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Main Content */
+.start-search,
+.left-aligned-container,
+.right-aligned-container {
+  flex: 1;
+}
+
+/* Footer Styles */
+.footer {
+  background-color: #282c34;
+  color: #ffffff;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.footer-nav {
+  margin-top: 0.5rem;
+}
+
+.footer-link {
+  color: #61dafb;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
 }

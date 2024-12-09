@@ -4,6 +4,7 @@ import Button from "./components/Button";
 import Navbar from "./components/Navbar";
 import SearchBar from "./components/SearchBar";
 import LogInSignIn from "./components/LogInSignIn";
+import Footer from "./components/Footer";
 
 const Account = () => {
     return (
@@ -11,7 +12,8 @@ const Account = () => {
             <Navbar />
             <SearchBar />
             <LogInSignIn />
-            </div>
+            <Footer />
+        </div>
     );
 };
 

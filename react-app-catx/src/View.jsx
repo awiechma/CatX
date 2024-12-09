@@ -3,6 +3,8 @@ import { useLocation } from "react-router-dom";
 import "./View.css";
 import SearchBar from "./components/SearchBar";
 import FilterableListGroup from "./components/FilterableListGroup";
+import Footer from "./components/Footer";
+
 
 const View = () => {
     const location = useLocation();
@@ -20,12 +22,13 @@ const View = () => {
             {/* SearchBar: "searchQuery" state stays */}
             <SearchBar
                 onSearch={(query) => setSearchQuery(query)}
-                initialSearchTerm={searchQuery} 
+                initialSearchTerm={searchQuery}
             />
 
             <div className="FilterableListGroup-container">
                 <FilterableListGroup searchQuery={searchQuery} />
             </div>
+            <Footer />
         </div>
     );
 };
