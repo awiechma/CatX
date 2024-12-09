@@ -27,6 +27,7 @@ const FilterableListGroup = ({ searchQuery }) => {
         );
     };
 
+    
     const filteredData = data.filter(
         (item) =>
             (!searchQuery || item.name.toLowerCase().includes(searchQuery.toLowerCase())) &&
