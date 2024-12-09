@@ -2,6 +2,28 @@ import React, { useState } from "react";
 import "/src/Account.css";
 
 const LogInSignIn = () => {
+    if (loggedIn()){
+        return <AccountPage/>
+    };
+
+    async function loggedIn(){
+        var temptoken = localStorage.getItem("authtoken");
+        try{
+            const response = await fetch("http://localhost:3000/api/validatetoken", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ temptoken }),
+            });
+            if(response.ok){
+                return true;  
+            } 
+        } catch {
+            console.error(err);
+        }
+        return false;
+    }
     
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
