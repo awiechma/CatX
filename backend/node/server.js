@@ -112,6 +112,7 @@ app.post('/api/validatetoken', passport.authenticate('jwt', { session: false }),
   }
 })
 
+
 app.post('/api/user/:username', passport.authenticate('jwt', { session: false }), async (req, res) => {
   const username = req.params.username;
   if (!username) {
@@ -231,7 +232,6 @@ app.get('/stac/search', async (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
     });
 });
-
 
 /**
  * Protected route to retrieve collections from the database
