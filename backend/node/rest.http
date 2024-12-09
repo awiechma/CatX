@@ -8,7 +8,8 @@ Content-Type: application/json
   "username": "Andi",
   "full_name": "AstraAndi",
   "email": "Astraistlecker@Astra.com",
-  "password": "LeckerBierchen"
+  "password": "LeckerBierchen",
+  "role": 2
 }
 
 ### Request a token
@@ -24,6 +25,11 @@ Content-Type: application/json
 ###
 @token = {{postLogin.response.body.token}}
 ###
+
+### inspect user data
+POST http://localhost:3000/api/user/Andi
+Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ### Get Collections
 GET http://localhost:3000/api/collections?limit=10&offset=0
