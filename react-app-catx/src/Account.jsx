@@ -3,15 +3,15 @@ import './Account.css';
 import Button from "./components/Button";
 import Navbar from "./components/Navbar";
 import SearchBar from "./components/SearchBar";
-import LogInSignIn from "./components/LogInSignIn";
+import AccountHandler from "./components/AccountHandler";
 
 const Account = () => {
     return (
         <div>
             <Navbar />
             <SearchBar />
-            <LogInSignIn/>
-            </div>
+            <AccountHandler/>
+        </div>
     );
 };
 
