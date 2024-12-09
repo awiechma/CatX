@@ -165,6 +165,33 @@ app.get('/stac', async (req, res) => {
     });
 })
 
+/**
+ * Protected route to retrieve collections from the database
+ * Requires a valid JWT token to access
+ */
+app.get('/stac/search', async (req, res) => {
+  const limit = req.params.limit || 20;
+  const offset = req.params.offset || 0;
+  const search = req.params.search || ' ';
+  const query = {
+    text: `
+      SELECT *
+      FROM items_complete_view
+      WHERE properties->>'description' ILIKE $3 
+      LIMIT $1
+      OFFSET $2
+    `,
+    values: [limit, offset, `%${search}%`],
+  };
+  console.log(query)
+  db.query(query)
+    .then(({ rows: items }) => res.status(200).json(items))
+    .catch(error => {
+      console.error('Error during item export', error);
+      res.status(500).json({ message: 'Internal server error' });
+    });
+});
+
 
 /**
  * Protected route to retrieve collections from the database
