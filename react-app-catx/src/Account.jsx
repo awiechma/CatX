@@ -10,7 +10,7 @@ const Account = () => {
         <div>
             <Navbar />
             <SearchBar />
-            <LogInSignIn />
+            <LogInSignIn/>
             </div>
     );
 };
