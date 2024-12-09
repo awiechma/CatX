@@ -98,6 +98,14 @@ app.post('/api/token', async (req, res) => {
   }
 });
 
+app.post('/api/validatetoken', passport.authenticate('jwt', { session: false }), (req, res) => {
+  if (req.user) {
+    res.status(200).json({ message: 'Token is valid' });
+  } else {
+    res.status(401).json({ message: 'Unauthorized' });
+  }
+})
+
 /**
  * Endpoint to retrieve providers from the database
  * Accepts optional limit and offset parameters in the request body for pagination
