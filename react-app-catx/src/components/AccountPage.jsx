@@ -7,12 +7,12 @@ const AccountPage = () => {
     async function getUserData() {
         const token = localStorage.getItem("authtoken");
         try {
-            const response = await fetch("http://localhost:3000/api/User", {
-                method: "POST",
+            const response = await fetch("http://localhost:3000/api/user/" + username, {
+                method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ username, token }),
+                    "Authorization": "Bearer " + token,
+                }
             });
 
             if (response.ok) {
@@ -26,7 +26,7 @@ const AccountPage = () => {
             }
         } catch (err) {
             console.error("Fehler:", err);
-        }
+        } 
     }
 
     useEffect(() => {
