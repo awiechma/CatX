@@ -7,7 +7,7 @@ const AccountPage = () => {
     async function getUserData() {
         const token = localStorage.getItem("authtoken");
         try {
-            const response = await fetch("http://localhost:3000/api/getUserData", {
+            const response = await fetch("http://localhost:3000/api/User", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
