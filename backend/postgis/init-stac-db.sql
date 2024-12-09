@@ -1,5 +1,13 @@
+CREATE TABLE IF NOT EXISTS catalog (
+    type TEXT DEFAULT 'catalog' NOT NULL,
+    stac_version TEXT NOT NULL,
+    stac_extensions TEXT [],
+    id TEXT PRIMARY KEY,
+    description TEXT NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS collections (
-    type TEXT NOT NULL,
+    type TEXT DEFAULT 'collection' NOT NULL,
     stac_version TEXT NOT NULL,
     stac_extensions TEXT [],
     id TEXT PRIMARY KEY,
@@ -58,7 +66,7 @@ ORDER BY
     COUNT(*);
 
 CREATE TABLE IF NOT EXISTS items (
-    type TEXT NOT NULL,
+    type TEXT DEFAULT 'item' NOT NULL,
     stac_version TEXT NOT NULL,
     stac_extensions TEXT [],
     id TEXT NOT NULL UNIQUE,
@@ -125,6 +133,42 @@ GROUP BY
 ORDER BY
     COUNT(*);
 
+CREATE VIEW catalog_complete_view AS
+SELECT
+    c.stac_version,
+    c.stac_extensions,
+    c.type,
+    c.id,
+    c.description,
+    COALESCE(
+        jsonb_agg(
+            jsonb_build_object(
+                'href',
+                CONCAT('/stac/collections/', co.id),
+                'rel',
+                'item'
+            )
+        ) FILTER (
+            WHERE
+                co.id IS NOT NULL
+        ),
+        '[]' :: jsonb -- Use an empty JSON array if there are no collections
+    ) || jsonb_build_object(
+        'href',
+        CONCAT('/stac'),
+        'rel',
+        'self'
+    ) AS links
+FROM
+    catalog c
+    LEFT JOIN collections co ON true
+GROUP BY
+    c.stac_version,
+    c.stac_extensions,
+    c.type,
+    c.id,
+    c.description;
+
 CREATE VIEW collections_complete_view AS
 SELECT
     c.stac_version,
@@ -153,16 +197,22 @@ SELECT
         WHERE
             c.id = p.id
     ) AS providers,
-    jsonb_agg(
-        jsonb_build_object(
-            'href',
-            CONCAT('/api/items/', i.id),
-            'rel',
-            'item'
-        )
+    COALESCE(
+        jsonb_agg(
+            jsonb_build_object(
+                'href',
+                CONCAT('/stac/collections/', c.id, '/items/', i.id),
+                'rel',
+                'item'
+            )
+        ) FILTER (
+            WHERE
+                i.id IS NOT NULL
+        ),
+        '[]' :: jsonb -- Empty array if no items
     ) || jsonb_build_object(
         'href',
-        CONCAT('/api/collections/', c.id),
+        CONCAT('/stac/collections/', c.id),
         'rel',
         'self'
     ) AS links
@@ -191,72 +241,75 @@ SELECT
     i.geometry,
     i.bbox,
     jsonb_strip_nulls(
-        jsonb_agg(
-            jsonb_build_object(
-                'description',
-                p.description,
-                'datetime',
-                p.datetime,
-                'start_datetime',
-                p.start_datetime,
-                'end_datetime',
-                p.end_datetime,
-                'mlm:name',
-                p."mlm:name",
-                'mlm:tasks',
-                (
-                    SELECT
-                        jsonb_agg(t.task)
-                    FROM
-                        mlm_tasks t
-                    WHERE
-                        i.collection = t.collection
-                        AND i.id = t.id
-                ),
-                'mlm:architecture',
-                p."mlm:architecture",
-                'mlm:framework',
-                p."mlm:framework",
-                'mlm:framework_version',
-                p."mlm:framework_version",
-                'mlm:memory_size',
-                p."mlm:memory_size",
-                'mlm:total_parameters',
-                p."mlm:total_parameters",
-                'mlm:pretrained',
-                p."mlm:pretrained",
-                'mlm:pretrained_source',
-                p."mlm:pretrained_source",
-                'mlm:batch_size_suggestion',
-                p."mlm:batch_size_suggestion",
-                'mlm:accelerator',
-                p."mlm:accelerator",
-                'mlm:accelerator_constrained',
-                p."mlm:accelerator_constrained",
-                'mlm:accelerator_summary',
-                p."mlm:accelerator_summary",
-                'mlm:accelerator_count',
-                p."mlm:accelerator_count",
-                'mlm:input',
-                p."mlm:input",
-                'mlm:output',
-                p."mlm:output",
-                'mlm:hyperparameters',
-                p."mlm:hyperparameters"
-            )
+        jsonb_build_object(
+            'description',
+            p.description,
+            'datetime',
+            p.datetime,
+            'start_datetime',
+            p.start_datetime,
+            'end_datetime',
+            p.end_datetime,
+            'mlm:name',
+            p."mlm:name",
+            'mlm:tasks',
+            (
+                SELECT
+                    jsonb_agg(t.task)
+                FROM
+                    mlm_tasks t
+                WHERE
+                    i.collection = t.collection
+                    AND i.id = t.id
+            ),
+            'mlm:architecture',
+            p."mlm:architecture",
+            'mlm:framework',
+            p."mlm:framework",
+            'mlm:framework_version',
+            p."mlm:framework_version",
+            'mlm:memory_size',
+            p."mlm:memory_size",
+            'mlm:total_parameters',
+            p."mlm:total_parameters",
+            'mlm:pretrained',
+            p."mlm:pretrained",
+            'mlm:pretrained_source',
+            p."mlm:pretrained_source",
+            'mlm:batch_size_suggestion',
+            p."mlm:batch_size_suggestion",
+            'mlm:accelerator',
+            p."mlm:accelerator",
+            'mlm:accelerator_constrained',
+            p."mlm:accelerator_constrained",
+            'mlm:accelerator_summary',
+            p."mlm:accelerator_summary",
+            'mlm:accelerator_count',
+            p."mlm:accelerator_count",
+            'mlm:input',
+            p."mlm:input",
+            'mlm:output',
+            p."mlm:output",
+            'mlm:hyperparameters',
+            p."mlm:hyperparameters"
         )
     ) AS properties,
     i.assets,
     jsonb_agg(
         jsonb_build_object(
             'href',
-            CONCAT('/api/items/', i.id),
+            CONCAT(
+                '/stac/collections/',
+                i.collection,
+                '/items/',
+                i.id
+            ),
             'rel',
             'self'
         )
     ) || jsonb_build_object(
         'href',
-        CONCAT('/api/collections/', i.collection),
+        CONCAT('/stac/collections/', i.collection),
         'rel',
         'collection'
     ) AS links
@@ -272,4 +325,22 @@ GROUP BY
     i.collection,
     i.geometry,
     i.bbox,
-    i.assets;
+    i.assets,
+    properties;
+
+INSERT INTO
+    catalog (
+        stac_version,
+        stac_extensions,
+        type,
+        id,
+        description
+    )
+VALUES
+    (
+        '1.0.0',
+        ARRAY ['stac', 'mlm'],
+        'catalog',
+        'mlm-catalog',
+        'Machine Learning Models Catalog'
+    );
