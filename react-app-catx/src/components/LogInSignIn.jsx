@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "/src/Account.css";
+import AccountPage from "./AccountPage";
 
 const LogInSignIn = () => {
-    if (loggedIn()){
+    if (true){ //TODO
         return <AccountPage/>
     };
 
