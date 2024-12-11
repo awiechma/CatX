@@ -3,27 +3,12 @@
 This project is a Node.js server built using Express. It includes several endpoints for managing user authentication, STAC (SpatioTemporal Asset Catalogs) collections, and related data.
 
 ## Table of Contents
-- [Getting Started](#getting-started)
 - [Endpoints](#endpoints)
   - [Authentication](#authentication)
   - [Users](#users)
   - [Providers](#providers)
   - [Keywords](#keywords)
   - [STAC Endpoints](#stac-endpoints)
-
-## Getting Started
-1. Clone the repository.
-2. Install dependencies using `npm install`.
-3. Create a `.env` file with the following variables:
-   ```
-   PORT=3000
-   JWT_SECRET=your_jwt_secret
-   JWT_EXPIRATION=1h
-   LOG_DIR=./logs
-   ```
-4. Run the server using `node server.js` or `npm start`.
-
-The server will start at `http://localhost:<PORT>`.
 
 ## Endpoints
 
