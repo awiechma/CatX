@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS catalog (
-    type TEXT DEFAULT 'catalog' NOT NULL,
+    type TEXT DEFAULT 'Catalog' NOT NULL,
     stac_version TEXT NOT NULL,
     stac_extensions TEXT [],
     id TEXT PRIMARY KEY,
@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS catalog (
 );
 
 CREATE TABLE IF NOT EXISTS collections (
-    type TEXT DEFAULT 'collection' NOT NULL,
+    type TEXT DEFAULT 'Collection' NOT NULL,
     stac_version TEXT NOT NULL,
     stac_extensions TEXT [],
     id TEXT PRIMARY KEY,
@@ -66,7 +66,7 @@ ORDER BY
     COUNT(*);
 
 CREATE TABLE IF NOT EXISTS items (
-    type TEXT DEFAULT 'item' NOT NULL,
+    type TEXT DEFAULT 'Feature' NOT NULL,
     stac_version TEXT NOT NULL,
     stac_extensions TEXT [],
     id TEXT NOT NULL UNIQUE,
@@ -146,7 +146,7 @@ SELECT
                 'href',
                 CONCAT('/stac/collections/', co.id),
                 'rel',
-                'item'
+                'child'
             )
         ) FILTER (
             WHERE
@@ -340,7 +340,7 @@ VALUES
     (
         '1.0.0',
         ARRAY ['stac', 'mlm'],
-        'catalog',
+        'Catalog',
         'mlm-catalog',
         'Machine Learning Models Catalog'
     );

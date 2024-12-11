@@ -36,7 +36,7 @@ app.use(morgan('combined', { stream: rotatingLogStream }));
 // Erlaube CORS für alle Ursprünge (kann eingeschränkt werden)
 app.use(cors({
   origin: 'http://localhost:5173',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
 
 /**
@@ -61,7 +61,7 @@ app.post('/api/register', async (req, res) => {
       values: [username, full_name, email, hashedPassword]
     }
     await db.query(insertUserQuery);
-    res.status(200).json({ message: 'Registration Successful'})
+    res.status(200).json({ message: 'Registration Successful' })
   } catch (error) {
     res.status(500).json({ message: 'Internal server error' });
   }
@@ -189,6 +189,21 @@ app.get('/api/keywords', async (req, res) => {
     });
 });
 
+app.get('/stac/conformance', async (req, res) => {
+  try {
+    res.status(200).json(
+      {
+        "conformsTo": [
+          "http://api.stacspec.org/v1.0.0/core",
+          "https://stac-extensions.github.io/mlm/v1.3.0/schema.json"
+        ]
+      }
+    )
+  } catch (error) {
+    console.error('Error during conformance export', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+})
 
 app.get('/stac', async (req, res) => {
   const query = {
@@ -237,6 +252,36 @@ app.get('/stac/search', async (req, res) => {
  * Protected route to retrieve collections from the database
  * Requires a valid JWT token to access
  */
+
+app.get('/stac/search', async (req, res) => {
+  const limit = req.params.limit || 20;
+  const offset = req.params.offset || 0;
+  const search = req.params.search || ' ';
+  const query = {
+    text: `
+      SELECT *
+      FROM items_complete_view
+      WHERE properties->>'description' ILIKE $3 
+      LIMIT $1
+      OFFSET $2
+    `,
+    values: [limit, offset, `%${search}%`],
+  };
+  console.log(query)
+  db.query(query)
+    .then(({ rows: items }) => res.status(200).json(items))
+    .catch(error => {
+      console.error('Error during item export', error);
+      res.status(500).json({ message: 'Internal server error' });
+    });
+});
+
+
+/**
+ * Protected route to retrieve collections from the database
+ * Requires a valid JWT token to access
+ */
+
 app.get('/stac/collections', async (req, res) => {
   const limit = req.params.limit || 20;
   const offset = req.params.offset || 0;
