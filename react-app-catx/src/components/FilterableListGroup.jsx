@@ -17,7 +17,7 @@ const FilterableListGroup = ({ searchQuery }) => {
         const fetchData = async () => {
             try {
                 const response = await fetch(
-                    "https://raw.githubusercontent.com/stac-extensions/mlm/refs/heads/main/examples/item_basic.json"
+                    "http://localhost:3000/api/items"
                 );
                 if (!response.ok) {
                     throw new Error(`HTTP Error: ${response.status}`);

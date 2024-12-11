@@ -212,6 +212,10 @@
   font-weight: bold;
 }
 
+.left-aligned-container {
+  bottom: 6%;
+  top: 10%;
+}
 
 /*Homepage Button View*/
 .left-aligned-container-view {
@@ -388,19 +392,31 @@
 }
 
 /* Footer Styles */
+.bg-custom {
+  background-color: #f8f9fa;
+  position: relative;
+  z-index: 10;
+}
+
+/*
 .footer {
-  background-color: #282c34;
-  color: #ffffff;
+  background-color: #f8f9fa;
+  color: #000000;
   text-align: center;
   padding: 1rem 0;
-}
+  bottom: 0;
+  position: absolute;
+  box-sizing: border-box;
+}*/
 
 .footer-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
+  bottom: 0;
 }
 
+/*
 .footer-nav {
   margin-top: 0.5rem;
 }
@@ -414,3 +430,4 @@
 .footer-link:hover {
   text-decoration: underline;
 }
+  */

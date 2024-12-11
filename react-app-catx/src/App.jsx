@@ -18,6 +18,7 @@ function App() {
     return (
         <div className="app-container">
             <Navbar />
+
             <div className="start-search">
                 <p>
                     Looking for something?
@@ -50,6 +51,7 @@ function App() {
                         <Button text="Help" />
                     </Link>
                 </div>
+
             </div>
             <div className="right-aligned-container">
                 <h3>Recently added:</h3>
