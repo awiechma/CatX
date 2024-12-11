@@ -12,12 +12,12 @@ catalog = pystac.Catalog.from_file(stac_url)
 print(catalog)
 
 # Auflisten von Sammlungen im Katalog
-for collection in catalog.get_collections():
-    print(f"Collection ID: {collection.id}")
+#for collection in catalog.get_collections():
+ #   print(f"Collection ID: {collection.id}")
 
 # Auflisten von Items in der ersten Sammlung
-first_collection = next(catalog.get_collections())
-items = list(first_collection.get_items())
+#first_collection = next(catalog.get_collections())
+#items = list(first_collection.get_items())
 
-for item in items:
-    print(f"Item ID: {item.id}")
+#for item in items:
+#    print(f"Item ID: {item.id}")
