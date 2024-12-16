@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import SearchBar from "./components/SearchBar";
 import ListGroup from "./components/ListGroup";
 import { Link } from "react-router-dom";
+import Footer from "./components/Footer";
 
 function App() {
     const [searchTerm, setSearchTerm] = useState("");
@@ -15,8 +16,9 @@ function App() {
     };
 
     return (
-        <div>
+        <div className="app-container">
             <Navbar />
+
             <div className="start-search">
                 <p>
                     Looking for something?
@@ -49,12 +51,17 @@ function App() {
                         <Button text="Help" />
                     </Link>
                 </div>
+
             </div>
             <div className="right-aligned-container">
                 <h3>Recently added:</h3>
                 <ListGroup className="list-recently-added" />
             </div>
+            <div>
+                <Footer />
+            </div>
         </div>
+
     );
 }
 

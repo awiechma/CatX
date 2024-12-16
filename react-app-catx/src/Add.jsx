@@ -4,6 +4,8 @@ import { useLocation } from "react-router-dom";
 import "./Add.css";
 import SearchBar from "./components/SearchBar";
 import Formular from "./components/Formular";
+import Footer from "./components/Footer";
+
 
 
 const Add = () => {
@@ -25,17 +27,18 @@ const Add = () => {
                     initialSearchTerm={searchQuery} // Set the initial value of the search input
                 />
             </div>
-    
+
             {/* Container for the h1 */}
             <div className="heading-add-page">
                 <h1>Form for metadata</h1>
             </div>
-    
-        <Formular/>
+
+            <Formular />
+            <Footer />
         </div>
     );
-    
-    
+
+
 };
 
 export default Add;
