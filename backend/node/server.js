@@ -104,7 +104,7 @@ app.post('/api/token', async (req, res) => {
   }
 });
 
-app.post('/api/validatetoken', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/api/validatetoken', passport.authenticate('jwt', { session: false }), (req, res) => {
   if (req.user) {
     res.status(200).json({ message: 'Token is valid' });
   } else {
@@ -113,7 +113,7 @@ app.post('/api/validatetoken', passport.authenticate('jwt', { session: false }),
 })
 
 
-app.post('/api/user/:username', passport.authenticate('jwt', { session: false }), async (req, res) => {
+app.get('/api/user/:username', passport.authenticate('jwt', { session: false }), async (req, res) => {
   const username = req.params.username;
   if (!username) {
     return res.status(400).json({ message: 'Username is required.' });
