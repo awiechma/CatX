@@ -3,7 +3,9 @@ import TagInput from "./TagInput";
 import Button from "./Button";
 
 const Formular = () => {
-    const [formData, setFormData] = useState({});
+    const [formData, setFormData] = useState({}); // Zustand für die Formularfelder
+    const [uploadedData, setUploadedData] = useState(null); // Original-JSON für den Upload
+    const [submitStatus, setSubmitStatus] = useState(""); // Feedback für den Submit
 
     // Handle file upload and parsing JSON
     const handleFileUpload = (event) => {
@@ -13,9 +15,11 @@ const Formular = () => {
             reader.onload = (e) => {
                 try {
                     const json = JSON.parse(e.target.result);
+                    setUploadedData(json); // Speichere das JSON für den Submit
                     populateFormFields(json);
                 } catch (error) {
                     console.error("Error parsing JSON:", error);
+                    setSubmitStatus("Error parsing the uploaded JSON file.");
                 }
             };
             reader.readAsText(file);
@@ -43,6 +47,36 @@ const Formular = () => {
         });
     };
 
+    // Handle form submission using fetch
+    const handleSubmit = async () => {
+        if (!uploadedData) {
+            setSubmitStatus("No data to submit. Please upload a file first.");
+            return;
+        }
+
+        try {
+            const response = await fetch("http://localhost:3000/api/items/upload", {
+                method: "POST",
+                headers: {
+                    Authorization: "Bearer " + token, 
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(uploadedData)
+            });
+
+            if (response.ok) {
+                setSubmitStatus("Upload successful!");
+            } else {
+                const errorData = await response.json();
+                console.error("Error response data:", errorData);
+                setSubmitStatus(`Upload failed: ${response.statusText}`);
+            }
+        } catch (error) {
+            console.error("Error uploading data:", error);
+            setSubmitStatus("Upload failed. Check console for details.");
+        }
+    };
+
     // Render form fields
     return (
         <div className="formular-form">
@@ -56,8 +90,8 @@ const Formular = () => {
                     onChange={handleFileUpload}
                 />
             </div>
-            <br></br>
-            <br></br>
+
+            <br />
 
             {/* Title */}
             <div className="input-group mb-3">
@@ -237,8 +271,17 @@ const Formular = () => {
             <TagInput />
 
             <br />
-            <div className="button-container-add" style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
-                <Button text="Submit" className="upload-button" />
+            <div className="button-container-add" style={{ display: ' flex', justifyContent: 'flex-end', marginTop:'20px' }}>
+                <Button 
+                    text="Submit"
+                    className="upload-button" 
+                    onClick={handleSubmit}
+                >
+                    Submit
+                </Button>
+                <span className="submit-status">
+                    {submitStatus}
+                </span>
             </div>
         </div>
     );

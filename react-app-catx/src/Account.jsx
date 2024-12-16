@@ -13,9 +13,8 @@ const Account = () => {
         <div>
             <Navbar />
             <SearchBar />
-            <LogInSignIn />
-            <Footer />
             <AccountHandler/>
+            <Footer />
 
         </div>
     );
