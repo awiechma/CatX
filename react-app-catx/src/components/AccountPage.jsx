@@ -6,6 +6,7 @@ const AccountPage = () => {
 
     async function getUserData() {
         const token = localStorage.getItem("authtoken");
+        const username = localStorage.getItem("username");
         try {
             const response = await fetch("http://localhost:3000/api/user/" + username, {
                 method: "GET",
@@ -17,20 +18,20 @@ const AccountPage = () => {
 
             if (response.ok) {
                 const data = await response.json();
-                setUserData({ 
-                    username: data.username || "Username not available", 
-                    email: data.email || "Email not available" 
+                setUserData({
+                    username: username || "Username not available",
+                    email: data.email || "Email not available"
                 });
             } else {
                 console.error("Fehler beim Abrufen der Daten.");
             }
         } catch (err) {
             console.error("Fehler:", err);
-        } 
+        }
     }
 
     useEffect(() => {
-        getUserData(); 
+        getUserData();
     }, []);
 
     return (
