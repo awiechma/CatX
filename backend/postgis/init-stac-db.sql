@@ -144,9 +144,11 @@ SELECT
         jsonb_agg(
             jsonb_build_object(
                 'href',
-                CONCAT('/stac/collections/', co.id),
+                CONCAT('http://localhost:3000/stac/collections/', co.id),
                 'rel',
-                'child'
+                'child',
+                'type',
+                'application/json'
             )
         ) FILTER (
             WHERE
@@ -155,9 +157,11 @@ SELECT
         '[]' :: jsonb -- Use an empty JSON array if there are no collections
     ) || jsonb_build_object(
         'href',
-        CONCAT('/stac'),
+        CONCAT('http://localhost:3000/stac'),
         'rel',
-        'self'
+        'self',
+        'type',
+        'application/json'
     ) AS links
 FROM
     catalog c
@@ -201,9 +205,11 @@ SELECT
         jsonb_agg(
             jsonb_build_object(
                 'href',
-                CONCAT('/stac/collections/', c.id, '/items/', i.id),
+                CONCAT('http://localhost:3000/stac/collections/', c.id, '/items/', i.id),
                 'rel',
-                'item'
+                'item',
+                'type',
+                'application/json'
             )
         ) FILTER (
             WHERE
@@ -212,9 +218,11 @@ SELECT
         '[]' :: jsonb -- Empty array if no items
     ) || jsonb_build_object(
         'href',
-        CONCAT('/stac/collections/', c.id),
+        CONCAT('http://localhost:3000/stac/collections/', c.id),
         'rel',
-        'self'
+        'self',
+        'type',
+        'application/json'
     ) AS links
 FROM
     collections c
@@ -299,19 +307,23 @@ SELECT
         jsonb_build_object(
             'href',
             CONCAT(
-                '/stac/collections/',
+                'http://localhost:3000/stac/collections/',
                 i.collection,
                 '/items/',
                 i.id
             ),
             'rel',
-            'self'
+            'self',
+            'type',
+            'application/json'
         )
     ) || jsonb_build_object(
         'href',
-        CONCAT('/stac/collections/', i.collection),
+        CONCAT('http://localhost:3000/stac/collections/', i.collection),
         'rel',
-        'collection'
+        'collection',
+        'type',
+        'application/json'
     ) AS links
 FROM
     items i

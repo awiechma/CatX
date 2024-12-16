@@ -370,7 +370,7 @@ app.get('/stac/collections/:cid/items/:iid', async (req, res) => {
   };
 
   db.query(query)
-    .then(({ rows: items }) => res.status(200).json((items.length > 0) ? items : {}))
+    .then(({ rows: items }) => res.status(200).json((items.length > 0) ? items[0] : {}))
     .catch(error => {
       console.error('Error during item export:', error);
       res.status(500).json({ message: 'Internal server error' });
