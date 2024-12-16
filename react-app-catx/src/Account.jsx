@@ -5,6 +5,8 @@ import Navbar from "./components/Navbar";
 import SearchBar from "./components/SearchBar";
 import LogInSignIn from "./components/LogInSignIn";
 import Footer from "./components/Footer";
+import AccountHandler from "./components/AccountHandler";
+
 
 const Account = () => {
     return (
@@ -13,6 +15,8 @@ const Account = () => {
             <SearchBar />
             <LogInSignIn />
             <Footer />
+            <AccountHandler/>
+
         </div>
     );
 };

@@ -43,7 +43,7 @@ const SearchBar = ({ onSearch, initialSearchTerm = "" }) => {
                     aria-label="Search"
                     value={searchTerm}
                     onChange={handleInputChange}
-                    style={{ width: '630px' }} 
+                    style={{ width: '100%' }} 
                 />
                 <button className="btn btn-outline-searchbar" type="submit">
                     Search

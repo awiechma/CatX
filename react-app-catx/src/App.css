@@ -70,16 +70,15 @@
   }
 }
 */
-/* Container for Searchbar*/
+/* Container for Searchbar */
 .SearchBar-container {
-  display: flex;
-  justify-content: center;
+  justify-content: center; /* Zentriere den Inhalt horizontal */
+  align-items: center; /* Zentriere den Inhalt vertikal */
   padding: 1.63rem;
   background-color: #dfe8ef;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  width: 100%;
-  max-width: 800px;
+  width: 50%;
   margin: auto;
   position: absolute;
   top: 13.5%;
@@ -88,13 +87,12 @@
 
 /* Input for Searchbar */
 .searchbar-whitespace {
-  width: 200%;
-  max-width: 800px;
-  padding: 0.5rem 14rem;
+  width: 100%; /* Nutze 100% der Containerbreite */
+  padding: 0.5rem; 
   font-size: 1.1rem;
   border: 1px solid #94b5ce;
   border-radius: 4px;
-  box-sizing: border-box;
+  /*box-sizing: border-box;*/
   outline: none;
 }
 

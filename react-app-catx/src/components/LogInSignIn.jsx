@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "/src/Account.css";
 
 const LogInSignIn = () => {
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
@@ -38,6 +39,7 @@ const LogInSignIn = () => {
             console.log("Login successful");
             const token = data.token;
             setSuccess("Login successful!");
+            localStorage.setItem("authToken", token);
         } catch (err) {
             console.error("Error during login", err);
             setError("Something went wrong. Please try again.");
@@ -77,7 +79,7 @@ const LogInSignIn = () => {
             setRegError("Something went wrong. Please try again.");
         }
     };
-
+    
     return (
         <div>
             <section className="vh-100" style={{ marginTop: '3rem' }}>
