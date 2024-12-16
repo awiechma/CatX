@@ -51,15 +51,26 @@ function App() {
                         <Button text="Help" />
                     </Link>
                 </div>
-
+                <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
             </div>
             <div className="right-aligned-container">
                 <h3>Recently added:</h3>
                 <ListGroup className="list-recently-added" />
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
             </div>
-            <div>
-                <Footer />
-            </div>
+            <Footer />   
         </div>
 
     );

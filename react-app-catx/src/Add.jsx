@@ -34,6 +34,11 @@ const Add = () => {
             </div>
 
             <Formular />
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
             <Footer />
         </div>
     );
