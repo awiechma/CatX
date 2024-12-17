@@ -35,16 +35,28 @@ const AccountPage = () => {
         getUserData();
     }, []);
 
-    return (
-        <ul className="list-disc pl-4">
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
+    const handleLogout = () => {
+        localStorage.removeItem("catx-user-session-token");
+        localStorage.removeItem("catx-user-session-username");
+        console.log("Logged out successfully!");
+        window.location.href = "/";
+    };
 
-            <li><strong>Username:</strong> {userData.username}</li>
-            <li><strong>Email:</strong> {userData.email}</li>
-        </ul>
+    return (
+        <div className="account-container">
+            <div className="account-content">
+                <ul className="user-data">
+                    <li><strong>Username:</strong> {userData.username}</li>
+                    <li><strong>Email:</strong> {userData.email}</li>
+                </ul>
+                <button 
+                    onClick={handleLogout} 
+                    className="logout-button"
+                >
+                    Logout
+                </button>
+            </div>
+        </div>
     );
 };
 

@@ -33,6 +33,53 @@ height: 100%;
     color: #ffffff;
 }
 
+/* Container für Zentrierung */
+.account-container {
+    display: flex;
+    justify-content: center; /* Zentriert horizontal */
+    align-items: center; /* Zentriert vertikal */
+    height: 100vh; /* Ganze Bildschirmhöhe */
+    background-color: #f8f9fa; /* Optional: Hintergrundfarbe */
+}
+
+/* Innerer Content-Container */
+.account-content {
+    text-align: center; /* Zentriert den Inhalt */
+    background: #ffffff; /* Weißer Hintergrund */
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Schatten */
+    width: 300px; /* Breite des Containers */
+}
+
+/* Liste der Benutzerdaten */
+.user-data {
+    list-style: none; /* Entfernt Aufzählungspunkte */
+    padding: 0;
+    margin-bottom: 1.5rem;
+}
+
+.user-data li {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+/* Logout-Button */
+.logout-button {
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #c82333; /* Dunkleres Rot bei Hover */
+}
+
   /* Button Styling  */
 .register-button {
     font-size: 1rem;
