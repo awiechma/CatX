@@ -41,6 +41,7 @@ const LogInSignIn = () => {
             setSuccess("Login successful!");
             localStorage.setItem("authToken", token);
             localStorage.setItem("username", username);
+
         } catch (err) {
             console.error("Error during login", err);
             setError("Something went wrong. Please try again.");

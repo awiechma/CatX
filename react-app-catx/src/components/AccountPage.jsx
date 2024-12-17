@@ -7,6 +7,7 @@ const AccountPage = () => {
     async function getUserData() {
         const token = localStorage.getItem("authToken");
         const username = localStorage.getItem("username")
+
         try {
             const response = await fetch("http://localhost:3000/api/user/" + username, {
                 method: "GET",
@@ -18,10 +19,10 @@ const AccountPage = () => {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log(data)
-                setUserData({ 
+
                     username: username || "Username not available", 
                     email: data.email || "Email not available"
+
                 });
             } else {
                 console.error("Fehler beim Abrufen der Daten.");
@@ -41,6 +42,7 @@ const AccountPage = () => {
             <br></br>
             <br></br>
             <br></br>
+
             <li><strong>Username:</strong> {userData.username}</li>
             <li><strong>Email:</strong> {userData.email}</li>
         </ul>

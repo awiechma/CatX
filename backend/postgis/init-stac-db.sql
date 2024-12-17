@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS catalog (
-    type TEXT DEFAULT 'catalog' NOT NULL,
+    type TEXT DEFAULT 'Catalog' NOT NULL,
     stac_version TEXT NOT NULL,
     stac_extensions TEXT [],
     id TEXT PRIMARY KEY,
@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS catalog (
 );
 
 CREATE TABLE IF NOT EXISTS collections (
-    type TEXT DEFAULT 'collection' NOT NULL,
+    type TEXT DEFAULT 'Collection' NOT NULL,
     stac_version TEXT NOT NULL,
     stac_extensions TEXT [],
     id TEXT PRIMARY KEY,
@@ -66,7 +66,7 @@ ORDER BY
     COUNT(*);
 
 CREATE TABLE IF NOT EXISTS items (
-    type TEXT DEFAULT 'item' NOT NULL,
+    type TEXT DEFAULT 'Feature' NOT NULL,
     stac_version TEXT NOT NULL,
     stac_extensions TEXT [],
     id TEXT NOT NULL UNIQUE,
@@ -144,9 +144,11 @@ SELECT
         jsonb_agg(
             jsonb_build_object(
                 'href',
-                CONCAT('/stac/collections/', co.id),
+                CONCAT('http://localhost:3000/stac/collections/', co.id),
                 'rel',
-                'item'
+                'child',
+                'type',
+                'application/json'
             )
         ) FILTER (
             WHERE
@@ -155,9 +157,11 @@ SELECT
         '[]' :: jsonb -- Use an empty JSON array if there are no collections
     ) || jsonb_build_object(
         'href',
-        CONCAT('/stac'),
+        CONCAT('http://localhost:3000/stac'),
         'rel',
-        'self'
+        'self',
+        'type',
+        'application/json'
     ) AS links
 FROM
     catalog c
@@ -201,9 +205,11 @@ SELECT
         jsonb_agg(
             jsonb_build_object(
                 'href',
-                CONCAT('/stac/collections/', c.id, '/items/', i.id),
+                CONCAT('http://localhost:3000/stac/collections/', c.id, '/items/', i.id),
                 'rel',
-                'item'
+                'item',
+                'type',
+                'application/json'
             )
         ) FILTER (
             WHERE
@@ -212,9 +218,11 @@ SELECT
         '[]' :: jsonb -- Empty array if no items
     ) || jsonb_build_object(
         'href',
-        CONCAT('/stac/collections/', c.id),
+        CONCAT('http://localhost:3000/stac/collections/', c.id),
         'rel',
-        'self'
+        'self',
+        'type',
+        'application/json'
     ) AS links
 FROM
     collections c
@@ -299,19 +307,23 @@ SELECT
         jsonb_build_object(
             'href',
             CONCAT(
-                '/stac/collections/',
+                'http://localhost:3000/stac/collections/',
                 i.collection,
                 '/items/',
                 i.id
             ),
             'rel',
-            'self'
+            'self',
+            'type',
+            'application/json'
         )
     ) || jsonb_build_object(
         'href',
-        CONCAT('/stac/collections/', i.collection),
+        CONCAT('http://localhost:3000/stac/collections/', i.collection),
         'rel',
-        'collection'
+        'collection',
+        'type',
+        'application/json'
     ) AS links
 FROM
     items i
@@ -340,7 +352,7 @@ VALUES
     (
         '1.0.0',
         ARRAY ['stac', 'mlm'],
-        'catalog',
+        'Catalog',
         'mlm-catalog',
         'Machine Learning Models Catalog'
     );
