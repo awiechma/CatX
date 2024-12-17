@@ -39,8 +39,10 @@ const LogInSignIn = () => {
             console.log("Login successful");
             const token = data.token;
             setSuccess("Login successful!");
+
             localStorage.setItem("catx-user-session-token", token);
             localStorage.setItem("catx-user-session-username", username);
+          
         } catch (err) {
             console.error("Error during login", err);
             setError("Something went wrong. Please try again.");

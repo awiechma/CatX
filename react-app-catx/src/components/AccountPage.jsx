@@ -7,6 +7,7 @@ const AccountPage = () => {
     async function getUserData() {
         const token = localStorage.getItem("catx-user-session-token");
         const username = localStorage.getItem("catx-user-session-username");
+
         try {
             const response = await fetch("http://localhost:3000/api/user/" + username, {
                 method: "GET",
@@ -36,6 +37,11 @@ const AccountPage = () => {
 
     return (
         <ul className="list-disc pl-4">
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+
             <li><strong>Username:</strong> {userData.username}</li>
             <li><strong>Email:</strong> {userData.email}</li>
         </ul>
