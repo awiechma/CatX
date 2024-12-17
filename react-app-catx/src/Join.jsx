@@ -11,13 +11,14 @@ const Join = () => {
     return (
         <Router>
             <Navbar />
-                <Routes>
-                    <Route path="/" element={<App/>} />
-                    <Route path="/view" element={<View/>} />
-                    <Route path="/add" element={<Add/>} />
-                    <Route path="/account" element={<Account/>} />
-                    <Route path="/help" element={<Help/>} />
-                </Routes>
+            <Routes>
+                <Route path="/" element={<App />} />
+                <Route path="/view" element={<View />} />
+                <Route path="/add" element={<Add />} />
+                <Route path="/account" element={<Account />} />
+                <Route path="/help" element={<Help />} />
+                {/*<Route path="/about" element={<About />} />*/}
+            </Routes>
         </Router>
     );
 };

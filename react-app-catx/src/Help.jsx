@@ -5,6 +5,8 @@ import Button from "./components/Button";
 import Navbar from "./components/Navbar";
 import SearchBar from "./components/SearchBar";
 import ScrollSpy from "./components/Scrollspy";
+import Footer from "./components/Footer";
+
 
 
 const Help = () => {
@@ -13,6 +15,7 @@ const Help = () => {
             <Navbar />
             <SearchBar />
             <ScrollSpy />
+            <Footer />
         </div>
     );
 };

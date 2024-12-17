@@ -5,8 +5,8 @@ const AccountPage = () => {
     const [userData, setUserData] = useState({ username: null, email: null });
 
     async function getUserData() {
-        const token = localStorage.getItem("authToken");
-        const username = localStorage.getItem("username")
+        const token = localStorage.getItem("catx-user-session-token");
+        const username = localStorage.getItem("catx-user-session-username");
 
         try {
             const response = await fetch("http://localhost:3000/api/user/" + username, {

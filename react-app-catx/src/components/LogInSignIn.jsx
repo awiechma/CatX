@@ -39,8 +39,10 @@ const LogInSignIn = () => {
             console.log("Login successful");
             const token = data.token;
             setSuccess("Login successful!");
-            localStorage.setItem("authToken", token);
-            localStorage.setItem("username", username);
+
+            localStorage.setItem("catx-user-session-token", token);
+            localStorage.setItem("catx-user-session-username", username);
+          
         } catch (err) {
             console.error("Error during login", err);
             setError("Something went wrong. Please try again.");
@@ -80,7 +82,7 @@ const LogInSignIn = () => {
             setRegError("Something went wrong. Please try again.");
         }
     };
-    
+
     return (
         <div>
             <section className="vh-100" style={{ marginTop: '3rem' }}>
