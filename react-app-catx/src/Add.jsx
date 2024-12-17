@@ -18,29 +18,27 @@ const Add = () => {
         }
     }, [location.state]);
     return (
-        <div>
-            {/* Container for SearchBar */}
-            <div className="search-filter-container">
-                {/* SearchBar: pass the searchQuery and handle changes */}
-                <SearchBar
-                    onSearch={(query) => setSearchQuery(query)} // Update searchQuery when search term changes
-                    initialSearchTerm={searchQuery} // Set the initial value of the search input
-                />
+        <div className="add-page-container">
+            <div className="content">
+                <div className="search-filter-container">
+                    <SearchBar
+                        onSearch={(query) => setSearchQuery(query)}
+                        initialSearchTerm={searchQuery}
+                    />
+                </div>
+
+                <div className="heading-add-page">
+                    <h1>Form for metadata</h1>
+                </div>
+
+                <div className="formular-form">
+                    <Formular />
+                </div>
             </div>
 
-            {/* Container for the h1 */}
-            <div className="heading-add-page">
-                <h1>Form for metadata</h1>
-            </div>
-
-            <Formular />
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
             <Footer />
         </div>
+
     );
 
 
