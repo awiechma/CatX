@@ -8,7 +8,7 @@ Content-Type: application/json
   "username": "Andi",
   "full_name": "AstraAndi",
   "email": "Astraistlecker@Astra.com",
-  "password": "LeckerBierchen",
+  "password": "Lecker",
   "role": 2
 }
 
@@ -19,7 +19,7 @@ Content-Type: application/json
 
 {
   "username": "Andi",
-  "password": "LeckerBierchen"
+  "password": "Lecker"
 }
 
 ###
