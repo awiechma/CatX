@@ -19,21 +19,20 @@ const AccountPage = () => {
 
             if (response.ok) {
                 const data = await response.json();
-
-                    username: username || "Username not available", 
+                setUserData({
+                    username: username || "Username not available",
                     email: data.email || "Email not available"
-
                 });
             } else {
                 console.error("Fehler beim Abrufen der Daten.");
             }
         } catch (err) {
             console.error("Fehler:", err);
-        } 
+        }
     }
 
     useEffect(() => {
-        getUserData(); 
+        getUserData();
     }, []);
 
     return (
