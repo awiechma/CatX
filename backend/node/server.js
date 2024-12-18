@@ -189,6 +189,27 @@ app.get('/api/keywords', async (req, res) => {
     });
 });
 
+app.get('/api/mlmtasks', async (req, res) => {
+  const limit = req.params.limit || 20;
+  const offset = req.params.offset || 0;
+  const query = {
+    text: `
+      SELECT 
+        *
+      FROM mlm_tasks_view
+      LIMIT $1
+      OFFSET $2
+    `,
+    values: [limit, offset],
+  }
+  db.query(query)
+    .then(({ rows: mlmtasks }) => res.status(200).json(mlmtasks))
+    .catch(error => {
+      console.error('Error during mlmtask export', error);
+      res.status(500).json({ message: 'Internal server error' });
+    });
+})
+
 app.get('/stac/conformance', async (req, res) => {
   try {
     res.status(200).json(
@@ -221,57 +242,48 @@ app.get('/stac', async (req, res) => {
     });
 })
 
-/**
- * Protected route to retrieve collections from the database
- * Requires a valid JWT token to access
- */
-app.get('/stac/search', async (req, res) => {
-  const limit = req.params.limit || 20;
-  const offset = req.params.offset || 0;
-  const search = req.params.search || ' ';
-  const query = {
-    text: `
-      SELECT *
-      FROM items_complete_view
-      WHERE properties->>'description' ILIKE $3 
-      LIMIT $1
-      OFFSET $2
-    `,
-    values: [limit, offset, `%${search}%`],
-  };
-  console.log(query)
-  db.query(query)
-    .then(({ rows: items }) => res.status(200).json(items))
-    .catch(error => {
-      console.error('Error during item export', error);
-      res.status(500).json({ message: 'Internal server error' });
-    });
-});
 
 /**
- * Protected route to retrieve collections from the database
- * Requires a valid JWT token to access
+ * route to retrieve items from database
+ * allows search via search=<searchTerm> in descripition or item id
+ * allows search via tasks=<task1,task2,task3> in mlm:tasks
  */
-
 app.get('/stac/search', async (req, res) => {
-  const limit = req.params.limit || 20;
-  const offset = req.params.offset || 0;
-  const search = req.params.search || ' ';
-  const query = {
-    text: `
-      SELECT *
-      FROM items_complete_view
-      WHERE properties->>'description' ILIKE $3 
-      LIMIT $1
-      OFFSET $2
-    `,
-    values: [limit, offset, `%${search}%`],
+  const limit = req.query.limit || 20;
+  const offset = req.query.offset || 0;
+  const tasks = req.query.tasks || null;
+  const searchTerm = req.query.search || null;
+
+  let baseQuery = `
+    SELECT *
+    FROM items_complete_view
+  `;
+  let queryValues = [limit, offset];
+  let filters = [];
+
+  if (tasks) {
+    filters.push(`properties->'mlm:tasks' @> $${filters.length + 3}`);
+    queryValues.push(JSON.stringify(tasks.split(',')));
+  }
+
+  if (searchTerm) {
+    filters.push(`(properties->>'description' ILIKE $${filters.length + 3} OR id ILIKE $${filters.length + 3})`);
+    queryValues.push(`%${searchTerm}%`);
+  }
+
+  if (filters.length > 0) {
+    baseQuery += ` WHERE ${filters.join(' AND ')}`;
+  }
+
+  const finalQuery = {
+    text: `${baseQuery} LIMIT $1 OFFSET $2`,
+    values: queryValues
   };
-  console.log(query)
-  db.query(query)
+
+  db.query(finalQuery)
     .then(({ rows: items }) => res.status(200).json(items))
     .catch(error => {
-      console.error('Error during item export', error);
+      console.error('Error during item export:', error);
       res.status(500).json({ message: 'Internal server error' });
     });
 });
