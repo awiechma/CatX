@@ -9,6 +9,7 @@ const Formular = () => {
     const [formData, setFormData] = useState({}); // Zustand für die Formularfelder
     const [uploadedData, setUploadedData] = useState(null); // Original-JSON für den Upload
     const [submitStatus, setSubmitStatus] = useState(""); // Feedback für den Submit
+    const [checked, setChecked] = useState(false);
 
     // Handle file upload and parsing JSON
     const handleFileUpload = (event) => {
@@ -28,6 +29,11 @@ const Formular = () => {
             reader.readAsText(file);
         }
     };
+
+
+    const handleToggle = () => {
+        setChecked(!checked);
+    }
 
     // Populate form fields based on JSON data
     const populateFormFields = (json) => {
@@ -58,10 +64,10 @@ const Formular = () => {
         }
 
         try {
-            const response = await fetch("http://localhost:3000/api/items/upload", {
+            const response = await fetch(`http://localhost:3000/api/items/upload${checked ? "?createcollection=true" : ""}`, {
                 method: "POST",
                 headers: {
-                    Authorization: "Bearer " + token, 
+                    "Authorization": "Bearer " + token,
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(uploadedData)
@@ -86,10 +92,10 @@ const Formular = () => {
             {/* Upload File */}
             <div className="mb-3">
                 <label htmlFor="file-upload" className="form-label">Upload File</label>
-                <input 
-                    className="form-control" 
-                    type="file" 
-                    id="file-upload" 
+                <input
+                    className="form-control"
+                    type="file"
+                    id="file-upload"
                     onChange={handleFileUpload}
                 />
             </div>
@@ -142,6 +148,11 @@ const Formular = () => {
                     value={formData.collection || ""}
                     readOnly
                 />
+            </div>
+
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="newCollectionSwitch" name="newCollection" checked={checked} onChange={handleToggle} />
+                <label class="form-check-label" for="newCollectionSwitch">Create new Collection?</label>
             </div>
 
             {/* Geometry */}
@@ -274,10 +285,10 @@ const Formular = () => {
             <TagInput />
 
             <br />
-            <div className="button-container-add" style={{ display: ' flex', justifyContent: 'flex-end', marginTop:'20px' }}>
-                <Button 
+            <div className="button-container-add" style={{ display: ' flex', justifyContent: 'flex-end', marginTop: '20px' }}>
+                <Button
                     text="Submit"
-                    className="upload-button" 
+                    className="upload-button"
                     onClick={handleSubmit}
                 >
                     Submit
