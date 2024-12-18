@@ -46,7 +46,6 @@ app.use(cors({
 app.post('/api/register', async (req, res) => {
   const { username, full_name, email, password } = req.body;
   const hashedPassword = bcrypt.hashSync(password);
-  console.log(hashedPassword)
   if (!username || !password || !full_name || !email) {
     return res.status(400).json({ message: 'You did not fill in all required fields.' });
   };
