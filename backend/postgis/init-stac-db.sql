@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS properties (
     "mlm:accelerator_count" INTEGER,
     "mlm:input" JSONB [],
     "mlm:output" JSONB [],
-    "mlm:hyperparameters" JSONB [],
+    "mlm:hyperparameters" JSONB,
     CREATION_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     CREATION_USER TEXT NOT NULL,
     UPDATE_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
