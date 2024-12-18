@@ -3,6 +3,8 @@ import TagInput from "./TagInput";
 import Button from "./Button";
 import "/src/Add.css";
 
+const token = localStorage.getItem("catx-user-session-token")
+
 const Formular = () => {
     const [formData, setFormData] = useState({}); // Zustand für die Formularfelder
     const [uploadedData, setUploadedData] = useState(null); // Original-JSON für den Upload
