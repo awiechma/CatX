@@ -478,6 +478,7 @@ app.post('/api/collections/upload', passport.authenticate('jwt', { session: fals
  */
 app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), async (req, res) => {
   const user = req.user.username;
+
   // Destructure the request body
   const {
     stac_version = null,
@@ -488,7 +489,8 @@ app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), 
     geometry = null,
     bbox = null,
     properties = null,
-    assets = null
+    assets = null,
+    createNewCollection = false,
   } = req.body;
   // Destructure the properties
   const {
@@ -519,6 +521,18 @@ app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), 
   try {
     // Begin a transaction
     await db.query('BEGIN');
+
+    if (createNewCollection) {
+      const insertCollectionQuery = {
+        text: `
+        INSERT INTO collections (stac_version, id, description, extent, CREATION_USER, UPDATE_USER)
+        VALUES ($1, $2, $2, $3, $4, $4)
+        `,
+        values: [stac_version, collection, "{}", user]
+      }
+
+      await db.query(insertCollectionQuery);
+    }
 
     // Insert the item
     const insertItemsQuery = {
