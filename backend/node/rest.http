@@ -41,7 +41,7 @@ GET http://localhost:3000/api/keywords?limit=10&offset=0
 GET http://localhost:3000/api/items?limit=10&offset=0
 
 ### search
-GET http://localhost:3000/stac/search?search=resnet
+GET http://localhost:3000/stac/search?tasks=segmentation
 
 
 ### get example collection from github

@@ -35,7 +35,7 @@ const FilterableListGroup = ({ initialsearchString }) => {
         setIsLoading(true);
         setError(null);
         try {
-            const endpoint = `http://localhost:3000/stac/search?${selectedTags.length > 0 ? `mlmtasks=${selectedTags.join(",")}` : ""}${(searchString ? `&search=${searchString}` : "")}`;
+            const endpoint = `http://localhost:3000/stac/search?${selectedTags.length > 0 ? `tasks=${selectedTags.join(",")}` : ""}${(searchString ? `&search=${searchString}` : "")}`;
             const response = await fetch(endpoint, {
                 method: "GET",
                 headers: { 'Content-Type': 'application/json' }
