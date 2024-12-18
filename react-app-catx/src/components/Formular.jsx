@@ -9,7 +9,7 @@ const Formular = () => {
     const [formData, setFormData] = useState({}); // Zustand für die Formularfelder
     const [uploadedData, setUploadedData] = useState(null); // Original-JSON für den Upload
     const [submitStatus, setSubmitStatus] = useState(""); // Feedback für den Submit
-    const [checked, setChecked] = useState(false);
+    const [createNewCollection, setChecked] = useState(false);
 
     // Handle file upload and parsing JSON
     const handleFileUpload = (event) => {
@@ -32,7 +32,7 @@ const Formular = () => {
 
 
     const handleToggle = () => {
-        setChecked(!checked);
+        setChecked(!createNewCollection);
     }
 
     // Populate form fields based on JSON data
@@ -63,14 +63,16 @@ const Formular = () => {
             return;
         }
 
+        const dataToUpload = { ...uploadedData, createNewCollection };
+
         try {
-            const response = await fetch(`http://localhost:3000/api/items/upload${checked ? "?createcollection=true" : ""}`, {
+            const response = await fetch(`http://localhost:3000/api/items/upload`, {
                 method: "POST",
                 headers: {
                     "Authorization": "Bearer " + token,
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(uploadedData)
+                body: JSON.stringify(dataToUpload)
             });
 
             if (response.ok) {
@@ -151,7 +153,7 @@ const Formular = () => {
             </div>
 
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" id="newCollectionSwitch" name="newCollection" checked={checked} onChange={handleToggle} />
+                <input class="form-check-input" type="checkbox" id="newCollectionSwitch" name="newCollection" checked={createNewCollection} onChange={handleToggle} />
                 <label class="form-check-label" for="newCollectionSwitch">Create new Collection?</label>
             </div>
 
