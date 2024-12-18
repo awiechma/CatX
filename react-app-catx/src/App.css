@@ -136,24 +136,18 @@
 /* container on the right side for list */
 .right-aligned-container {
   position: absolute;
-  top: 48%;
-  right: 1rem;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: flex-end;
-  padding: 1rem;
-  justify-content: center;
-  right: 3%;
+  top: 30%; /* Optional: Passe die vertikale Position an */
+  bottom: 10%; /* Sorgt dafür, dass der Container den gesamten Bereich einnimmt */
+  right: 3%; /* Setzt den Container an den rechten Rand */
+  width: 60%; /* X durch den Platz für andere Inhalte (z. B. Sidebar) ersetzen, falls nötig */
   background-color: #dfe8ef;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  width: 100%;
-  max-width: 800px;
-  margin: auto;
-  position: absolute;
-  font-weight: bold;
-
+  border-radius: 8px; /* Falls abgerundete Ecken nötig sind */
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
 }
+
 
 /* style for heading */
 .right-aligned-container h3 {
