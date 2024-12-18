@@ -18,15 +18,26 @@ const Add = () => {
         }
     }, [location.state]);
     return (
-        <div>
-            {/* Container for the h1 */}
-            <div className="heading-add-page">
-                <h1>Form for metadata</h1>
-            </div>
+      <div className="add-page-container">
+            <div className="content">
+                <div className="search-filter-container">
+                    <SearchBar
+                        onSearch={(query) => setSearchQuery(query)}
+                        initialSearchTerm={searchQuery}
+                    />
+                </div>
 
-            <Formular />
+                <div className="heading-add-page">
+                    <h1>Form for metadata</h1>
+                </div>
+
+                <div className="formular-form">
+                    <Formular />
+                </div>
+            </div>
             <Footer />
         </div>
+
     );
 
 

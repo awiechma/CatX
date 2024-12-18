@@ -9,6 +9,26 @@
     padding-right: 3%;
 }
 
+/* Sicherstellen, dass die Seite mindestens 100% der Viewporthöhe einnimmt */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.add-page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Nimmt die gesamte Höhe ein */
+}
+
+/* Der Hauptinhalt bekommt flexibles Layout */
+.content {
+  flex: 1; /* Verfügt über den verbleibenden Platz */
+  padding-bottom: 50px; /* Sicherstellen, dass der Footer nicht überlappt */
+}
+
+
 .add-tag-button{
     color: rgb(0, 0, 0) !important;
     background-color: #ffffff !important;

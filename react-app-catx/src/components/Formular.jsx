@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import TagInput from "./TagInput";
 import Button from "./Button";
+import "/src/Add.css";
 
 const Formular = () => {
     const [formData, setFormData] = useState({}); // Zustand für die Formularfelder
