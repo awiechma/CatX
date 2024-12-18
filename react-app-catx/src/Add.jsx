@@ -18,7 +18,7 @@ const Add = () => {
         }
     }, [location.state]);
     return (
-        <div className="add-page-container">
+      <div className="add-page-container">
             <div className="content">
                 <div className="search-filter-container">
                     <SearchBar
@@ -35,7 +35,6 @@ const Add = () => {
                     <Formular />
                 </div>
             </div>
-
             <Footer />
         </div>
 

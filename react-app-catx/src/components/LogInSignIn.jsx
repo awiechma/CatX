@@ -86,7 +86,7 @@ const LogInSignIn = () => {
 
     return (
         <div>
-            <section className="vh-100" style={{ marginTop: '3rem' }}>
+            <section>
                 <div className="container-fluid h-custom">
                     <div className="row d-flex justify-content-center align-items-center h-100">
                         {/* Login Fields */}

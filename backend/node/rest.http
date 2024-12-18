@@ -41,7 +41,7 @@ GET http://localhost:3000/api/keywords?limit=10&offset=0
 GET http://localhost:3000/api/items?limit=10&offset=0
 
 ### search
-GET http://localhost:3000/stac/search?limit=10&offset=0&search=stac
+GET http://localhost:3000/stac/search?search=resnet
 
 
 ### get example collection from github
@@ -61,7 +61,7 @@ Content-Type: application/json
 
 ###
 # @name itemGitHub
-GET https://raw.githubusercontent.com/stac-extensions/mlm/refs/heads/main/examples/item_basic.json
+GET https://raw.githubusercontent.com/stac-extensions/mlm/refs/heads/main/examples/item_bands_expression.json
 ###
 @item = {{itemGitHub.response.body.*}}
 
