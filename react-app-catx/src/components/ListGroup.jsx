@@ -1,12 +1,15 @@
 import React from "react";
+import "../App.css"
 
 // creates listgroup 
 const ListGroup = () => {
     return (
-        <ul className="list-group list-group-flush">
-            
-            
-        </ul>
+        <div>
+            <h2 className="text-xl font-bold mb-2">Recently Added:</h2>
+            <div class="list-group">
+                <a href="/view" class="list-group-item list-group-item-action">Link to Model</a>
+            </div>
+        </div>
     );
 };
 
