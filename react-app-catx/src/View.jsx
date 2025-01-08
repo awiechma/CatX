@@ -1,34 +1,43 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "./View.css";
-import SearchBar from "./components/SearchBar";
-import FilterableListGroup from "./components/FilterableListGroup";
+import SearchBar from "./components/View/SearchBar";
+import Filter from "./components/View/Filter";
+import FilterableListGroup from "./components/View/ItemListAndDisplay";
 import Footer from "./components/Footer";
+import ItemListAndDisplay from "./components/View/ItemListAndDisplay";
 
 const View = () => {
     const location = useLocation();
-    const [searchQuery, setSearchQuery] = useState("");
+    const [searchString, setSearchString] = useState("");
+    const [selectedTags, setSelectedTags] = useState([]);
 
     // take the search input from router-state 
     useEffect(() => {
-        if (location.state?.searchQuery) {
-            setSearchQuery(location.state.searchQuery);
+        if (location.state?.searchString) {
+            setSearchString(location.state.searchString);
+        }
+        if (location.state?.selectedTags) {
+            setSelectedTags(location.state.selectedTags);
         }
     }, [location.state]);
 
     return (
-        <div className="d-flex flex-column min-vh-100">
-            <main className="flex-grow-1">
-                {/* SearchBar: "searchQuery" state stays */}
+        <div className="page-div">
+            <div className="view-div">
                 <SearchBar
-                    onSearch={(query) => setSearchQuery(query)}
-                    initialSearchTerm={searchQuery}
+                    searchString={searchString}
+                    setSearchString={setSearchString}
                 />
-
-                <div className="FilterableListGroup-container">
-                    <FilterableListGroup searchQuery={searchQuery} />
-                </div>
-            </main>
+                <Filter
+                    selectedTags={selectedTags}
+                    setSelectedTags={setSelectedTags}
+                />
+                <ItemListAndDisplay
+                    searchString={searchString}
+                    selectedTags={selectedTags}
+                />
+            </div>
 
             <Footer />
         </div>

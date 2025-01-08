@@ -4,6 +4,7 @@
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   padding: 0.5rem 1rem;
   font-family: Arial, sans-serif;
+  height: 8%;
 }
 
 /* our CatX-Logo in Navbar */
@@ -136,14 +137,15 @@
 /* container on the right side for list */
 .right-aligned-container {
   position: absolute;
-  top: 30%; /* Optional: Passe die vertikale Position an */
-  bottom: 10%; /* Sorgt dafür, dass der Container den gesamten Bereich einnimmt */
-  right: 3%; /* Setzt den Container an den rechten Rand */
+  top: 8%; /* Optional: Passe die vertikale Position an */
+  bottom: 8%; /* Sorgt dafür, dass der Container den gesamten Bereich einnimmt */
+  right: 0%; /* Setzt den Container an den rechten Rand */
   width: 60%; /* X durch den Platz für andere Inhalte (z. B. Sidebar) ersetzen, falls nötig */
   background-color: #dfe8ef;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px; /* Falls abgerundete Ecken nötig sind */
   padding: 1rem;
+  margin: 2% 2%;
   display: flex;
   flex-direction: column;
 }
@@ -205,12 +207,14 @@
 }
 
 .left-aligned-container {
-  bottom: 6%;
-  top: 10%;
+  bottom: 8%;
+  top: 8%;
+  left: 0%;
+  height: 84%;
 }
 
 /*Homepage Button View*/
-.left-aligned-container-view {
+.left-aligned-container-small {
   display: flex;
   justify-content: center;
   padding-left: 1rem;
@@ -222,13 +226,30 @@
   border-radius: 8px;
   width: 100%;
   max-width: 350px;
-  margin: auto;
+  margin: 2% 2%;
   position: absolute;
-  top: 30%;
-  left: 3%;
+  left: 0%;
   font-weight: bold;
   flex-direction: column;
 }
+
+.view {
+  top: 8%;
+}
+
+.add {
+  top: 29%;
+}
+
+.account {
+  top: 50%
+}
+
+.help {
+  top: 71%;
+}
+
+
 
 .btn-view {
   color: rgb(0, 0, 0) !important;
@@ -249,26 +270,6 @@
   color: #ffffff !important;
 }
 
-/*Homepage Button Add*/
-.left-aligned-container-add {
-  display: flex;
-  justify-content: center;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  background-color: #dfe8ef;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  width: 100%;
-  max-width: 350px;
-  margin: auto;
-  position: absolute;
-  top: 48%;
-  left: 3%;
-  font-weight: bold;
-  flex-direction: column;
-}
 
 .btn-add {
   color: rgb(0, 0, 0) !important;
@@ -289,27 +290,6 @@
   color: #ffffff !important;
 }
 
-/*Homepage Button Account*/
-.left-aligned-container-account {
-  display: flex;
-  justify-content: center;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  background-color: #dfe8ef;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  width: 100%;
-  max-width: 350px;
-  margin: auto;
-  position: absolute;
-  top: 66%;
-  left: 3%;
-  font-weight: bold;
-  flex-direction: column;
-}
-
 .btn-account {
   color: rgb(0, 0, 0) !important;
   background-color: #ffffff !important;
@@ -327,27 +307,6 @@
   background-color: #94b5ce !important;
   border-color: #94b5ce !important;
   color: #ffffff !important;
-}
-
-/*Homepage Button Help*/
-.left-aligned-container-help {
-  display: flex;
-  justify-content: center;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  background-color: #dfe8ef;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  width: 100%;
-  max-width: 350px;
-  margin: auto;
-  position: absolute;
-  top: 84%;
-  left: 3%;
-  font-weight: bold;
-  flex-direction: column;
 }
 
 .btn-help {

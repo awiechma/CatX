@@ -1,35 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../View.css";
+import "../../View.css";
 
-const FilterableListGroup = ({ initialsearchString }) => {
+const ItemListAndDisplay = ({ searchString, selectedTags }) => {
     const [items, setItems] = useState([]);
-    const [tags, setTags] = useState([]);
-    const [searchString, setSearchString] = useState(initialsearchString || "");
-    const [selectedTags, setSelectedTags] = useState([]);
     const [selectedItem, setSelectedItem] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const fetchTagsAndItems = async () => {
-            try {
-                const tagResponse = await fetch("http://localhost:3000/api/mlmtasks");
-                if (!tagResponse.ok) throw new Error(`HTTP Error: ${tagResponse.status}`);
-                const tagData = await tagResponse.json();
-                setTags(tagData.map(x => x.task));
-
-                // Fetch initial items
-                await fetchItems();
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchTagsAndItems();
-    }, []);
 
     const fetchItems = async () => {
         setIsLoading(true);
@@ -48,14 +25,6 @@ const FilterableListGroup = ({ initialsearchString }) => {
         } finally {
             setIsLoading(false);
         }
-    };
-
-    const toggleTag = (tag) => {
-        setSelectedTags((prevSelected) =>
-            prevSelected.includes(tag)
-                ? prevSelected.filter((t) => t !== tag)
-                : [...prevSelected, tag]
-        );
     };
 
     useEffect(() => {
@@ -99,26 +68,14 @@ const FilterableListGroup = ({ initialsearchString }) => {
     };
 
 
-    if (isLoading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
+    if (isLoading) return <div className="custom-container bg-body-tertiary">Loading...</div>;
+    if (error) return <div className="custom-container bg-body-tertiary">Error: {error}</div>;
 
     return (
-        <div className="p-4">
+        <div className="custom-container bg-body-tertiary items-container">
             {!selectedItem ? (
                 <>
-                    <h1 className="text-xl font-bold mb-4">Results</h1>
-                    <div className="mb-4 flex flex-wrap">
-                        {tags.map((tag) => (
-                            <button
-                                key={tag}
-                                onClick={() => toggleTag(tag)}
-                                className={`px-3 py-1 m-1 rounded-lg border ${selectedTags.includes(tag) ? "selected-tag" : "other-tag"}`}
-                            >
-                                {tag}
-                            </button>
-                        ))}
-                    </div>
-
+                    <h3>Results</h3>
                     <ul className="list-group">
                         {items.length > 0 ? (
                             items.map((item) => (
@@ -139,28 +96,30 @@ const FilterableListGroup = ({ initialsearchString }) => {
                     </ul>
                 </>
             ) : (
-                <div className="grid grid-cols-2 gap-4">
+                <div >
                     <button onClick={goBack} className="back-button">Back to List</button>
-                    <div className="left-side-container-view-page">
-                        <h2 className="text-xl font-bold mb-2">Detailed Info</h2>
-                        <div className="detail-preview-left-side">
-                            <ul className="list-disc pl-4">
-                                {/* Render item details */}
-                                {Object.entries(selectedItem || {}).map(([key, value]) => (
-                                    <li key={key}>
-                                        <strong>{key}:</strong> {renderValue(value)}
-                                    </li>
-                                ))}
-                            </ul>
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="left-side-container-view-page">
+                            <h2 className="text-xl font-bold mb-2">Detailed Info</h2>
+                            <div className="detail-preview-left-side">
+                                <ul className="list-disc pl-4">
+                                    {/* Render item details */}
+                                    {Object.entries(selectedItem || {}).map(([key, value]) => (
+                                        <li key={key}>
+                                            <strong>{key}:</strong> {renderValue(value)}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                    <div className="json-preview-right-side">
-                        <h2 className="text-xl font-bold mb-2">JSON View</h2>
-                        <textarea
-                            readOnly
-                            value={JSON.stringify(selectedItem, null, 2)}
-                            className="w-full h-64 p-2 border rounded bg-white"
-                        />
+                        <div className="json-preview-right-side">
+                            <h2 className="text-xl font-bold mb-2">JSON View</h2>
+                            <textarea
+                                readOnly
+                                value={JSON.stringify(selectedItem, null, 2)}
+                                className="w-full h-64 p-2 border rounded bg-white"
+                            />
+                        </div>
                     </div>
                 </div>
             )}
@@ -168,4 +127,4 @@ const FilterableListGroup = ({ initialsearchString }) => {
     );
 };
 
-export default FilterableListGroup;
+export default ItemListAndDisplay;

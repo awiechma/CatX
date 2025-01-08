@@ -3,7 +3,6 @@ import React from "react";
 import "./Help.css";
 import Button from "./components/Button";
 import Navbar from "./components/Navbar";
-import SearchBar from "./components/SearchBar";
 import ScrollSpy from "./components/Scrollspy";
 import Footer from "./components/Footer";
 
@@ -11,7 +10,6 @@ const Help = () => {
   return (
     <div>
       <Navbar />
-      <SearchBar />
       <div className="intro-to-help">
         <p>
           <h3>User Guide for STAC Metadata Integration</h3>
