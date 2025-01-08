@@ -95,6 +95,7 @@ const ScrollSpyComponent = () => {
                             discoverable, and usable.
                         </p>
                     </div>
+                    <br></br>
                     <div id="item-1-1">
                         <h5>Core Components of STAC</h5>
                         <ul>
@@ -117,9 +118,13 @@ const ScrollSpyComponent = () => {
                             </li>
                         </ul>
                     </div>
+                  
+                    <hr></hr>
+                    <br></br>
                     <div id="item-2">
                         <h4>Getting Started with STAC Clients</h4>
                     </div>
+                    <br></br>
                     <div id="item-2-1">
                         <h5>Overview</h5>
                         <ul>
@@ -134,6 +139,7 @@ const ScrollSpyComponent = () => {
                             </li>
                         </ul>
                     </div>
+                    <br></br>
                     <div id="item-2-2">
                         <h5>Installation</h5>
                         <p>
@@ -159,8 +165,12 @@ const ScrollSpyComponent = () => {
                             </code>
                         </pre>
                     </div>
+                    
+                    <hr></hr>
+                    <br></br>
                     <div id="item-3">
                         <h4>Using STAC Clients in R</h4>
+                        <br></br>
                         <div id="item-3-1">
                             <h5>Connecting to a STAC</h5>
                             <p>
@@ -175,8 +185,9 @@ const ScrollSpyComponent = () => {
                                     &lt;- stac(stac_url)
                                 </code>
                             </pre>
+                            <br></br>
                             <div id="item-3-2">
-                                <h6>Retrieving Metadata</h6>
+                                <h5>Retrieving Metadata</h5>
                                 <p>Fetch details about the STAC service or its collections:</p>
                                 <pre>
                                     <code>
@@ -187,8 +198,9 @@ const ScrollSpyComponent = () => {
                                     </code>
                                 </pre>
                             </div>
+                            <br></br>
                             <div id="item-3-3">
-                                <h6>Searching for Items</h6>
+                                <h5>Searching for Items</h5>
                                 <p>
                                     Filter data by collection, time period, or other parameters:
                                 </p>
@@ -207,8 +219,9 @@ const ScrollSpyComponent = () => {
                                     </code>
                                 </pre>
                             </div>
+                            <br></br>
                             <div id="item-3-4">
-                                <h6>Downloading Assets</h6>
+                                <h5>Downloading Assets</h5>
                                 <p>Download files associated with your search:</p>
                                 <pre>
                                     <code>
@@ -224,10 +237,13 @@ const ScrollSpyComponent = () => {
                             </div>
                         </div>
                     </div>
-
+                   
+                    <hr></hr>
+                    <br></br>
                     <div id="item-4">
                         <h4>Using STAC Clients in Python</h4>
                     </div>
+                    <br></br>
                     <div id="item-4-1">
                         <h5>Connecting to a STAC</h5>
                         <p>Connect to catalog using its URL:</p>
@@ -247,6 +263,7 @@ const ScrollSpyComponent = () => {
                             </code>
                         </pre>
                     </div>
+                    <br></br>
                     <div id="item-4-2">
                         <h5>Exploring Metadata</h5>
                         <p>Fetch and display metadata about the catalog, collections, or items:</p>
@@ -267,6 +284,7 @@ const ScrollSpyComponent = () => {
                             </code>
                         </pre>
                     </div>
+                    <br></br>
                     <div id="item-4-3">
                         <h5>Searching the Catalog</h5>
                         <p>Use the client to search for specific datasets:</p>
@@ -285,6 +303,7 @@ const ScrollSpyComponent = () => {
                             </code>
                         </pre>
                     </div>
+                    <br></br>
                     <div id="item-4-4">
                         <h5>Downloading Assets</h5>
                         <p>Download data files from an item’s assets:</p>
@@ -308,6 +327,9 @@ const ScrollSpyComponent = () => {
                         </pre>
                     </div>
                 </div>
+              
+                <hr></hr>
+                <br></br>
                 <div id="item-5">
                     <h4>Comparing RSTAC and PySTAC</h4>
                     <div>
@@ -353,6 +375,9 @@ const ScrollSpyComponent = () => {
                             </tbody>
                         </table>
                     </div>
+                    <br></br>
+                    <hr></hr>
+                    <br></br>
                     <div id="item-6">
                         <h4>Additional Resources</h4>
                         <div>
