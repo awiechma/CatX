@@ -1,0 +1,10 @@
+.impressum{
+position: relative;
+margin: 6% auto 2%; /* Steuert den Abstand: 10% oben, auto horizontal, 2% unten */
+background-color: #dfe8ef;
+box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+border-radius: 8px; /* Abgerundete Ecken */
+padding: 1rem;
+width: 96%;
+min-height: calc(100vh - 16%); /* Berücksichtigt den Platzbedarf */
+}
