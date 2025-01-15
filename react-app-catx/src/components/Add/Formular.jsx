@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import TagInput from "./TagInput";
-import Button from "./Button";
+import TagInput from "../TagInput";
+import Button from "../Button";
 import "/src/Add.css";
 
 const token = localStorage.getItem("catx-user-session-token");
@@ -20,6 +20,7 @@ const Formular = () => {
                     const json = JSON.parse(e.target.result);
                     setUploadedData(json);
                     populateFormFields(json);
+                    setSubmitStatus("File uploaded successfully.");
                 } catch (error) {
                     console.error("Error parsing JSON:", error);
                     setSubmitStatus("Error parsing the uploaded JSON file.");
@@ -47,37 +48,39 @@ const Formular = () => {
             type: json.type || "",
             id: json.id || "",
             collection: json.collection || "",
+            assets: json.assets || "",
             geometry: JSON.stringify(json.geometry, null, 2) || "",
-            startDatetime: json.properties?.start_datetime || "",
-            endDatetime: json.properties?.end_datetime || "",
             mlmName: json.properties?.["mlm:name"] || "",
             mlmTasks: json.properties?.["mlm:tasks"]?.join(", ") || "",
             mlmArchitecture: json.properties?.["mlm:architecture"] || "",
-            mlmInput: JSON.stringify(json.properties?.["mlm:input"], null, 2) || "",
-            mlmOutput: JSON.stringify(json.properties?.["mlm:output"], null, 2) || "",
-            assets: JSON.stringify(json.assets, null, 2) || "",
-            links: JSON.stringify(json.links, null, 2) || "",
         });
     };
 
     const handleSubmit = async () => {
-        const payload = {
-            ...formData,
-            geometry: JSON.parse(formData.geometry),
-            assets: JSON.parse(formData.assets),
-            links: JSON.parse(formData.links),
-            mlmInput: JSON.parse(formData.mlmInput),
-            mlmOutput: JSON.parse(formData.mlmOutput),
-        };
-
         try {
+            let body = {
+                stac_version: "1.0",
+                title: formData.title,
+                type: formData.type,
+                id: formData.id,
+                collection: formData.collection,
+                assets: formData.assets,
+                geometry: formData.geometry,
+                properties: {
+                    'mlm:name': formData.mlmName,
+                    'mlm:tasks': formData.mlmTasks,
+                    'mlm:architecture': formData.mlmArchitecture
+                },
+                createNewCollection
+            }
+            console.log(formData)
             const response = await fetch('http://localhost:3000/api/items/upload', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     "Authorization": "Bearer " + token,
                 },
-                body: JSON.stringify(payload),
+                body: JSON.stringify(body),
             });
 
             if (!response.ok) {
@@ -85,12 +88,15 @@ const Formular = () => {
             }
 
             const data = await response.json();
+            setSubmitStatus("Upload successful!");
             console.log('Upload successful:', data);
         } catch (error) {
             console.error('Error uploading data:', error);
+            setSubmitStatus("Error uploading data.");
         }
     };
 
+    const isSubmitDisabled = !formData.title || !formData.geometry || !formData.type || !formData.id;
 
     return (
         <div className="formular-form">
@@ -100,6 +106,7 @@ const Formular = () => {
                     className="form-control"
                     type="file"
                     id="file-upload"
+                    accept=".json"
                     onChange={handleFileUpload}
                 />
             </div>
@@ -143,6 +150,29 @@ const Formular = () => {
             </div>
 
             <div className="input-group mb-3">
+                <span className="input-group-text">Geometry</span>
+                <textarea
+                    className="form-control"
+                    placeholder="Enter geometry in JSON format"
+                    value={formData.geometry || ""}
+                    name="geometry"
+                    onChange={handleInputChange}
+                ></textarea>
+            </div>
+
+            <div className="input-group mb-3">
+                <span className="input-group-text">Assets</span>
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="JSON..."
+                    value={formData.assets || ""}
+                    name="assets"
+                    onChange={handleInputChange}
+                />
+            </div>
+
+            <div className="input-group mb-3">
                 <span className="input-group-text">Collection</span>
                 <input
                     type="text"
@@ -168,45 +198,8 @@ const Formular = () => {
                 </label>
             </div>
 
-            <div className="input-group mb-3">
-                <span className="input-group-text">Geometry</span>
-                <textarea
-                    className="form-control"
-                    placeholder="Enter geometry in JSON format"
-                    value={formData.geometry || ""}
-                    name="geometry"
-                    onChange={handleInputChange}
-                ></textarea>
-            </div>
-
-            {/* Start Datetime */}
-            <div className="input-group mb-3">
-                <span className="input-group-text">Start Datetime</span>
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Start Datetime"
-                    value={formData.startDatetime || ""}
-                    name="startDatetime"
-                    onChange={handleInputChange}
-                />
-            </div>
-
-            {/* End Datetime */}
-            <div className="input-group mb-3">
-                <span className="input-group-text">End Datetime</span>
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="End Datetime"
-                    value={formData.endDatetime || ""}
-                    name="endDatetime"
-                    onChange={handleInputChange}
-                />
-            </div>
-
-            {/* MLM Name */}
-            <div className="input-group mb-3">
+            {/* MLM Input Fields */}
+            <div className="input-group mb-3 mt-5">
                 <span className="input-group-text">MLM Name</span>
                 <input
                     type="text"
@@ -218,7 +211,6 @@ const Formular = () => {
                 />
             </div>
 
-            {/* MLM Tasks */}
             <div className="input-group mb-3">
                 <span className="input-group-text">MLM Tasks</span>
                 <input
@@ -231,7 +223,6 @@ const Formular = () => {
                 />
             </div>
 
-            {/* MLM Architecture */}
             <div className="input-group mb-3">
                 <span className="input-group-text">MLM Architecture</span>
                 <input
@@ -244,53 +235,7 @@ const Formular = () => {
                 />
             </div>
 
-            {/* MLM Input */}
-            <div className="input-group mb-3">
-                <span className="input-group-text">MLM Input</span>
-                <textarea
-                    className="form-control"
-                    placeholder="Describe the input data"
-                    value={formData.mlmInput || ""}
-                    name="mlmInput"
-                    onChange={handleInputChange}
-                ></textarea>
-            </div>
-
-            {/* MLM Output */}
-            <div className="input-group mb-3">
-                <span className="input-group-text">MLM Output</span>
-                <textarea
-                    className="form-control"
-                    placeholder="Describe the output data"
-                    value={formData.mlmOutput || ""}
-                    name="mlmOutput"
-                    onChange={handleInputChange}
-                ></textarea>
-            </div>
-
-            {/* Assets */}
-            <div className="input-group mb-3">
-                <span className="input-group-text">Assets</span>
-                <textarea
-                    className="form-control"
-                    placeholder="Enter assets as JSON array (e.g., href, title, description)"
-                    value={formData.assets || ""}
-                    name="assets"
-                    onChange={handleInputChange}
-                ></textarea>
-            </div>
-
-            {/* Links */}
-            <div className="input-group mb-3">
-                <span className="input-group-text">Links</span>
-                <textarea
-                    className="form-control"
-                    placeholder="Enter links as JSON array (e.g., rel, href, type)"
-                    value={formData.links || ""}
-                    name="links"
-                    onChange={handleInputChange}
-                ></textarea>
-            </div>
+            
 
             <TagInput />
 
@@ -300,6 +245,7 @@ const Formular = () => {
                     text="Submit"
                     className="upload-button"
                     onClick={handleSubmit}
+                    disabled={isSubmitDisabled}
                 >
                     Submit
                 </Button>
