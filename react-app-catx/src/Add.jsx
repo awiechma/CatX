@@ -2,7 +2,10 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "./Add.css";
-import Formular from "./components/Formular";
+
+import SearchBar from "./components/SearchBar";
+import Formular from "./components/Add/Formular";
+
 import Footer from "./components/Footer";
 
 

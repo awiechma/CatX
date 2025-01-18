@@ -633,11 +633,12 @@ app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), 
         update_user
       )
       VALUES ($1,$2,$3,$4,$4)
+      ON CONFLICT (collection, id, task) DO NOTHING
       `
       }
 
-      for (const task of mlmTasks) {
-        await db.query(insertTasksQuery, [id, collection, task, user]);
+      for (const task of mlmTasks.split(',')) {
+        await db.query(insertTasksQuery, [id, collection, task.trim(), user]);
       }
     }
 
