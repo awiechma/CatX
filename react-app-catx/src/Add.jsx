@@ -1,11 +1,7 @@
 // import all the components used in the app
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import "./Add.css";
-
-import SearchBar from "./components/SearchBar";
 import Formular from "./components/Add/Formular";
-
 import Footer from "./components/Footer";
 
 
