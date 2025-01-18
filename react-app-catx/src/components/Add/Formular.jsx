@@ -305,7 +305,7 @@ const Formular = () => {
                         <button
                             key={index}
                             type="button"
-                            className="btn btn-secondary me-2"
+                            className="btn btn-secondary me-2 mb-2"
                             onClick={() => handleAddOptionalField(field)}
                         >
                             Add {field.label}
