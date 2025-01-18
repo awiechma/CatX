@@ -1,15 +1,35 @@
 import React, { useState } from "react";
-import TagInput from "../TagInput";
+import { useNavigate } from "react-router-dom";
+import TagInput from "./TagInput";
 import Button from "../Button";
 import "/src/Add.css";
-
+    
 const token = localStorage.getItem("catx-user-session-token");
+
+const optionalFieldOptions = [
+    { name: 'mlm:framework', label: 'MLM Framework' },
+    { name: 'mlm:framework_version', label: 'MLM Framework Version' },
+    { name: 'mlm:memory_size', label: 'MLM Memory Size' },
+    { name: 'mlm:total_parameters', label: 'MLM Total Parameters' },
+    { name: 'mlm:pretrained', label: 'MLM Pretrained', type: 'checkbox' },
+    { name: 'mlm:pretrained_source', label: 'MLM Pretrained Source' },
+    { name: 'mlm:batch_size_suggestion', label: 'MLM Batch Size Suggestion' },
+    { name: 'mlm:accelerator', label: 'MLM Accelerator' },
+    { name: 'mlm:accelerator_constrained', label: 'MLM Accelerator Constrained', type: 'checkbox' },
+    { name: 'mlm:accelerator_summary', label: 'MLM Accelerator Summary' },
+    { name: 'mlm:accelerator_count', label: 'MLM Accelerator Count' },
+    { name: 'mlm:input', label: 'MLM Input' },
+    { name: 'mlm:output', label: 'MLM Output' },
+    { name: 'mlm:hyperparameters', label: 'MLM Hyperparameters' }
+];
 
 const Formular = () => {
     const [formData, setFormData] = useState({});
-    const [uploadedData, setUploadedData] = useState(null);
+    const [uploadedData, setUploadedData] = useState({});
     const [submitStatus, setSubmitStatus] = useState("");
     const [createNewCollection, setChecked] = useState(false);
+    const [optionalFields, setOptionalFields] = useState([]);
+    
 
     const handleFileUpload = (event) => {
         const file = event.target.files[0];
@@ -36,6 +56,12 @@ const Formular = () => {
             ...prev,
             [name]: value,
         }));
+    };
+
+    const handleAddOptionalField = (field) => {
+        if (!optionalFields.includes(field)) {
+            setOptionalFields([...optionalFields, field]);
+        }
     };
 
     const handleToggle = () => {
@@ -69,11 +95,24 @@ const Formular = () => {
                 properties: {
                     'mlm:name': formData.mlmName,
                     'mlm:tasks': formData.mlmTasks,
-                    'mlm:architecture': formData.mlmArchitecture
+                    'mlm:architecture': formData.mlmArchitecture,
+                    'mlm:framework': formData.mlmFramework,
+                    'mlm:framework_version': formData.mlmFrameworkVersion,
+                    'mlm:memory_size': formData.mlmMemorySize,
+                    'mlm:total_parameters': formData.mlmTotalParameters,
+                    'mlm:pretrained': formData.mlmPretrained,
+                    'mlm:pretrained_source': formData.mlmPretrainedSource,
+                    'mlm:batch_size_suggestion': formData.mlmBatchSizeSuggestion,
+                    'mlm:accelerator': formData.mlmAccelerator,
+                    'mlm:accelerator_constrained': formData.mlmAcceleratorConstrained,
+                    'mlm:accelerator_summary': formData.mlmAcceleratorSummary,
+                    'mlm:accelerator_count': formData.mlmAcceleratorCount,
+                    'mlm:input': formData.mlmInput,
+                    'mlm:output': formData.mlmOutput,
+                    'mlm:hyperparameters': formData.mlmHyperparameters
                 },
                 createNewCollection
             }
-            console.log(formData)
             const response = await fetch('http://localhost:3000/api/items/upload', {
                 method: 'POST',
                 headers: {
@@ -82,7 +121,6 @@ const Formular = () => {
                 },
                 body: JSON.stringify(body),
             });
-
             if (!response.ok) {
                 throw new Error(`HTTP Error: ${response.status}`);
             }
@@ -235,7 +273,46 @@ const Formular = () => {
                 />
             </div>
 
-            
+            <div className="h3">Optional Data</div>
+
+            {optionalFields.map((field, index) => (
+                <div className="input-group mb-3" key={index}>
+                    <span className="input-group-text">{field.label}</span>
+                    {field.type === 'checkbox' ? (
+                        <input
+                            type="checkbox"
+                            className="form-check-input"
+                            checked={formData[field.name] || false}
+                            name={field.name}
+                            onChange={handleInputChange}
+                        />
+                    ) : (
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder={field.label}
+                            value={formData[field.name] || ""}
+                            name={field.name}
+                            onChange={handleInputChange}
+                        />
+                    )}
+                </div>
+            ))}
+
+            <div className="mb-3">
+                {optionalFieldOptions.map((field, index) => (
+                    !optionalFields.includes(field) && (
+                        <button
+                            key={index}
+                            type="button"
+                            className="btn btn-secondary me-2"
+                            onClick={() => handleAddOptionalField(field)}
+                        >
+                            Add {field.label}
+                        </button>
+                    )
+                ))}
+            </div>
 
             <TagInput />
 
