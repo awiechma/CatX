@@ -8,7 +8,15 @@
 }
 
 .intro-to-help{
-    padding-top: 12%;
+    padding-top: 8%;
     padding-left: 3%;
     padding-right: 3%;
 }
+
+#navbar-example3 {
+    position: sticky;
+    top: 0;
+    max-height: 100vh;
+    overflow-y: auto;
+}
+

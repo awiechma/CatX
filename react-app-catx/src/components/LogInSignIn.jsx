@@ -89,7 +89,7 @@ const LogInSignIn = () => {
             <section>
                 <div className="d-flex flex-column min-vh-100">
                     <main className="flex-grow-1">
-                        <div className="row d-flex justify-content-center align-items-center h-100">
+                        <div className="row d-flex justify-content-center align-items-start" style={{ marginTop: '10%' }}>
                             {/* Login Fields */}
                             <div className="col-md-8 col-lg-6 col-xl-4">
                                 <form onSubmit={handleLogin}>
@@ -140,7 +140,7 @@ const LogInSignIn = () => {
                             </div>
 
                             {/* Registration Fields */}
-                            <div className="col-md-9 col-lg-6 col-xl-5 offset-xl-1" style={{ marginTop: '10rem' }}>
+                            <div className="col-md-9 col-lg-6 col-xl-5 offset-xl-1">
                                 <form onSubmit={handleRegister}>
                                     <div className="divider d-flex align-items-center my-4">
                                         <p className="text-center fw-bold mx-3 mb-0">Registration</p>
