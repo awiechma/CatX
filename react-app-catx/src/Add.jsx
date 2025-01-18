@@ -2,7 +2,7 @@ import React from "react";
 import "./Add.css";
 import Formular from "./components/Add/Formular";
 import Footer from "./components/Footer";
-import useAuth from "./UserAuth";
+import useAuth from "./components/UserAuth";
 import { useNavigate } from "react-router-dom";
 
 const Add = () => {
