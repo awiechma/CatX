@@ -1,26 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from 'react';
 import './App.css';
 import Button from "./components/Button";
 import Navbar from "./components/Navbar";
 import { Link } from "react-router-dom";
 import Footer from "./components/Footer";
+import RecentItems from "./components/App/RecentItems";
 
 function App() {
-
-    const [recentItems, setRecentItems] = useState([]);
-
-    useEffect(() => {
-        const fetchRecentItems = async () => {
-            try {
-                const response = await fetch('http://localhost:3000/api/recent-items');
-                const data = await response.json();
-                setRecentItems(data);
-            } catch (error) {
-                console.error('Error fetching recent items:', error);
-            }
-        };
-        fetchRecentItems();
-    }, []);
 
     return (
         <div className="app-container">
@@ -55,17 +41,7 @@ function App() {
                     </div>
                     <div className="right-aligned-container bg-body-tertiary">
                         <div className="mb-5"><h3>Recently Added Models</h3></div>
-                        <div className="recent-items-list">
-                            {recentItems.map((item) => (
-                                //TODO /view/${item.id}
-                                <Link to={`/view/`} key={item.id} className="recent-item-box mb-3">
-                                    <div className="recent-item-content center-vertical">
-                                        <strong>{item.properties['mlm:name']}</strong>
-                                        <p>{item.properties.description}</p>
-                                    </div>
-                                </Link>
-                            ))}
-                        </div>
+                        <RecentItems />
                     </div>
                 </main>
             </div>

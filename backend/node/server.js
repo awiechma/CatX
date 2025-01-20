@@ -231,7 +231,7 @@ app.get('/api/recent-items', async (req, res) => {
     const result = await pool.query(`
           SELECT * FROM items_complete_view
           ORDER BY id DESC
-          LIMIT 5
+          LIMIT 10
       `);
     res.json(result.rows);
   } catch (err) {
