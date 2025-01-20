@@ -23,23 +23,6 @@ const app = express();
 app.use(express.json());
 
 // Set up the PostgreSQL connection pool
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
-
-const connectWithRetry = async () => {
-  console.log('Waiting 5 seconds before trying to connect to database...');
-  await new Promise(resolve => setTimeout(resolve, 5000));
-  try {
-    await pool.connect();
-    console.log('Connected to database successfully.');
-  } catch (err) {
-    console.error('Error connecting to database:', err);
-    setTimeout(connectWithRetry, 5000);
-  }
-};
-
-connectWithRetry();
 
 // Initialize passport for JWT authentication
 app.use(passport.initialize());
@@ -231,7 +214,7 @@ app.get('/api/mlmtasks', async (req, res) => {
 
 app.get('/api/recent-items', async (req, res) => {
   try {
-    const result = await pool.query(`
+    const result = await db.query(`
           SELECT * FROM items_complete_view
           ORDER BY id DESC
           LIMIT 10
