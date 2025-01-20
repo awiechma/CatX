@@ -16,10 +16,14 @@ body {
 .view-div {
     display: flex;
     flex-direction: column;
-    height: 84vh;
+    height: 100%;
     margin-top: 8vh;
     width: 100%;
     position: relative;
+}
+
+.height90{
+    height: 90%;
 }
 
 .custom-container {
@@ -126,16 +130,15 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     left: 3%;
     top: 30%;
-    bottom: 13%;
+    bottom: 5%;
 }
 
 .detail-preview-left-side {
-    overflow: auto;
     width: 100%;
-    height: 90%;
+    height: 85%;
     padding: 10px;
     font-size: 14px;
-    resize: vertical;
+    overflow-y: scroll;
 }
 
 /* container for right side */
@@ -148,16 +151,15 @@ body {
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: auto;
     right: 3%;
     top: 30%;
-    bottom: 13%;
+    bottom: 5%;
 }
 
 /* textarea json preview */
 .json-preview-right-side textarea {
     width: 100%;
-    height: 400px;
+    height: 85%;
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #ccc;
@@ -174,7 +176,7 @@ body {
     .left-side-container-view-page,
     .json-preview-right-side {
         width: 100%;
-        position: static;
+        height: 100%;
         margin-bottom: 16px;
     }
 
