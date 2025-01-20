@@ -382,3 +382,71 @@
   text-decoration: underline;
 }
   */
+
+
+/** Recently Added List */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.left-aligned-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+.left-aligned-container-small {
+  margin-bottom: 20px;
+}
+
+.right-aligned-container {
+  padding: 20px;
+}
+
+.recent-items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.recent-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  max-height: 100%; 
+  padding: 1rem;
+  background-color: #f8f9fa;
+}
+.recent-item-box {
+  display: block;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.3s;
+}
+
+.recent-item-box:hover {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.recent-item-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.recent-item-content strong {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.recent-item-content p {
+  font-size: 1rem;
+  color: #666;
+}

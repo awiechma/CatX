@@ -7,6 +7,7 @@ const rfs = require('rotating-file-stream');
 const passport = require('./passportConfig');
 const db = require('./db');
 const cors = require('cors');
+const { Pool } = require('pg');
 
 // Load environment variables from .env file
 require('dotenv').config();
@@ -20,6 +21,22 @@ const app = express();
 
 // Middleware to parse JSON requests
 app.use(express.json());
+
+// Set up the PostgreSQL connection pool
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
+
+const connectWithRetry = async () => {
+  try {
+    await pool.connect();
+  } catch (err) {
+    console.error('Error connecting to database:', err);
+    setTimeout(connectWithRetry, 5000);
+  }
+};
+
+connectWithRetry();
 
 // Initialize passport for JWT authentication
 app.use(passport.initialize());
@@ -208,6 +225,20 @@ app.get('/api/mlmtasks', async (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
     });
 })
+
+app.get('/api/recent-items', async (req, res) => {
+  try {
+    const result = await pool.query(`
+          SELECT * FROM items_complete_view
+          ORDER BY id DESC
+          LIMIT 10
+      `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 app.get('/stac/conformance', async (req, res) => {
   try {

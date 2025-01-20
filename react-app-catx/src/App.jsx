@@ -1,20 +1,18 @@
-import React, { useState } from "react";
+import React from 'react';
 import './App.css';
 import Button from "./components/Button";
 import Navbar from "./components/Navbar";
-import ListGroup from "./components/ListGroup";
 import { Link } from "react-router-dom";
 import Footer from "./components/Footer";
+import RecentItems from "./components/App/RecentItems";
 
 function App() {
-
 
     return (
         <div className="app-container">
             <div className="d-flex flex-column min-vh-100">
                 <Navbar />
-                <main classname="flex-grow-1">
-                                      
+                <main className="flex-grow-1">
                     <div className="left-aligned-container">
                         <div className="left-aligned-container-small view bg-body-tertiary">
                             <p>Specify your search?</p>
@@ -42,13 +40,13 @@ function App() {
                         </div>
                     </div>
                     <div className="right-aligned-container bg-body-tertiary">
-                        <ListGroup className="list-recently-added" />
+                        <div className="mb-5"><h3>Recently Added Models</h3></div>
+                        <RecentItems />
                     </div>
                 </main>
             </div>
             <Footer />
         </div>
-
     );
 }
 
