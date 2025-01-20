@@ -11,8 +11,8 @@ const Help = () => {
     <div>
       <Navbar />
       <div className="intro-to-help">
+        <h3>User Guide for STAC Metadata Integration</h3>
         <p>
-          <h3>User Guide for STAC Metadata Integration</h3>
           This guide introduces what STAC is and how to work with STAC clients
           in R and Python, enabling you to query STAC catalogs, retrieve
           metadata, and download datasets. Whether you’re using R’s RSTAC
