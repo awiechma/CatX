@@ -43,7 +43,7 @@ const ItemListAndDisplay = ({ searchString, selectedTags }) => {
                     items.map((item) => (
                         <li key={item.id} className="mb-2 p-2 border rounded cursor-pointer hover:bg-gray-100">
                             <Link to={`/view/${item.id}`}>
-                                {item.id}{" "}
+                                {item.properties["mlm:name"]}{" "}
                                 <span className="text-sm text-gray-500">
                                     ({item.properties["mlm:tasks"].join(", ")})
                                 </span>

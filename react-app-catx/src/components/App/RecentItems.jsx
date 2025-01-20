@@ -25,13 +25,6 @@ const RecentItems = () => {
     }
     return (
         <div className="recent-items-list">
-            { !loading && (
-                <script>
-                    {setTimeout(() => {
-                        window.location.reload();
-                    }, 5000)}
-                </script>
-            )}
             {Array.isArray(recentItems) && recentItems.map((item) => (
                 //TODO: Add the correct link to the item (${item.id})
                 <Link to={`/view/`} key={item.id} className="recent-item-box mb-3">
