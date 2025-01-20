@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import TagInput from "./TagInput";
 import Button from "../Button";
 import "/src/Add.css";
-    
+
 const token = localStorage.getItem("catx-user-session-token");
 
+// List of optional fields with their labels and types
 const optionalFieldOptions = [
     { name: 'mlm:framework', label: 'MLM Framework' },
     { name: 'mlm:framework_version', label: 'MLM Framework Version' },
@@ -24,13 +25,14 @@ const optionalFieldOptions = [
 ];
 
 const Formular = () => {
+    // State management
     const [formData, setFormData] = useState({});
     const [uploadedData, setUploadedData] = useState({});
     const [submitStatus, setSubmitStatus] = useState("");
     const [createNewCollection, setChecked] = useState(false);
     const [optionalFields, setOptionalFields] = useState([]);
-    
 
+    // Handle file upload and parse JSON
     const handleFileUpload = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -50,6 +52,7 @@ const Formular = () => {
         }
     };
 
+    // Handle form input change
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({
@@ -58,16 +61,19 @@ const Formular = () => {
         }));
     };
 
+    // Add an optional field dynamically
     const handleAddOptionalField = (field) => {
         if (!optionalFields.includes(field)) {
             setOptionalFields([...optionalFields, field]);
         }
     };
 
+    // Toggle collection creation checkbox
     const handleToggle = () => {
         setChecked(!createNewCollection);
     };
 
+    // Populate form fields with uploaded JSON data
     const populateFormFields = (json) => {
         setFormData({
             title: json.properties?.description || "",
@@ -82,6 +88,7 @@ const Formular = () => {
         });
     };
 
+    // Submit form data to the API
     const handleSubmit = async () => {
         try {
             let body = {
@@ -150,7 +157,7 @@ const Formular = () => {
             </div>
 
             <br />
-
+            {/* Basic form fields */}
             <div className="input-group mb-3">
                 <span className="input-group-text">Title</span>
                 <input

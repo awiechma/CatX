@@ -8,6 +8,7 @@ import Account from "./Account";
 import Help from "./Help";
 import About from "./About";
 
+// linking betweeen pages react-style 😎
 const Join = () => {
   return (
     <Router>

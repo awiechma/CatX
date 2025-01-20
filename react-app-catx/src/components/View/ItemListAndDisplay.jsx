@@ -8,6 +8,7 @@ const ItemListAndDisplay = ({ searchString, selectedTags }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    // fetch items from API based on search criteria
     const fetchItems = async () => {
         setIsLoading(true);
         setError(null);
@@ -27,13 +28,16 @@ const ItemListAndDisplay = ({ searchString, selectedTags }) => {
         }
     };
 
+    // Fetch items whenever search string or selected tags change
     useEffect(() => {
         fetchItems();
     }, [searchString, selectedTags]);
 
+    // Handle item selection
     const handleItemClick = (item) => setSelectedItem(item);
     const goBack = () => setSelectedItem(null);
 
+    // Function to format and display item properties recursively
     const renderValue = (value) => {
         if (value === null || value === undefined) {
             return "Not available";

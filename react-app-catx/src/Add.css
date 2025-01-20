@@ -1,5 +1,5 @@
-/* Sicherstellen, dass die Seite mindestens 100% der Viewporthöhe einnimmt */
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -22,7 +22,7 @@ html, body {
   width: 96%;
 }
 
-/* Der Hauptinhalt bekommt flexibles Layout */
+/* flexible Layout */
 .content {
   flex: 1;
   padding-bottom: 50px;
@@ -66,7 +66,7 @@ html, body {
   outline: #94b5ce !important;
 }
 
-/* Zentrieren des Inhalts */
+/* centering content */
 .center-content {
   display: flex;
   flex-direction: column;
@@ -76,7 +76,7 @@ html, body {
   text-align: center;
 }
 
-/* Styling für die Warnmeldung */
+/* Styling warning */
 .alert {
   background-color: #f8d7da;
   color: #721c24;

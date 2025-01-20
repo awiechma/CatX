@@ -1,17 +1,19 @@
 .divider:after,
 .divider:before {
-content: "";
-flex: 1;
-height: 1px;
-background: #eee;
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee;
 }
+
 .h-custom {
-height: calc(100% - 73px);
+    height: calc(100% - 73px);
 }
+
 @media (max-width: 450px) {
-.h-custom {
-height: 100%;
-}
+    .h-custom {
+        height: 100%;
+    }
 }
 
 
@@ -22,7 +24,7 @@ height: 100%;
     border-radius: 4px;
     border: 1px solid #ccc;
     background-color: #dfe8ef;
-    cursor: pointer ;
+    cursor: pointer;
     color: #333;
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
@@ -33,28 +35,28 @@ height: 100%;
     color: #ffffff;
 }
 
-/* Container für Zentrierung */
+/* Container for centering */
 .account-container {
     display: flex;
-    justify-content: center; /* Zentriert horizontal */
-    align-items: center; /* Zentriert vertikal */
-    height: 100vh; /* Ganze Bildschirmhöhe */
-    background-color: #f8f9fa; /* Optional: Hintergrundfarbe */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8f9fa;
 }
 
-/* Innerer Content-Container */
+/* Inner Content-Container */
 .account-content {
-    text-align: center; /* Zentriert den Inhalt */
-    background: #ffffff; /* Weißer Hintergrund */
+    text-align: center;
+    background: #ffffff;
     padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Schatten */
-    width: 300px; /* Breite des Containers */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 300px;
 }
 
-/* Liste der Benutzerdaten */
+/* List of user data */
 .user-data {
-    list-style: none; /* Entfernt Aufzählungspunkte */
+    list-style: none;
     padding: 0;
     margin-bottom: 1.5rem;
 }
@@ -77,17 +79,17 @@ height: 100%;
 }
 
 .logout-button:hover {
-    background-color: #c82333; /* Dunkleres Rot bei Hover */
+    background-color: #c82333;
 }
 
-  /* Button Styling  */
+/* Button Styling  */
 .register-button {
     font-size: 1rem;
     padding: 0.5rem 2rem 0.5rem 2rem;
     border-radius: 4px;
     border: 1px solid #ccc;
     background-color: #dfe8ef;
-    cursor: pointer ;
+    cursor: pointer;
     color: #333;
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
@@ -97,4 +99,3 @@ height: 100%;
     border-color: #aaa;
     color: #ffffff;
 }
-

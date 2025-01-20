@@ -3,6 +3,7 @@ import "/src/Help.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
+// navigation and tutorials in one 
 const ScrollSpyComponent = () => {
     return (
         <div className="row" style={{ marginTop: "5%" }}>
@@ -79,6 +80,7 @@ const ScrollSpyComponent = () => {
                 </nav>
             </div>
 
+            {/* contents of the tutorials */}
             <div className="col-8">
                 <div
                     data-bs-spy="scroll"

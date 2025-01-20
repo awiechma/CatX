@@ -2,15 +2,18 @@ import React, { useState, useEffect } from "react";
 
 const SearchBar = ({ searchString, setSearchString }) => {
 
+    // Local state to manage the input field value
     const [searchTerm, setSearchTerm] = useState(searchString);
 
+    // Handles changes in the search input field
     const handleInputChange = (event) => {
         setSearchTerm(event.target.value);
     }
 
+    // Handles form submission to update the search string in parent component
     const handleSubmit = (e) => {
-        e.preventDefault()
-        setSearchString(searchTerm);
+        e.preventDefault() // Prevents page reload
+        setSearchString(searchTerm); // Passes updated search term to parent component
     }
 
     return (
@@ -22,8 +25,8 @@ const SearchBar = ({ searchString, setSearchString }) => {
                     type="search"
                     placeholder="Search"
                     aria-label="Search"
-                    value={searchTerm}
-                    onChange={handleInputChange}
+                    value={searchTerm} // Binds input value to state
+                    onChange={handleInputChange} // Updates state on user input
                     style={{ width: '100%' }}
                 />
                 <button className="btn btn-outline-searchbar" type="submit">

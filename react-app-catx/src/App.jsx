@@ -13,6 +13,7 @@ function App() {
             <div className="d-flex flex-column min-vh-100">
                 <Navbar />
                 <main className="flex-grow-1">
+                    {/* container for buttons on left side */}
                     <div className="left-aligned-container">
                         <div className="left-aligned-container-small view bg-body-tertiary">
                             <p>Specify your search?</p>
@@ -39,6 +40,7 @@ function App() {
                             </Link>
                         </div>
                     </div>
+                    {/* recently added on right side */}
                     <div className="right-aligned-container bg-body-tertiary">
                         <div className="mb-5"><h3>Recently Added Models</h3></div>
                         <RecentItems />
