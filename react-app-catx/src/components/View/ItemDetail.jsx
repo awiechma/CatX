@@ -48,7 +48,7 @@ const ItemDetail = ({ items }) => {
         <div className="page-div">
             <div className='view-div'>
                 <div className="custom-container height90 bg-body-tertiary ">
-                    <button onClick={() => navigate(-1)} className="back-button mt-4">Back to List</button>
+                    <button onClick={() => navigate("/view")} className="back-button mt-4">Back to List</button>
                     <div className="grid grid-cols-2 gap-4">
                         <div className="left-side-container-view-page">
                             <h2 className="text-xl font-bold mb-2">Detailed Info</h2>
