@@ -28,8 +28,11 @@ const pool = new Pool({
 });
 
 const connectWithRetry = async () => {
+  console.log('Waiting 5 seconds before trying to connect to database...');
+  await new Promise(resolve => setTimeout(resolve, 5000));
   try {
     await pool.connect();
+    console.log('Connected to database successfully.');
   } catch (err) {
     console.error('Error connecting to database:', err);
     setTimeout(connectWithRetry, 5000);
