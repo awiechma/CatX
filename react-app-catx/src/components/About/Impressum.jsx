@@ -45,6 +45,8 @@ const Impressum = () => {
         <p>48149 Münster</p>
         <p>Germany</p>
         <br></br>
+        <a href="https://github.com/awiechma/CatX" target="_blank" rel="noopener noreferrer">CatX GitHub Repository</a>
+        <br></br>
         <hr></hr>
         <br></br>
         <h2>Contact Information</h2>

@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import Impressum from "./components/Impressum";
+import Impressum from "./components/About/Impressum";
 
 const About = () => {
   return (

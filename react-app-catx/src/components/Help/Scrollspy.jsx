@@ -7,7 +7,7 @@ const ScrollSpyComponent = () => {
     return (
         <div className="row" style={{ marginTop: "5%" }}>
             <div className="col-4">
-                {/* Navigation mit verschachteltem Layout */}
+                {/* Navigation with nestled items */}
                 <nav
                     id="navbar-example3"
                     className="h-100 flex-column align-items-stretch pe-4 border-end"
@@ -118,7 +118,7 @@ const ScrollSpyComponent = () => {
                             </li>
                         </ul>
                     </div>
-                  
+
                     <hr></hr>
                     <br></br>
                     <div id="item-2">
@@ -165,7 +165,7 @@ const ScrollSpyComponent = () => {
                             </code>
                         </pre>
                     </div>
-                    
+
                     <hr></hr>
                     <br></br>
                     <div id="item-3">
@@ -237,7 +237,7 @@ const ScrollSpyComponent = () => {
                             </div>
                         </div>
                     </div>
-                   
+
                     <hr></hr>
                     <br></br>
                     <div id="item-4">
@@ -327,7 +327,7 @@ const ScrollSpyComponent = () => {
                         </pre>
                     </div>
                 </div>
-              
+
                 <hr></hr>
                 <br></br>
                 <div id="item-5">
