@@ -7,7 +7,6 @@ const rfs = require('rotating-file-stream');
 const passport = require('./passportConfig');
 const db = require('./db');
 const cors = require('cors');
-const { Pool } = require('pg');
 
 // Load environment variables from .env file
 require('dotenv').config();
@@ -21,8 +20,6 @@ const app = express();
 
 // Middleware to parse JSON requests
 app.use(express.json());
-
-// Set up the PostgreSQL connection pool
 
 // Initialize passport for JWT authentication
 app.use(passport.initialize());
