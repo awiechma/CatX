@@ -213,7 +213,7 @@ app.get('/api/recent-items', async (req, res) => {
   try {
     const result = await db.query(`
           SELECT * FROM items_complete_view
-          ORDER BY id DESC
+          ORDER BY update_date DESC
           LIMIT 10
       `);
     res.json(result.rows);
