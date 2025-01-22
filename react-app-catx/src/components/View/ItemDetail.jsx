@@ -7,7 +7,7 @@ import Footer from '../Footer';
 const ItemDetail = ({ items }) => {
     const { itemId } = useParams();  // Get itemId from the URL
     const navigate = useNavigate();  // Use navigate for programmatic navigation
-    const selectedItem = items.find(item => item.id === itemId);  // Find the selected item
+    const selectedItem = items.find(item => String(item.id) === String(itemId));  // Find the selected item
 
     const renderValue = (value) => {
         if (value === null || value === undefined) {
