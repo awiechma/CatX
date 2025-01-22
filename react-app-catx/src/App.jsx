@@ -15,33 +15,33 @@ function App() {
                 <main className="flex-grow-1">
                     {/* container for buttons on left side */}
                     <div className="left-aligned-container">
-                        <div className="left-aligned-container-small view bg-body-tertiary">
+                        <div className="left-aligned-container-small view ">
                             <p>Specify your search?</p>
                             <Link to="/view" className="btn-view">
-                                <Button text="View" />
+                                <Button text="View " />
                             </Link>
                         </div>
-                        <div className="left-aligned-container-small add bg-body-tertiary">
+                        <div className="left-aligned-container-small add">
                             <p>Add models?</p>
                             <Link to="/add" className="btn-add">
                                 <Button text="Add" />
                             </Link>
                         </div>
-                        <div className="left-aligned-container-small account bg-body-tertiary">
+                        <div className="left-aligned-container-small account">
                             <p>No account?</p>
                             <Link to="/account" className="btn-account">
-                                <Button text="Log in" />
+                                <Button text="Login" />
                             </Link>
                         </div>
-                        <div className="left-aligned-container-small help bg-body-tertiary">
+                        <div className="left-aligned-container-small help">
                             <p>Need help?</p>
                             <Link to="/help" className="btn-help">
-                                <Button text="Help" />
+                                <Button text="Help " />
                             </Link>
                         </div>
                     </div>
                     {/* recently added on right side */}
-                    <div className="right-aligned-container bg-body-tertiary">
+                    <div className="right-aligned-container">
                         <div className="mb-5"><h3>Recently Added Models</h3></div>
                         <RecentItems />
                     </div>

@@ -11,9 +11,9 @@
 .navbar-brand {
   display: flex;
   align-items: center;
-  color: #343a40;
+  /* color: #343a40; */
   font-weight: bold;
-  text-decoration: none;
+  /* text-decoration: none; */
 }
 
 .navbar-brand img {
@@ -38,16 +38,16 @@
   color: #94b5ce !important;
 }
 
-/* Toggler Button Styling for mobile devices */
+/* Toggler Button Styling for mobile devices 
 .navbar-toggler {
-  border: none;
-}
+  /* border: none; 
+} */
 
 .navbar-toggler-icon {
   filter: brightness(0) invert(1);
 }
 
-/* Container for Searchbar */
+/* Container for Searchbar 
 .SearchBar-container {
   justify-content: center;
   align-items: center;
@@ -60,9 +60,9 @@
   position: absolute;
   top: 13.5%;
   right: 3%;
-}
+} */
 
-/* Input for Searchbar */
+/* Input for Searchbar 
 .searchbar-whitespace {
   width: 100%;
   padding: 0.5rem;
@@ -70,13 +70,14 @@
   border: 1px solid #94b5ce;
   border-radius: 4px;
   outline: none;
-}
+} 
 
 .searchbar-whitespace::placeholder {
   padding-right: 5rem;
-}
+} */
 
-/* Searchbutton Styling  */
+
+/* Searchbutton Styling  
 .btn-outline-searchbar {
   border-color: #94b5ce !important;
   color: #000000 !important;
@@ -84,36 +85,17 @@
   padding: 0.5rem 1rem;
   margin-left: 0.5rem;
   transition: all 0.3s ease;
-}
+} 
 
 .btn-outline-searchbar:hover {
   background-color: #94b5ce !important;
   color: white !important;
-}
+} */
 
 
-/* list in the container */
-.list-recently-added {
-  display: flex;
-  justify-content: center;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  background-color: #f8f9fa;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  width: 100%;
-  max-width: 350px;
-  margin: auto;
-  position: absolute;
-  top: 30%;
-  left: 3%;
-  font-weight: bold;
-  flex-direction: column;
-}
 
-/* Container for text to start search */
+
+/* Container for text to start search 
 .start-search {
   display: flex;
   justify-content: center;
@@ -128,29 +110,32 @@
   top: 13.5%;
   left: 3%;
   font-weight: bold;
-}
+} */
+
+
 /* container on the right side for list */
 .right-aligned-container {
   position: absolute;
   top: 8%;
   bottom: 8%;
   right: 0%;
-  width: 60%;
-  background-color: #dfe8ef;
+  width: 65%;
+  background-color: #cfe6e6;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  margin: 2% 2%;
+  margin-top: 2%;
   display: flex;
   flex-direction: column;
   padding: 2%;
+  height: 100%;
 } 
 
-/* Verhalten für kleine Bildschirme */
+/* for small devices*/
 @media (max-width: 768px) {
   .right-aligned-container {
-    align-self: center; /* Nach unten verschieben (zentrieren) */
-    width: 100%; /* Volle Breite nutzen */
-    margin: 2% 0; /* Oben und unten etwas Abstand */
+    align-self: center; 
+    width: 100%; 
+    margin: 2% 0; 
     flex-direction: column;
   }
 }
@@ -164,55 +149,36 @@
 
 }
 
-/* list in the container */
-.list-recently-added {
-  display: flex;
-  justify-content: center;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  background-color: #f8f9fa;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  width: 100%;
-  max-width: 350px;
-  margin: auto;
-  position: absolute;
-  top: 30%;
-  left: 3%;
-  font-weight: bold;
-  flex-direction: column;
-}
+.left-aligned-container { 
+ display: flex;
+ top: 8%;
+ bottom: 8%;
+ width: 28%;
+ box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+ border-radius: 8px;
+ margin-top: 2%;
+ flex-direction: column;
+ background-color: rgb(45, 105, 105);
+ height: 100%;
 
 
-
-.left-aligned-container {
-  bottom: 8%;
-  top: 8%;
-  left: 0%;
-  height: 84%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 2%;
-
-}
+} 
 
 /*Homepage Button View*/
 .left-aligned-container-small {
   display: flex;
   justify-content: center;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  background-color: #dfe8ef;
+  /* background-color: #dfe8ef; */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  width: 100%;
+  background-color: #cfe6e6;
   max-width: 350px;
-  margin: 2% 2%;
+  margin-top: 2%;
+  margin-left: 2%;
   position: absolute;
   left: 0%;
   font-weight: bold;
@@ -253,7 +219,7 @@
 
 /* Hover-effect for button */
 .btn-view:hover {
-  background-color: #94b5ce !important;
+  background-color: #e6cfcf !important;
   border-color: #94b5ce !important;
   color: #ffffff !important;
 }
@@ -262,12 +228,12 @@
   color: rgb(0, 0, 0) !important;
   background-color: #ffffff !important;
   border: 1px solid #94b5ce !important;
-  padding: 0.25rem 7.5rem;
+  padding: 0.15rem 8.0rem !important;
   border-radius: 4px;
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s, border-color 0.3s;
+  transition: background-color 0.3s, border-color 0.3s !important;
 }
 
 /* Hover-effect for button */
@@ -281,7 +247,7 @@
   color: rgb(0, 0, 0) !important;
   background-color: #ffffff !important;
   border: 1px solid #94b5ce !important;
-  padding: 0.25rem 7.5rem;
+  padding: 0.20rem 7.5rem;
   border-radius: 4px;
   font-size: 1rem;
   font-weight: bold;

@@ -24,7 +24,7 @@
     border-radius: 4px;
     border: 1px solid #ccc;
     background-color: #dfe8ef;
-    cursor: pointer;
+    /* cursor: pointer; */
     color: #333;
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
@@ -73,7 +73,7 @@
     color: white;
     border: none;
     border-radius: 5px;
-    cursor: pointer;
+    /* cursor: pointer; */
     font-size: 16px;
     transition: background-color 0.3s ease;
 }
@@ -89,7 +89,7 @@
     border-radius: 4px;
     border: 1px solid #ccc;
     background-color: #dfe8ef;
-    cursor: pointer;
+    /* cursor: pointer; */
     color: #333;
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
