@@ -1,5 +1,7 @@
 import React from "react";
-import "../App.css"; // Importiere die CSS-Datei
+import "../App.css";
+
+// creates default footer
 
 const Footer = () => {
     return (

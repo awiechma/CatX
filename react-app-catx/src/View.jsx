@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import "./View.css";
 import SearchBar from "./components/View/SearchBar";
 import Filter from "./components/View/Filter";
-import FilterableListGroup from "./components/View/ItemListAndDisplay";
 import Footer from "./components/Footer";
 import ItemListAndDisplay from "./components/View/ItemListAndDisplay";
 

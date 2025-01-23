@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import "/src/Account.css";
 
 const LogInSignIn = () => {
-
+    // state for login form
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
 
+    // state for registration form
     const [regUsername, setRegUsername] = useState("");
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
@@ -21,6 +22,7 @@ const LogInSignIn = () => {
         setSuccess(null);
 
         try {
+            // send login request
             const response = await fetch("http://localhost:3000/api/token", {
                 method: "POST",
                 headers: {
@@ -43,7 +45,7 @@ const LogInSignIn = () => {
             localStorage.setItem("catx-user-session-token", token);
             localStorage.setItem("catx-user-session-username", username);
 
-            window.location.href = "/account";
+            window.location.href = "/account"; // redirect after login
         } catch (err) {
             console.error("Error during login", err);
             setError("Something went wrong. Please try again.");
@@ -56,6 +58,7 @@ const LogInSignIn = () => {
         setRegSuccess(null);
 
         try {
+            // send registration request
             const response = await fetch("http://localhost:3000/api/register", {
                 method: "POST",
                 headers: {
