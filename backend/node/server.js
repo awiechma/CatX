@@ -427,6 +427,35 @@ app.get('/api/items', async (req, res) => {
     })
 });
 
+
+/**
+ * Endpoint to retrieve a single item by its ID from the database
+ */
+app.get('/api/items/:itemid', async (req, res) => {
+  const itemId = req.params.itemid;
+  const query = {
+    text: `
+      SELECT * 
+      FROM items_complete_view
+      WHERE id = $1
+    `,
+    values: [itemId]
+  };
+
+  db.query(query)
+    .then(({ rows: items }) => {
+      if (items.length > 0) {
+        res.status(200).json(items[0]);
+      } else {
+        res.status(404).json({ message: 'Item not found' });
+      }
+    })
+    .catch(error => {
+      console.error('Error during item export:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    });
+});
+
 /**
  * Endpoint to upload a collection to the database
  * Requires a valid JWT token containing the username

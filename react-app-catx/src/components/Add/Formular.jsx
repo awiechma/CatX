@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import TagInput from "./TagInput";
 import Button from "../Button";
 import "/src/Add.css";
@@ -54,10 +53,10 @@ const Formular = () => {
 
     // Handle form input change
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value, type, checked } = e.target;
         setFormData((prev) => ({
             ...prev,
-            [name]: value,
+            [name]: type === 'checkbox' ? checked : value,
         }));
     };
 
@@ -75,7 +74,7 @@ const Formular = () => {
 
     // Populate form fields with uploaded JSON data
     const populateFormFields = (json) => {
-        setFormData({
+        const newFormData = {
             title: json.properties?.description || "",
             type: json.type || "",
             id: json.id || "",
@@ -85,7 +84,20 @@ const Formular = () => {
             mlmName: json.properties?.["mlm:name"] || "",
             mlmTasks: json.properties?.["mlm:tasks"]?.join(", ") || "",
             mlmArchitecture: json.properties?.["mlm:architecture"] || "",
+        };
+
+        // Add optional fields if they exist in the JSON
+        const newOptionalFields = [];
+        optionalFieldOptions.forEach((field) => {
+            const fieldName = field.name;
+            if (json.properties?.[fieldName] !== undefined) {
+                newFormData[fieldName] = json.properties[fieldName];
+                newOptionalFields.push(field);
+            }
         });
+
+        setFormData(newFormData);
+        setOptionalFields(newOptionalFields);
     };
 
     // Submit form data to the API
@@ -103,20 +115,20 @@ const Formular = () => {
                     'mlm:name': formData.mlmName,
                     'mlm:tasks': formData.mlmTasks,
                     'mlm:architecture': formData.mlmArchitecture,
-                    'mlm:framework': formData.mlmFramework,
-                    'mlm:framework_version': formData.mlmFrameworkVersion,
-                    'mlm:memory_size': formData.mlmMemorySize,
-                    'mlm:total_parameters': formData.mlmTotalParameters,
-                    'mlm:pretrained': formData.mlmPretrained,
-                    'mlm:pretrained_source': formData.mlmPretrainedSource,
-                    'mlm:batch_size_suggestion': formData.mlmBatchSizeSuggestion,
-                    'mlm:accelerator': formData.mlmAccelerator,
-                    'mlm:accelerator_constrained': formData.mlmAcceleratorConstrained,
-                    'mlm:accelerator_summary': formData.mlmAcceleratorSummary,
-                    'mlm:accelerator_count': formData.mlmAcceleratorCount,
-                    'mlm:input': formData.mlmInput,
-                    'mlm:output': formData.mlmOutput,
-                    'mlm:hyperparameters': formData.mlmHyperparameters
+                    'mlm:framework': formData['mlm:framework'],
+                    'mlm:framework_version': formData['mlm:framework_version'],
+                    'mlm:memory_size': formData['mlm:memory_size'],
+                    'mlm:total_parameters': formData['mlm:total_parameters'],
+                    'mlm:pretrained': formData['mlm:pretrained'],
+                    'mlm:pretrained_source': formData['mlm:pretrained_source'],
+                    'mlm:batch_size_suggestion': formData['mlm:batch_size_suggestion'],
+                    'mlm:accelerator': formData['mlm:accelerator'],
+                    'mlm:accelerator_constrained': formData['mlm:accelerator_constrained'],
+                    'mlm:accelerator_summary': formData['mlm:accelerator_summary'],
+                    'mlm:accelerator_count': formData['mlm:accelerator_count'],
+                    'mlm:input': formData['mlm:input'],
+                    'mlm:output': formData['mlm:output'],
+                    'mlm:hyperparameters': formData['mlm:hyperparameters']
                 },
                 createNewCollection
             }
@@ -145,8 +157,8 @@ const Formular = () => {
 
     return (
         <div className="formular-form">
-            <div className="mb-3">
-                <label htmlFor="file-upload" className="form-label">Upload File</label>
+            <div className="mb-3 mt-5">
+                <div className="h3">Upload File</div>
                 <input
                     className="form-control"
                     type="file"
@@ -157,9 +169,11 @@ const Formular = () => {
             </div>
 
             <br />
+
+            <div className="h3">Fill in Fields Manually</div>
             {/* Basic form fields */}
             <div className="input-group mb-3">
-                <span className="input-group-text">Title</span>
+                <span className="input-group-text w-auto">Title</span>
                 <input
                     type="text"
                     className="form-control"
@@ -171,7 +185,7 @@ const Formular = () => {
             </div>
 
             <div className="input-group mb-3">
-                <span className="input-group-text">Type</span>
+                <span className="input-group-text w-auto">Type</span>
                 <input
                     type="text"
                     className="form-control"
@@ -183,7 +197,7 @@ const Formular = () => {
             </div>
 
             <div className="input-group mb-3">
-                <span className="input-group-text">ID</span>
+                <span className="input-group-text w-auto">ID</span>
                 <input
                     type="text"
                     className="form-control"
@@ -195,7 +209,7 @@ const Formular = () => {
             </div>
 
             <div className="input-group mb-3">
-                <span className="input-group-text">Geometry</span>
+                <span className="input-group-text w-auto">Geometry</span>
                 <textarea
                     className="form-control"
                     placeholder="Enter geometry in JSON format"
@@ -206,7 +220,7 @@ const Formular = () => {
             </div>
 
             <div className="input-group mb-3">
-                <span className="input-group-text">Assets</span>
+                <span className="input-group-text w-auto">Assets</span>
                 <input
                     type="text"
                     className="form-control"
@@ -218,7 +232,7 @@ const Formular = () => {
             </div>
 
             <div className="input-group mb-3">
-                <span className="input-group-text">Collection</span>
+                <span className="input-group-text w-auto">Collection</span>
                 <input
                     type="text"
                     className="form-control"
@@ -245,7 +259,7 @@ const Formular = () => {
 
             {/* MLM Input Fields */}
             <div className="input-group mb-3 mt-5">
-                <span className="input-group-text">MLM Name</span>
+                <span className="input-group-text w-auto">MLM Name</span>
                 <input
                     type="text"
                     className="form-control"
@@ -257,7 +271,7 @@ const Formular = () => {
             </div>
 
             <div className="input-group mb-3">
-                <span className="input-group-text">MLM Tasks</span>
+                <span className="input-group-text w-auto">MLM Tasks</span>
                 <input
                     type="text"
                     className="form-control"
@@ -269,7 +283,7 @@ const Formular = () => {
             </div>
 
             <div className="input-group mb-3">
-                <span className="input-group-text">MLM Architecture</span>
+                <span className="input-group-text w-auto">MLM Architecture</span>
                 <input
                     type="text"
                     className="form-control"
@@ -280,19 +294,21 @@ const Formular = () => {
                 />
             </div>
 
-            <div className="h3">Optional Data</div>
+            <div className="h3 mt-5">Optional Data</div>
 
             {optionalFields.map((field, index) => (
-                <div className="input-group mb-3" key={index}>
-                    <span className="input-group-text">{field.label}</span>
+                <div className="input-group mb-3 " key={index}>
+                    <span className="input-group-text w-auto">{field.label}</span>
                     {field.type === 'checkbox' ? (
-                        <input
-                            type="checkbox"
-                            className="form-check-input"
-                            checked={formData[field.name] || false}
-                            name={field.name}
-                            onChange={handleInputChange}
-                        />
+                        <div className="form-check form-switch">
+                            <input
+                                type="checkbox"
+                                className="form-check-input ms-2 mt-2"
+                                checked={formData[field.name] || false}
+                                name={field.name}
+                                onChange={handleInputChange}
+                            />
+                        </div>
                     ) : (
                         <input
                             type="text"
