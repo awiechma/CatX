@@ -19,7 +19,7 @@ const Add = () => {
                 <div className="alert alert-warning">
                     <div className="alert-message">You are not logged in. Please log in.</div>
                     <button className="btn btn-primary" onClick={() => navigate("/account")}>
-                        Zum Account
+                        To Account
                     </button>
                 </div>
             </div>

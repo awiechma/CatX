@@ -3,6 +3,7 @@ import "/src/Help.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
+// navigation and tutorials in one 
 const ScrollSpyComponent = () => {
     return (
         <div className="row" style={{ marginTop: "5%" }}>
@@ -79,6 +80,7 @@ const ScrollSpyComponent = () => {
                 </nav>
             </div>
 
+            {/* contents of the tutorials */}
             <div className="col-8">
                 <div
                     data-bs-spy="scroll"
@@ -147,10 +149,11 @@ const ScrollSpyComponent = () => {
                         </p>
                         <pre>
                             <code>
-                                # Install rstac package from CRAN
+                            <span style={{ color: 'green' }}># Install rstac package from CRAN</span>
                                 <br></br>
                                 install.packages("rstac")
-                                <br></br># Load the rstac package into the R session
+                                <br></br>
+                                <span style={{ color: 'green' }}># Load the rstac package into the R session</span>
                                 <br></br>
                                 library(rstac)
                             </code>
@@ -160,7 +163,7 @@ const ScrollSpyComponent = () => {
                         </p>
                         <pre>
                             <code>
-                                # Install pystac package using pip
+                                <span style={{ color: 'green' }}># Install pystac package using pip </span>
                                 <br></br>pip install pystac
                             </code>
                         </pre>
@@ -179,9 +182,9 @@ const ScrollSpyComponent = () => {
                             </p>
                             <pre>
                                 <code>
-                                    # Define the URL of the STAC catalog <br></br>
-                                    stac_url &lt;- "https://example.com/stac" <br></br># Create a
-                                    STAC object to interact with the catalog <br></br>stac_obj
+                                <span style={{ color: 'green' }}># Define the URL of the STAC catalog </span><br></br>
+                                    stac_url &lt;- "https://example.com/stac" <br></br>
+                                    <span style={{ color: 'green' }}># Create a STAC object to interact with the catalog </span><br></br>stac_obj
                                     &lt;- stac(stac_url)
                                 </code>
                             </pre>
@@ -191,9 +194,9 @@ const ScrollSpyComponent = () => {
                                 <p>Fetch details about the STAC service or its collections:</p>
                                 <pre>
                                     <code>
-                                        # Get general metadata about the STAC catalog <br></br>
-                                        stac_obj %&gt; get_request() <br></br># List all available
-                                        collections in the STAC catalog <br></br> stac_obj %&gt;
+                                    <span style={{ color: 'green' }}># Get general metadata about the STAC catalog </span><br></br>
+                                        stac_obj %&gt; get_request() <br></br>
+                                        <span style={{ color: 'green' }}># List all available collections in the STAC catalog </span> <br></br> stac_obj %&gt;
                                         collections() %&gt; get_request()
                                     </code>
                                 </pre>
@@ -206,15 +209,17 @@ const ScrollSpyComponent = () => {
                                 </p>
                                 <pre>
                                     <code>
-                                        # Perform a search query to find items in a specific
-                                        collection <br></br>search_results &lt;- stac_search({" "}
-                                        <br></br>q = stac_obj, # The STAC object connected to the
-                                        catalog
-                                        <br></br>collections = "collection-name",# Specify the
-                                        collection to search
-                                        <br></br>datetime = "2022-01-01/2022-12-31", # Define the
-                                        time range for the search<br></br>limit = 5 # Limit the
-                                        number of results returned
+                                    <span style={{ color: 'green' }}># Perform a search query to find items in a specific
+                                        collection </span> <br></br>search_results &lt;- stac_search({" "}
+                                        <br></br>q = stac_obj, 
+                                        <span style={{ color: 'green' }}> # The STAC object connected to the catalog </span>
+                                        <br></br>collections = "collection-name",
+                                        <span style={{ color: 'green' }}> # Specify the
+                                        collection to search </span>
+                                        <br></br>datetime = "2022-01-01/2022-12-31", 
+                                        <span style={{ color: 'green' }}> # Define the
+                                        time range for the search </span> <br></br>limit = 5 
+                                        <span style={{ color: 'green' }}> # Limit the number of results returned </span>
                                         <br></br>) %&gt; get_request()
                                     </code>
                                 </pre>
@@ -225,13 +230,15 @@ const ScrollSpyComponent = () => {
                                 <p>Download files associated with your search:</p>
                                 <pre>
                                     <code>
-                                        # Download specific assets from the search results<br></br>
-                                        assets_download( <br></br>search_results, # The search query
-                                        result object <br></br> asset_id = "asset-name", # The ID of
-                                        the asset to download <br></br> output_dir =
-                                        "output-directory", # Specify the directory for saving files{" "}
-                                        <br></br>overwrite = TRUE # Overwrite files if they already
-                                        exist <br></br> )
+                                    <span style={{ color: 'green' }}># Download specific assets from the search results </span> <br></br>
+                                        assets_download( <br></br>search_results, 
+                                        <span style={{ color: 'green' }}> # The search query
+                                        result object </span> <br></br> asset_id = "asset-name", 
+                                        <span style={{ color: 'green' }}> # The ID of the asset to download </span><br></br> output_dir =
+                                        "output-directory", 
+                                        <span style={{ color: 'green' }}> # Specify the directory for saving files{" "} </span>
+                                        <br></br>overwrite = TRUE 
+                                        <span style={{ color: 'green' }}> # Overwrite files if they already exist </span><br></br> )
                                     </code>
                                 </pre>
                             </div>
@@ -249,15 +256,15 @@ const ScrollSpyComponent = () => {
                         <p>Connect to catalog using its URL:</p>
                         <pre>
                             <code>
-                                # Import the pystac Client module to connect to the STAC catalog
+                            <span style={{ color: 'green' }}># Import the pystac Client module to connect to the STAC catalog </span>
                                 <br></br>
                                 from pystac_client import Client
                                 <br></br>
-                                # Define the STAC catalog URL
+                                <span style={{ color: 'green' }}># Define the STAC catalog URL </span>
                                 <br></br>
                                 catalog_url = "https://example.com/stac"
                                 <br></br>
-                                # Open a connection to the STAC catalog
+                                <span style={{ color: 'green' }}># Open a connection to the STAC catalog </span>
                                 <br></br>
                                 client = Client.open(catalog_url)
                             </code>
@@ -269,15 +276,15 @@ const ScrollSpyComponent = () => {
                         <p>Fetch and display metadata about the catalog, collections, or items:</p>
                         <pre>
                             <code>
-                                # Get the root catalog object<br />
+                            <span style={{ color: 'green' }}># Get the root catalog object </span> <br />
                                 catalog = client.get_catalog()<br />
-                                # Display basic metadata about the catalog<br />
-                                print(f"Catalog ID: &#123;catalog.id&#125;") &nbsp; # Unique identifier for the catalog<br />
-                                print(f"Description: &#123;catalog.description&#125;") &nbsp; # Description of the catalog<br />
-                                # Retrieve and list all collections in the catalog<br />
+                                <span style={{ color: 'green' }}># Display basic metadata about the catalog </span> <br />
+                                print(f"Catalog ID: &#123;catalog.id&#125;") &nbsp; <span style={{ color: 'green' }}># Unique identifier for the catalog </span><br />
+                                print(f"Description: &#123;catalog.description&#125;") &nbsp; <span style={{ color: 'green' }}># Description of the catalog </span><br />
+                                <span style={{ color: 'green' }}># Retrieve and list all collections in the catalog </span><br />
                                 collections = list(catalog.get_collections())<br />
-                                print(f"Number of collections: &#123;len(collections)&#125;") &nbsp; # Display the total number of collections<br />
-                                # Loop through collections to display their IDs<br />
+                                print(f"Number of collections: &#123;len(collections)&#125;") &nbsp; <span style={{ color: 'green' }}># Display the total number of collections </span><br />
+                                <span style={{ color: 'green' }}># Loop through collections to display their IDs </span><br />
                                 print("Collections IDs:")<br />
                                 for collection in collections:<br />
                                 &nbsp;&nbsp;print(f"- &#123;collection.id&#125;")<br />
@@ -290,16 +297,20 @@ const ScrollSpyComponent = () => {
                         <p>Use the client to search for specific datasets:</p>
                         <pre>
                             <code>
-                                # Perform a search query with specific parameters<br />
+                            <span style={{ color: 'green' }}># Perform a search query with specific parameters </span> <br />
                                 search = client.search(<br />
-                                &nbsp;&nbsp;collections=&#91;"collection-name"&#93;, &nbsp; # Specify the collection to search<br />
-                                &nbsp;&nbsp;datetime="2022-01-01/2022-12-31", &nbsp; # Filter by time range<br />
-                                &nbsp;&nbsp;limit=5 &nbsp; # Limit the number of results<br />
+                                &nbsp;&nbsp;collections=&#91;"collection-name"&#93;, &nbsp; 
+                                <span style={{ color: 'green' }}># Specify the collection to search </span><br />
+                                &nbsp;&nbsp;datetime="2022-01-01/2022-12-31", &nbsp; 
+                                <span style={{ color: 'green' }}># Filter by time range </span><br />
+                                &nbsp;&nbsp;limit=5 &nbsp; 
+                                <span style={{ color: 'green' }}># Limit the number of results </span><br />
                                 )<br />
-                                # Retrieve all items from the search results<br />
+                                <span style={{ color: 'green' }}># Retrieve all items from the search results </span> <br />
                                 items = list(search.get_items())<br />
                                 for item in items:<br />
-                                &nbsp;&nbsp;print(f"Item ID: &#123;item.id&#125;") &nbsp; # Print the ID of each retrieved item<br />
+                                &nbsp;&nbsp;print(f"Item ID: &#123;item.id&#125;") &nbsp; 
+                                <span style={{ color: 'green' }}># Print the ID of each retrieved item </span> <br />
                             </code>
                         </pre>
                     </div>
@@ -309,19 +320,24 @@ const ScrollSpyComponent = () => {
                         <p>Download data files from an item’s assets:</p>
                         <pre>
                             <code>
-                                # Loop through items and download their assets<br />
+                            <span style={{ color: 'green' }}># Loop through items and download their assets </span> <br />
                                 for item in items:<br />
                                 &nbsp;&nbsp;for asset_key, asset in item.assets.items():<br />
-                                &nbsp;&nbsp;&nbsp;&nbsp;# Get the URL of the asset<br />
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <span style={{ color: 'green' }}># Get the URL of the asset </span> <br />
                                 &nbsp;&nbsp;&nbsp;&nbsp;asset_url = asset.href<br />
-                                &nbsp;&nbsp;&nbsp;&nbsp;# Define a file name for saving the asset locally<br />
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <span style={{ color: 'green' }}># Define a file name for saving the asset locally </span> <br />
                                 &nbsp;&nbsp;&nbsp;&nbsp;file_name = f"&#123;asset_key&#125;.&#123;asset.media_type.split('/')&#91;-1&#93;&#125;"<br />
-                                &nbsp;&nbsp;&nbsp;&nbsp;# Download the asset using an HTTP GET request<br />
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <span style={{ color: 'green' }}># Download the asset using an HTTP GET request </span> <br />
                                 &nbsp;&nbsp;&nbsp;&nbsp;response = requests.get(asset_url)<br />
-                                &nbsp;&nbsp;&nbsp;&nbsp;# Save the asset to the local file system<br />
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <span style={{ color: 'green' }}># Save the asset to the local file system </span> <br />
                                 &nbsp;&nbsp;&nbsp;&nbsp;with open(file_name, 'wb') as f:<br />
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f.write(response.content)<br />
-                                &nbsp;&nbsp;&nbsp;&nbsp;print(f"Downloaded: &#123;file_name&#125;") &nbsp; # Confirm the file was downloaded<br />
+                                &nbsp;&nbsp;&nbsp;&nbsp;print(f"Downloaded: &#123;file_name&#125;") &nbsp; 
+                                <span style={{ color: 'green' }}># Confirm the file was downloaded </span><br />
 
                             </code>
                         </pre>

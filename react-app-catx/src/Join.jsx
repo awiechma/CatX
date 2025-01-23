@@ -9,6 +9,7 @@ import Help from "./Help";
 import About from "./About";
 import ItemDetail from "./components/View/ItemDetail.jsx";
 
+// linking betweeen pages react-style 😎
 const Join = () => {
   return (
     <Router>

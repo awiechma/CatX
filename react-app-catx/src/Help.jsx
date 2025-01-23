@@ -1,7 +1,6 @@
 // import all the components used in the app
 import React from "react";
 import "./Help.css";
-import Button from "./components/Button";
 import Navbar from "./components/Navbar";
 import ScrollSpy from "./components/Help/Scrollspy";
 import Footer from "./components/Footer";

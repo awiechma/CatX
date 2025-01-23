@@ -1,31 +1,39 @@
-/* Sicherstellen, dass die Seite mindestens 100% der Viewporthöhe einnimmt */
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
+  background-color: #e0efef;
 }
 
 .input-group-text {
   width: 10%;
 }
 
+.bg-body-tertiary.text-center.shadow-lg.text-black.py-3.mt-4 {
+  background-color: #5e2222; 
+  
+}
 .add-page-container {
   display: flex;
   flex-direction: column;
   top: 8%;
   bottom: 8%;
-  background-color: #f8f9fa;
+  background-color: #bedddd;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
   margin: 2% 2%;
   padding: 1rem;
   position: absolute;
   width: 96%;
-}
+  height: 140%
+} 
 
-/* Der Hauptinhalt bekommt flexibles Layout */
+/* flexible Layout */
 .content {
   flex: 1;
   padding-bottom: 50px;
+  height: 135%;
 }
 
 .add-tag-button {
@@ -66,7 +74,7 @@ html, body {
   outline: #94b5ce !important;
 }
 
-/* Zentrieren des Inhalts */
+/* centering content */
 .center-content {
   display: flex;
   flex-direction: column;
@@ -76,7 +84,7 @@ html, body {
   text-align: center;
 }
 
-/* Styling für die Warnmeldung */
+/* Styling warning */
 .alert {
   background-color: #f8d7da;
   color: #721c24;
