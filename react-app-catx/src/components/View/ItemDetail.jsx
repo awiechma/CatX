@@ -3,11 +3,34 @@ import { useParams, useNavigate } from 'react-router-dom';
 import '../../View.css'; // Ensure this file contains the updated CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from '../Footer';
+import { useState, useEffect } from 'react';
 
-const ItemDetail = ({ items }) => {
+const ItemDetail = () => {
     const { itemId } = useParams();  // Get itemId from the URL
     const navigate = useNavigate();  // Use navigate for programmatic navigation
-    const selectedItem = items.find(item => String(item.id) === String(itemId));  // Find the selected item
+    const [selectedItem, setSelectedItem] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchItem = async () => {
+            try {
+                const response = await fetch(`http://localhost:3000/api/items/${itemId}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP Error: ${response.status}`);
+                }
+                const data = await response.json();
+                setSelectedItem(data);
+            } catch (error) {
+                console.error("Error fetching item:", error);
+                setError("Error fetching item.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchItem();
+    }, [itemId]);
 
     const renderValue = (value) => {
         if (value === null || value === undefined) {
