@@ -85,7 +85,7 @@ const ItemListAndDisplay = ({ searchString, selectedTags }) => {
                             items.map((item) => (
                                 <li
                                     key={item.id}
-                                    className="mb-2 p-2 border rounded cursor-pointer hover:bg-gray-100"
+                                    className="list-group-item"
                                     onClick={() => handleItemClick(item)}
                                 >
                                     {item.id}{" "}

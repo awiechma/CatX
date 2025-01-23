@@ -29,7 +29,7 @@ const SearchBar = ({ searchString, setSearchString }) => {
                     onChange={handleInputChange} // Updates state on user input
                     style={{ width: '100%' }}
                 />
-                <button className="btn btn-outline-searchbar" type="submit">
+                <button className="btn-outline-searchbar" type="submit">
                     Search
                 </button>
             </form>
