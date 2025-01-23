@@ -18,5 +18,12 @@
     top: 0;
     max-height: 100vh;
     overflow-y: auto;
+    background-color: #bedddd;
+    border-radius: 8px;
+}
+
+.nav-link.active{
+    background-color:#bedddd !important ;
+    color: #000000 !important;
 }
 

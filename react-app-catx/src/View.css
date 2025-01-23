@@ -24,7 +24,24 @@ body {
     background-color: #315e5e;
 }
 
+.btn-outline-searchbar {
+    color: rgb(0, 0, 0) !important;
+    background-color: #f6fafa!important;
+    border: 1px solid #bedddd !important;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
   
+  /* Hover-effect for button */
+  .btn-outline-searchbar:hover {
+    background-color: #f6fafa !important;
+    border-color: #add5d5 !important;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border: 2px solid;
+  }
 
 .height90{
     height: 90%;
@@ -56,6 +73,7 @@ body {
 /* Container FilterableListGroup */
 .FilterableListGroup-container {
     margin-top: 7%;
+    background-color: #315e5e;
 }
 
 /* Styling for search and filter box */

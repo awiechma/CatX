@@ -16,24 +16,25 @@
     }
 }
 
-
-/* Button Styling  */
-.log-in-button {
-    font-size: 1rem;
-    padding: 0.5rem 2rem 0.5rem 2rem;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    background-color: #dfe8ef;
-    /* cursor: pointer; */
-    color: #333;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+.log-in-button{
+color: rgb(0, 0, 0) !important;
+background-color: #bedddd!important;
+border: 1px solid #bedddd !important;
+padding: 0.5rem 1rem;
+border-radius: 4px;
+font-size: 1rem;
+cursor: pointer;
+transition: background-color 0.3s, border-color 0.3s;
 }
 
+/* Hover-effect for button */
 .log-in-button:hover {
-    background-color: #94b5ce;
-    border-color: #aaa;
-    color: #ffffff;
+background-color: #f6fafa !important;
+border-color: #add5d5 !important;
+box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+border: 2px solid;
 }
+
 
 /* Container for centering */
 .account-container {
@@ -41,13 +42,13 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f8f9fa;
+    background-color: #e0efef;
 }
 
 /* Inner Content-Container */
 .account-content {
     text-align: center;
-    background: #ffffff;
+    background: #f6fafa;
     padding: 2rem;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -66,10 +67,11 @@
     font-size: 1.1rem;
 }
 
+
 /* Logout-Button */
 .logout-button {
     padding: 10px 20px;
-    background-color: #dc3545;
+    background-color: #892626 ;
     color: white;
     border: none;
     border-radius: 5px;
@@ -83,19 +85,21 @@
 }
 
 /* Button Styling  */
-.register-button {
-    font-size: 1rem;
-    padding: 0.5rem 2rem 0.5rem 2rem;
+.register-button{
+    color: rgb(0, 0, 0) !important;
+    background-color: #bedddd!important;
+    border: 1px solid #bedddd !important;
+    padding: 0.5rem 1rem;
     border-radius: 4px;
-    border: 1px solid #ccc;
-    background-color: #dfe8ef;
-    /* cursor: pointer; */
-    color: #333;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+    }
+    
+/* Hover-effect for button */
 .register-button:hover {
-    background-color: #94b5ce;
-    border-color: #aaa;
-    color: #ffffff;
-}
+    background-color: #f6fafa !important;
+    border-color: #add5d5 !important;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border: 2px solid;
+    }

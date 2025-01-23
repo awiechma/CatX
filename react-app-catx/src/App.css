@@ -32,14 +32,14 @@ html, body {
 
 /* Navbar-Links Styling */
 .nav-link {
-  color: #315e5e;
+  color: #000000 !important;
   font-size: 1.2rem;
   font-weight: 500;
   transition: color 0.2s ease-in-out;
 }
 
 .nav-link:hover {
-  color: #bedddd !important;
+  color: #315e5e !important;
 }
 
 /* active Link */
