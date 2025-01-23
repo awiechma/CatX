@@ -248,6 +248,7 @@ SELECT
     i.collection,
     i.geometry,
     i.bbox,
+    i.update_date,
     jsonb_strip_nulls(
         jsonb_build_object(
             'description',
@@ -338,7 +339,8 @@ GROUP BY
     i.geometry,
     i.bbox,
     i.assets,
-    properties;
+    properties,
+    i.update_date;
 
 INSERT INTO
     catalog (

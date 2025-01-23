@@ -7,7 +7,6 @@ const rfs = require('rotating-file-stream');
 const passport = require('./passportConfig');
 const db = require('./db');
 const cors = require('cors');
-const { Pool } = require('pg');
 
 // Load environment variables from .env file
 require('dotenv').config();
@@ -21,22 +20,6 @@ const app = express();
 
 // Middleware to parse JSON requests
 app.use(express.json());
-
-// Set up the PostgreSQL connection pool
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
-
-const connectWithRetry = async () => {
-  try {
-    await pool.connect();
-  } catch (err) {
-    console.error('Error connecting to database:', err);
-    setTimeout(connectWithRetry, 5000);
-  }
-};
-
-connectWithRetry();
 
 // Initialize passport for JWT authentication
 app.use(passport.initialize());
@@ -228,9 +211,9 @@ app.get('/api/mlmtasks', async (req, res) => {
 
 app.get('/api/recent-items', async (req, res) => {
   try {
-    const result = await pool.query(`
+    const result = await db.query(`
           SELECT * FROM items_complete_view
-          ORDER BY id DESC
+          ORDER BY update_date DESC
           LIMIT 10
       `);
     res.json(result.rows);

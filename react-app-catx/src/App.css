@@ -340,8 +340,8 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  overflow-y: auto;
-  max-height: 100%;
+  overflow-y:scroll;
+  max-height: 100%; 
   padding: 1rem;
   background-color: #e0efef;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
