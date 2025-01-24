@@ -7,7 +7,12 @@ body {
 }
 
 .input-group-text {
-  width: 10%;
+  min-width: 20%;
+  overflow: hidden;
+}
+
+.form-control {
+  line-height: 1;
 }
 
 .add-page-container {
