@@ -25,9 +25,9 @@ const optionalFieldOptions = [
     { name: 'mlmAccelerator_constrained', label: 'MLM Accelerator Constrained', type: 'checkbox' },
     { name: 'mlmAccelerator_summary', label: 'MLM Accelerator Summary' },
     { name: 'mlmAccelerator_count', label: 'MLM Accelerator Count' },
-    { name: 'mlmInput', label: 'MLM Input' },
-    { name: 'mlmOutput', label: 'MLM Output' },
-    { name: 'mlmHyperparameters', label: 'MLM Hyperparameters' }
+    { name: 'mlmInput', label: 'MLM Input', type: 'textarea' },
+    { name: 'mlmOutput', label: 'MLM Output', type: 'textarea' },
+    { name: 'mlmHyperparameters', label: 'MLM Hyperparameters', type: 'textarea' }
 ];
 
 const Formular = () => {
@@ -48,10 +48,9 @@ const Formular = () => {
                     setUploadedData(json);
                     addOptionFormFields(json);
                     populateFormFields(json);
-                    setSubmitStatus("File uploaded successfully.");
                 } catch (error) {
                     console.error("Error parsing JSON:", error);
-                    setSubmitStatus("Error parsing the uploaded JSON file.");
+                    setSubmitStatus("Error parsing the  JSON file.");
                 }
             };
             reader.readAsText(file);
@@ -59,10 +58,10 @@ const Formular = () => {
     };
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
+        const { name, type, value, checked } = e.target;
         setFormData((prev) => ({
             ...prev,
-            [name]: value,
+            [name]: type === 'checkbox' ? checked : value,
         }));
     };
 
@@ -80,7 +79,7 @@ const Formular = () => {
     const addOptionFormFields = (json) => {
         let fieldsToAdd = []
         for (const field of optionalFieldOptions) {
-            if (field.name.replace(/([A-Z])/, ':$1') in json || field.name.replace(/([A-Z])/, ':$1') in json.properties) {
+            if (field.name.replace(/([A-Z])/, (match) => ':' + match.toLowerCase()) in json || field.name.replace(/([A-Z])/, (match) => ':' + match.toLowerCase()) in json.properties) {
                 fieldsToAdd.push(field);
             }
         }
@@ -96,7 +95,7 @@ const Formular = () => {
             id: json.id || "",
             collection: json.collection || "",
             bbox: json.bbox?.join(", ") || "",
-            assets: JSON.stringify(json.assets, null, 2 ) || "",
+            assets: JSON.stringify(json.assets, null, 2) || "",
             geometry: JSON.stringify(json.geometry, null, 2) || "",
             description: json.properties?.description || "",
             datetime: json.properties?.datetime || "",
@@ -106,58 +105,89 @@ const Formular = () => {
             mlmTasks: json.properties?.["mlm:tasks"]?.join(", ") || "",
             mlmArchitecture: json.properties?.["mlm:architecture"] || "",
             mlmFramework: json.properties?.["mlm:framework"] || "",
-            mlmFrameworkVersion: json.properties?.["mlm:framework_version"] || "",
-            mlmMemorySize: json.properties?.["mlm:memory_size"] || "",
-            mlmTotalParameters: json.properties?.["mlm:total_parameters"] || "",
+            mlmFramework_version: json.properties?.["mlm:framework_version"] || "",
+            mlmMemory_size: json.properties?.["mlm:memory_size"] || "",
+            mlmTotal_parameters: json.properties?.["mlm:total_parameters"] || "",
             mlmPretrained: json.properties?.["mlm:pretrained"] || "",
-            mlmPretrainedSource: json.properties?.["mlm:pretrained_source"] || "",
-            mlmBatchSizeSuggestion: json.properties?.["mlm:batch_size_suggestion"] || "",
+            mlmPretrained_source: json.properties?.["mlm:pretrained_source"] || "",
+            mlmBatch_size_suggestion: json.properties?.["mlm:batch_size_suggestion"] || "",
             mlmAccelerator: json.properties?.["mlm:accelerator"] || "",
-            mlmAcceleratorConstrained: json.properties?.["mlm:accelerator_constrained"] || "",
-            mlmAcceleratorSummary: json.properties?.["mlm:accelerator_summary"] || "",
-            mlmAcceleratorCount: json.properties?.["mlm:accelerator_count"] || "",
-            mlmInput: json.properties?.["mlm:input"] || "",
-            mlmOutput: json.properties?.["mlm:output"] || "",
-            mlmHyperparameters: json.properties?.["mlm:hyperparameters"] || ""
+            mlmAccelerator_constrained: json.properties?.["mlm:accelerator_constrained"] || "",
+            mlmAccelerator_summary: json.properties?.["mlm:accelerator_summary"] || "",
+            mlmAccelerator_count: json.properties?.["mlm:accelerator_count"] || "",
+            mlmInput: JSON.stringify(json.properties?.["mlm:input"], null, 2) || "",
+            mlmOutput: JSON.stringify(json.properties?.["mlm:output"], null, 2) || "",
+            mlmHyperparameters: JSON.stringify(json.properties?.["mlm:hyperparameters"], null, 2) || ""
         }));
     };
 
+
+    const removeEmpty = (obj) => {
+        if (Array.isArray(obj)) {
+            return obj
+                .map(item => removeEmpty(item)) // Recursively clean array elements
+                .filter(item => item !== null && item !== undefined && item !== ""); // Filter empty items
+        } else if (typeof obj === "object" && obj !== null) {
+            return Object.entries(obj)
+                .reduce((acc, [key, value]) => {
+                    const cleanedValue = removeEmpty(value); // Recursively clean object properties
+                    if (
+                        cleanedValue !== null &&
+                        cleanedValue !== undefined &&
+                        cleanedValue !== "" &&
+                        !(typeof cleanedValue === "object" && Object.keys(cleanedValue).length === 0) && // Remove empty objects
+                        !(Array.isArray(cleanedValue) && cleanedValue.length === 0) // Remove empty arrays
+                    ) {
+                        acc[key] = cleanedValue; // Only include non-empty properties
+                    }
+                    return acc;
+                }, {});
+        }
+        return obj; // Return non-object values directly
+    }
+
     const handleSubmit = async () => {
         try {
-            let body = {
+            let body = removeEmpty({
                 stac_version: formData.stac_version,
-                stac_extensions: formData.stac_extensions,
+                stac_extensions: formData.stac_extensions
+                    ? formData.stac_extensions.split(", ")
+                    : null,
                 type: formData.type,
                 id: formData.id,
                 collection: formData.collection,
-                bbox: formData.bbox,
-                assets: formData.assets,
-                geometry: formData.geometry,
-                properties: {
+                bbox: formData.bbox
+                    ? formData.bbox.split(", ").map(x => parseFloat(x))
+                    : null,
+                assets: formData.assets ? JSON.parse(formData.assets) : null,
+                geometry: formData.geometry ? JSON.parse(formData.geometry) : null,
+                properties: removeEmpty({
                     description: formData.description,
                     datetime: formData.datetime,
                     start_datetime: formData.start_datetime,
                     end_datetime: formData.end_datetime,
-                    'mlm:name': formData.mlmName,
-                    'mlm:tasks': formData.mlmTasks,
-                    'mlm:architecture': formData.mlmArchitecture,
-                    'mlm:framework': formData.mlmFramework,
-                    'mlm:framework_version': formData.mlmFrameworkVersion,
-                    'mlm:memory_size': formData.mlmMemorySize,
-                    'mlm:total_parameters': formData.mlmTotalParameters,
-                    'mlm:pretrained': formData.mlmPretrained,
-                    'mlm:pretrained_source': formData.mlmPretrainedSource,
-                    'mlm:batch_size_suggestion': formData.mlmBatchSizeSuggestion,
-                    'mlm:accelerator': formData.mlmAccelerator,
-                    'mlm:accelerator_constrained': formData.mlmAcceleratorConstrained,
-                    'mlm:accelerator_summary': formData.mlmAcceleratorSummary,
-                    'mlm:accelerator_count': formData.mlmAcceleratorCount,
-                    'mlm:input': formData.mlmInput,
-                    'mlm:output': formData.mlmOutput,
-                    'mlm:hyperparameters': formData.mlmHyperparameters
-                },
+                    "mlm:name": formData.mlmName,
+                    "mlm:tasks": formData.mlmTasks,
+                    "mlm:architecture": formData.mlmArchitecture,
+                    "mlm:framework": formData.mlmFramework,
+                    "mlm:framework_version": formData.mlmFramework_version,
+                    "mlm:memory_size": formData.mlmMemory_size,
+                    "mlm:total_parameters": formData.mlmTotal_parameters,
+                    "mlm:pretrained": formData.mlmPretrained,
+                    "mlm:pretrained_source": formData.mlmPretrained_source,
+                    "mlm:batch_size_suggestion": formData.mlmBatch_size_suggestion,
+                    "mlm:accelerator": formData.mlmAccelerator,
+                    "mlm:accelerator_constrained": formData.mlmAccelerator_constrained,
+                    "mlm:accelerator_summary": formData.mlmAccelerator_summary,
+                    "mlm:accelerator_count": formData.mlmAccelerator_count,
+                    "mlm:input": formData.mlmInput ? JSON.parse(formData.mlmInput) : null,
+                    "mlm:output": formData.mlmOutput ? JSON.parse(formData.mlmOutput) : null,
+                    "mlm:hyperparameters": formData.mlmHyperparameters
+                        ? JSON.parse(formData.mlmHyperparameters)
+                        : null,
+                }),
                 createNewCollection
-            }
+            });
             const response = await fetch('http://localhost:3000/api/items/upload', {
                 method: 'POST',
                 headers: {
@@ -233,10 +263,9 @@ const Formular = () => {
 
             <div className="input-group mb-3">
                 <span className="input-group-text">Assets</span>
-                <input
-                    type="text"
+                <textarea
                     className="form-control"
-                    placeholder="JSON..."
+                    placeholder="Enter assets in JSON format"
                     value={formData.assets || ""}
                     name="assets"
                     onChange={handleInputChange}
@@ -312,23 +341,34 @@ const Formular = () => {
                 <div className="input-group mb-3" key={index}>
                     <span className="input-group-text">{field.label}</span>
                     {field.type === 'checkbox' ? (
-                        <input
-                            type="checkbox"
-                            className="form-check-input"
-                            checked={formData[field.name] || false}
-                            name={field.name}
-                            onChange={handleInputChange}
-                        />
-                    ) : (
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder={field.label}
-                            value={formData[field.name] || ""}
-                            name={field.name}
-                            onChange={handleInputChange}
-                        />
-                    )}
+                        <div className="form-check form-switch">
+                            <input
+                                type="checkbox"
+                                className="form-check-input form-switch"
+                                checked={formData[field.name] || false}
+                                name={field.name}
+                                onChange={(e) => handleInputChange(e)}
+                            />
+                        </div>
+                    ) :
+                        field.type === 'textarea' ? (
+                            <textarea
+                                className="form-control"
+                                placeholder={field.label}
+                                value={formData[field.name] || ""}
+                                name={field.name}
+                                onChange={handleInputChange}
+                            />
+                        ) : (
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder={field.label}
+                                value={formData[field.name] || ""}
+                                name={field.name}
+                                onChange={handleInputChange}
+                            />
+                        )}
                 </div>
             ))}
 

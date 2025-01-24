@@ -507,6 +507,7 @@ app.post('/api/collections/upload', passport.authenticate('jwt', { session: fals
  * Requires a valid JWT token containing the username
  */
 app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  let error = "Exception while parsing input."
   const user = req.user.username;
 
   // Destructure the request body
@@ -547,12 +548,12 @@ app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), 
     "mlm:hyperparameters": mlmHyperparameters = null,
   } = properties;
 
-
   try {
     // Begin a transaction
     await db.query('BEGIN');
 
     if (createNewCollection) {
+      error = "Exception while creating new collection."
       const insertCollectionQuery = {
         text: `
         INSERT INTO collections (stac_version, id, description, extent, CREATION_USER, UPDATE_USER)
@@ -592,6 +593,7 @@ app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), 
         user,
       ],
     };
+    error = "Exception while inserting item."
     await db.query(insertItemsQuery);
 
     // Insert the properties
@@ -650,6 +652,7 @@ app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), 
         user
       ],
     };
+    error = "Exception while inserting properties."
     await db.query(insertPropertiesQuery);
 
     // Insert the tasks
@@ -668,6 +671,7 @@ app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), 
       `
       }
 
+      error = "Exception while inserting tasks."
       for (const task of mlmTasks.split(',')) {
         await db.query(insertTasksQuery, [id, collection, task.trim(), user]);
       }
@@ -678,7 +682,7 @@ app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), 
     res.status(200).json({ message: 'Item uploaded successfully' });
   } catch (error) {
     await db.query('ROLLBACK');
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: 'Internal server error: ' + error });
   }
 });
 
