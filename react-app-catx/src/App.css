@@ -1,6 +1,15 @@
+
+html, body {
+  background-color: #e0efef;
+}
+
+.flex-grow-1 {
+  background-color: #e0efef; 
+}
+
 /* Styling for Navbar */
 .navbar {
-  background-color: #f8f9fa !important;
+  background-color:  #e9f3f3 !important;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   padding: 0.5rem 1rem;
   font-family: Arial, sans-serif;
@@ -11,9 +20,9 @@
 .navbar-brand {
   display: flex;
   align-items: center;
-  color: #343a40;
+  /* color: #343a40; */
   font-weight: bold;
-  text-decoration: none;
+  /* text-decoration: none; */
 }
 
 .navbar-brand img {
@@ -23,58 +32,38 @@
 
 /* Navbar-Links Styling */
 .nav-link {
-  color: #61696e;
+  color: #000000 !important;
   font-size: 1.2rem;
   font-weight: 500;
   transition: color 0.2s ease-in-out;
 }
 
 .nav-link:hover {
-  color: #94b5ce !important;
+  color: #315e5e !important;
 }
 
 /* active Link */
 .nav-link.active {
-  color: #94b5ce !important;
+  color: #bedddd !important;
 }
 
-/* Toggler Button Styling for mobile devices */
+/* Toggler Button Styling for mobile devices 
 .navbar-toggler {
-  border: none;
-}
+  /* border: none; 
+} */
 
 .navbar-toggler-icon {
   filter: brightness(0) invert(1);
 }
 
-/* Dropdown menu */
-/*
-.nav-item.dropdown .dropdown-menu {
-  border-radius: 0.5rem;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+.container-fluid {
+  background-color: #bedddd;
 }
 
-.dropdown-item {
-  color: #343a40;
-  font-size: 1rem;
-}
-
-.dropdown-item:hover {
-  background-color: #007bff;
-  color: white; 
-}
-
-/* Responsive design 
-@media (max-width: 992px) {
-  .navbar-nav {
-    text-align: center;
-  }
-}
-*/
-/* Container for Searchbar */
+/* Container for Searchbar 
 .SearchBar-container {
-  justify-content: center; /* Zentriere den Inhalt horizontal */
-  align-items: center; /* Zentriere den Inhalt vertikal */
+  justify-content: center;
+  align-items: center;
   padding: 1.63rem;
   background-color: #dfe8ef;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -84,24 +73,24 @@
   position: absolute;
   top: 13.5%;
   right: 3%;
-}
+} */
 
-/* Input for Searchbar */
+/* Input for Searchbar 
 .searchbar-whitespace {
-  width: 100%; /* Nutze 100% der Containerbreite */
-  padding: 0.5rem; 
+  width: 100%;
+  padding: 0.5rem;
   font-size: 1.1rem;
   border: 1px solid #94b5ce;
   border-radius: 4px;
-  /*box-sizing: border-box;*/
   outline: none;
-}
+} 
 
 .searchbar-whitespace::placeholder {
   padding-right: 5rem;
-}
+} */
 
-/* Searchbutton Styling  */
+
+/* Searchbutton Styling  
 .btn-outline-searchbar {
   border-color: #94b5ce !important;
   color: #000000 !important;
@@ -109,87 +98,17 @@
   padding: 0.5rem 1rem;
   margin-left: 0.5rem;
   transition: all 0.3s ease;
-}
+} 
 
 .btn-outline-searchbar:hover {
   background-color: #94b5ce !important;
   color: white !important;
-}
-
-/* for smaller devices 
-@media (max-width: 576px) {
-  .SearchBar-container {
-    padding: 0.5rem;
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .form-control {
-    width: 100%;
-    margin-bottom: 0.5rem;
-  }
-
-  .btn-outline-success {
-    width: 100%;
-  }
 } */
 
-/* container on the right side for list */
-.right-aligned-container {
-  position: absolute;
-  top: 8%; /* Optional: Passe die vertikale Position an */
-  bottom: 8%; /* Sorgt dafür, dass der Container den gesamten Bereich einnimmt */
-  right: 0%; /* Setzt den Container an den rechten Rand */
-  width: 60%; /* X durch den Platz für andere Inhalte (z. B. Sidebar) ersetzen, falls nötig */
-  background-color: #dfe8ef;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px; /* Falls abgerundete Ecken nötig sind */
-  padding: 1rem;
-  margin: 2% 2%;
-  display: flex;
-  flex-direction: column;
-}
 
 
-/* style for heading */
-.right-aligned-container h3 {
-  padding: 1rem;
-  position: absolute;
-  top: 0;
-  left: 0;
 
-}
-
-/* list in the container */
-.list-recently-added {
-  display: flex;
-  justify-content: center;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  background-color: #f8f9fa;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  width: 100%;
-  max-width: 350px;
-  margin: auto;
-  position: absolute;
-  top: 30%;
-  left: 3%;
-  font-weight: bold;
-  flex-direction: column;
-}
-
-/* mobile devices 
-@media (max-width: 768px) {
-  .right-aligned-container {
-    align-items: flex-start;
-    margin-right: 0;
-  }
-} */
-
-/* Container for text to start search */
+/* Container for text to start search 
 .start-search {
   display: flex;
   justify-content: center;
@@ -204,34 +123,83 @@
   top: 13.5%;
   left: 3%;
   font-weight: bold;
+} */
+
+
+/* container on the right side for list */
+.right-aligned-container {
+  position: absolute;
+  top: 8%;
+  bottom: 8%;
+  right: 0%;
+  width: 65%;
+  background-color: #bedddd;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin-top: 2%;
+  display: flex;
+  flex-direction: column;
+  padding: 2%;
+  height: 91%;
+} 
+
+/* for small devices 
+@media (max-width: 768px) {
+  .right-aligned-container {
+    align-self: center; 
+    width: 100%; 
+    margin: 2% 0; 
+    flex-direction: column;
+  }
+} */
+
+/* style for heading */
+.right-aligned-container h3 {
+  padding: 1rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+
 }
 
-.left-aligned-container {
-  bottom: 8%;
-  top: 8%;
-  left: 0%;
-  height: 84%;
-}
+.left-aligned-container { 
+ display: flex;
+ top: 8%;
+ bottom: 8%;
+ width: 28%;
+ box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+ border-radius: 8px;
+ margin-top: 2%;
+ flex-direction: column;
+ background-color: #315e5e;
+ height: 100%;
+
+
+} 
 
 /*Homepage Button View*/
 .left-aligned-container-small {
   display: flex;
   justify-content: center;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  background-color: #dfe8ef;
+  /* background-color: #dfe8ef; */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  width: 100%;
+  background-color: #e0efef;
   max-width: 350px;
-  margin: 2% 2%;
+  margin-top: 2%;
+  margin-left: 2%;
   position: absolute;
   left: 0%;
   font-weight: bold;
   flex-direction: column;
+  margin-bottom: 2%;
+
 }
+
 
 .view {
   top: 8%;
@@ -250,32 +218,31 @@
 }
 
 
-
 .btn-view {
   color: rgb(0, 0, 0) !important;
-  background-color: #ffffff !important;
-  border: 1px solid #94b5ce !important;
-  padding: 0.25rem 7.5rem !important;
+  background-color: #f6fafa!important;
+  border: 1px solid #add5d5!important;
+  padding: 0.25rem 7.5rem;
   border-radius: 4px;
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s, border-color 0.3s !important;
+  transition: background-color 0.3s, border-color 0.3s;
 }
 
 /* Hover-effect for button */
 .btn-view:hover {
-  background-color: #94b5ce !important;
-  border-color: #94b5ce !important;
-  color: #ffffff !important;
+  background-color: #f6fafa !important;
+  border-color: #add5d5 !important;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border: 2px solid;
 }
-
 
 .btn-add {
   color: rgb(0, 0, 0) !important;
-  background-color: #ffffff !important;
-  border: 1px solid #94b5ce !important;
-  padding: 0.25rem 7.5rem;
+  background-color: #f6fafa!important;
+  border: 1px solid #add5d5 !important;
+  padding: 0.15rem 8.0rem;
   border-radius: 4px;
   font-size: 1rem;
   font-weight: bold;
@@ -285,16 +252,17 @@
 
 /* Hover-effect for button */
 .btn-add:hover {
-  background-color: #94b5ce !important;
-  border-color: #94b5ce !important;
-  color: #ffffff !important;
+  background-color: #f6fafa !important;
+  border-color: #bedddd !important;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border: 2px solid;
 }
 
 .btn-account {
   color: rgb(0, 0, 0) !important;
-  background-color: #ffffff !important;
-  border: 1px solid #94b5ce !important;
-  padding: 0.25rem 7.5rem;
+  background-color: #f6fafa!important;
+  border: 1px solid #add5d5 !important;
+  padding: 0.20rem 7.5rem;
   border-radius: 4px;
   font-size: 1rem;
   font-weight: bold;
@@ -304,15 +272,16 @@
 
 /* Hover-effect for button */
 .btn-account:hover {
-  background-color: #94b5ce !important;
-  border-color: #94b5ce !important;
-  color: #ffffff !important;
+  background-color: #f6fafa !important;
+  border-color: #add5d5 !important;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border: 2px solid;
 }
 
-.btn-help {
+ .btn-help {
   color: rgb(0, 0, 0) !important;
-  background-color: #ffffff !important;
-  border: 1px solid #94b5ce !important;
+  background-color: #f6fafa!important;
+  border: 1px solid #add5d5 !important;
   padding: 0.25rem 7.5rem;
   border-radius: 4px;
   font-size: 1rem;
@@ -323,16 +292,18 @@
 
 /* Hover-effect for button */
 .btn-help:hover {
-  background-color: #94b5ce !important;
-  border-color: #94b5ce !important;
-  color: #ffffff !important;
-}
+  background-color: #f6fafa !important;
+  border-color: #add5d5 !important;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border: 2px solid;
+} 
 
 /* App Container */
 .app-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
+  margin:0;
 }
 
 /* Main Content */
@@ -349,17 +320,6 @@
   z-index: 10;
 }
 
-/*
-.footer {
-  background-color: #f8f9fa;
-  color: #000000;
-  text-align: center;
-  padding: 1rem 0;
-  bottom: 0;
-  position: absolute;
-  box-sizing: border-box;
-}*/
-
 .footer-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -367,44 +327,8 @@
   bottom: 0;
 }
 
-/*
-.footer-nav {
-  margin-top: 0.5rem;
-}
-
-.footer-link {
-  color: #61dafb;
-  text-decoration: none;
-  font-size: 0.9rem;
-}
-
-.footer-link:hover {
-  text-decoration: underline;
-}
-  */
 
 
-/** Recently Added List */
-.app-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.left-aligned-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 20px;
-}
-
-.left-aligned-container-small {
-  margin-bottom: 20px;
-}
-
-.right-aligned-container {
-  padding: 20px;
-}
 
 .recent-items-grid {
   display: grid;
@@ -416,24 +340,29 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  overflow-y: auto;
+  overflow-y:scroll;
   max-height: 100%; 
   padding: 1rem;
-  background-color: #f8f9fa;
+  background-color: #e0efef;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  border-color: #add5d5;
 }
+
 .recent-item-box {
   display: block;
-  background-color: #ffffff;
+  background-color: #f6fafa;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 20px;
   text-decoration: none;
   color: inherit;
   transition: box-shadow 0.3s;
+  border-color:#add5d5;
 }
 
 .recent-item-box:hover {
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .recent-item-content {
@@ -450,3 +379,9 @@
   font-size: 1rem;
   color: #666;
 }
+
+
+
+
+
+

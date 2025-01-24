@@ -11,7 +11,7 @@ const Account = () => {
     const isLoggedIn = useAuth();
 
     if (isLoggedIn === null) {
-        return <div>Überprüfe Anmeldestatus...</div>;
+        return <div>Checking login status...</div>;
     }
 
     if (isLoggedIn === false) {

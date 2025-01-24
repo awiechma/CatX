@@ -7,7 +7,6 @@ const rfs = require('rotating-file-stream');
 const passport = require('./passportConfig');
 const db = require('./db');
 const cors = require('cors');
-const { Pool } = require('pg');
 
 // Load environment variables from .env file
 require('dotenv').config();
@@ -21,22 +20,6 @@ const app = express();
 
 // Middleware to parse JSON requests
 app.use(express.json());
-
-// Set up the PostgreSQL connection pool
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
-
-const connectWithRetry = async () => {
-  try {
-    await pool.connect();
-  } catch (err) {
-    console.error('Error connecting to database:', err);
-    setTimeout(connectWithRetry, 5000);
-  }
-};
-
-connectWithRetry();
 
 // Initialize passport for JWT authentication
 app.use(passport.initialize());
@@ -228,9 +211,9 @@ app.get('/api/mlmtasks', async (req, res) => {
 
 app.get('/api/recent-items', async (req, res) => {
   try {
-    const result = await pool.query(`
+    const result = await db.query(`
           SELECT * FROM items_complete_view
-          ORDER BY id DESC
+          ORDER BY update_date DESC
           LIMIT 10
       `);
     res.json(result.rows);
@@ -444,6 +427,35 @@ app.get('/api/items', async (req, res) => {
     })
 });
 
+
+/**
+ * Endpoint to retrieve a single item by its ID from the database
+ */
+app.get('/api/items/:itemid', async (req, res) => {
+  const itemId = req.params.itemid;
+  const query = {
+    text: `
+      SELECT * 
+      FROM items_complete_view
+      WHERE id = $1
+    `,
+    values: [itemId]
+  };
+
+  db.query(query)
+    .then(({ rows: items }) => {
+      if (items.length > 0) {
+        res.status(200).json(items[0]);
+      } else {
+        res.status(404).json({ message: 'Item not found' });
+      }
+    })
+    .catch(error => {
+      console.error('Error during item export:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    });
+});
+
 /**
  * Endpoint to upload a collection to the database
  * Requires a valid JWT token containing the username
@@ -507,6 +519,7 @@ app.post('/api/collections/upload', passport.authenticate('jwt', { session: fals
  * Requires a valid JWT token containing the username
  */
 app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  let error = "Exception while parsing input."
   const user = req.user.username;
 
   // Destructure the request body
@@ -547,12 +560,12 @@ app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), 
     "mlm:hyperparameters": mlmHyperparameters = null,
   } = properties;
 
-
   try {
     // Begin a transaction
     await db.query('BEGIN');
 
     if (createNewCollection) {
+      error = "Exception while creating new collection."
       const insertCollectionQuery = {
         text: `
         INSERT INTO collections (stac_version, id, description, extent, CREATION_USER, UPDATE_USER)
@@ -592,6 +605,7 @@ app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), 
         user,
       ],
     };
+    error = "Exception while inserting item."
     await db.query(insertItemsQuery);
 
     // Insert the properties
@@ -650,6 +664,7 @@ app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), 
         user
       ],
     };
+    error = "Exception while inserting properties."
     await db.query(insertPropertiesQuery);
 
     // Insert the tasks
@@ -668,6 +683,7 @@ app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), 
       `
       }
 
+      error = "Exception while inserting tasks."
       for (const task of mlmTasks.split(',')) {
         await db.query(insertTasksQuery, [id, collection, task.trim(), user]);
       }
@@ -678,7 +694,7 @@ app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), 
     res.status(200).json({ message: 'Item uploaded successfully' });
   } catch (error) {
     await db.query('ROLLBACK');
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: 'Internal server error: ' + error });
   }
 });
 
