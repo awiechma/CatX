@@ -1,9 +1,9 @@
-/* Sicherstellen, dass die Seite mindestens 100% der Viewporthöhe einnimmt */
 html,
 body {
   margin: 0;
   padding: 0;
   height: 100%;
+  background-color: #e0efef;
 }
 
 .input-group-text {
@@ -20,18 +20,42 @@ body {
   flex-direction: column;
   top: 8%;
   bottom: 8%;
-  background-color: #f8f9fa;
+  background-color: #bedddd;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
   margin: 2% 2%;
   padding: 1rem;
   position: absolute;
   width: 96%;
+  height: 140%
+} 
+
+.btn-optional-data {
+  color: rgb(255, 255, 255) !important;
+  background-color: #315e5e!important;
+  border: 1px solid #add5d5 !important;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+  margin: 0.5%;
 }
 
-/* Der Hauptinhalt bekommt flexibles Layout */
+/* Hover-effect for button */
+.btn-optional-data:hover {
+  background-color: #f6fafa !important;
+  border-color: #add5d5 !important;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid;
+  color: black !important;
+} 
+
+/* flexible Layout */
 .content {
   flex: 1;
   padding-bottom: 50px;
+  height: 135%;
 }
 
 .add-tag-button {
@@ -72,7 +96,7 @@ body {
   outline: #94b5ce !important;
 }
 
-/* Zentrieren des Inhalts */
+/* centering content */
 .center-content {
   display: flex;
   flex-direction: column;
@@ -82,7 +106,7 @@ body {
   text-align: center;
 }
 
-/* Styling für die Warnmeldung */
+/* Styling warning */
 .alert {
   background-color: #f8d7da;
   color: #721c24;

@@ -1,9 +1,9 @@
-/* Sicherstellen, dass die Seite mindestens 100% der Viewporthöhe einnimmt */
 html,
 body {
-    margin: 0;
-    padding: 0;
+    margin: 3%;
+    padding: 3%;
     height: 100%;
+    background-color: #315e5e;
 }
 
 .page-div {
@@ -11,15 +11,40 @@ body {
     display: flex;
     flex-direction: column;
     margin: 0;
+    background-color: #315e5e;
 }
 
 .view-div {
     display: flex;
     flex-direction: column;
-    height: 84vh;
+    height: 100%;
     margin-top: 8vh;
     width: 100%;
     position: relative;
+    background-color: #315e5e;
+}
+
+.btn-outline-searchbar {
+    color: rgb(0, 0, 0) !important;
+    background-color: #f6fafa!important;
+    border: 1px solid #bedddd !important;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  
+  /* Hover-effect for button */
+  .btn-outline-searchbar:hover {
+    background-color: #f6fafa !important;
+    border-color: #add5d5 !important;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border: 2px solid;
+  }
+
+.height90{
+    height: 90%;
 }
 
 .custom-container {
@@ -28,9 +53,17 @@ body {
     padding: 1.63rem;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    width: 100%;
+    width: 98%;
     position: relative;
-    margin-top: 1vh;
+    margin-top: 2vh;
+    margin-left: 2vh;
+    margin-right: 2vh;
+    margin-bottom: 2vh;
+    
+}
+
+.custom-container.bg-body-tertiary {
+    background-color:  #e0efef !important; 
 }
 
 .items-container {
@@ -40,13 +73,14 @@ body {
 /* Container FilterableListGroup */
 .FilterableListGroup-container {
     margin-top: 7%;
+    background-color: #315e5e;
 }
 
 /* Styling for search and filter box */
 .search-with-filter-container {
     justify-content: center;
     padding: 1.63rem;
-    background-color: #dfe8ef;
+    background-color: #315e5e;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     width: 100%;
@@ -65,7 +99,7 @@ body {
     margin: 5px;
     border-radius: 30px;
     border: 2px solid #ddd;
-    background-color: #94b5ce;
+    background-color: #315e5e;
     color: #ffffff !important;
     transition: all 0.3s ease;
     cursor: pointer;
@@ -76,8 +110,8 @@ body {
     padding: 10px 20px;
     margin: 5px;
     border-radius: 30px;
-    border: 2px solid #ddd;
-    background-color: #f9f9f9;
+    border: 2px solid #bedddd;
+    background-color: #f6fafa;
     color: #000000 !important;
     transition: all 0.3s ease;
     cursor: pointer;
@@ -85,33 +119,55 @@ body {
 
 /* Hover effects */
 .other-tag:hover {
-    background-color: #dfe8ef;
+    background-color: #f6fafa;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* back button */
 .back-button {
-    position: relative;
-    font-size: 14px;
-    padding: 8px 12px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    background-color: #dfe8ef;
-    color: #333;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
-.back-button:hover {
-    background-color: #94b5ce;
-    border-color: #aaa;
-    color: #ffffff;
-}
+    color: rgb(0, 0, 0) !important;
+    background-color: #f6fafa!important;
+    border: 1px solid #bedddd !important;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  
+  /* Hover-effect for button */
+  .back-button:hover {
+    background-color: #f6fafa !important;
+    border-color: #add5d5 !important;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border: 2px solid;
+  } 
 
 .details-layout {
     display: flex;
     flex-direction: row;
     gap: 20px;
     margin-top: 20px;
+}
+
+.list-group {
+    background-color: #bedddd;
+    padding: 1rem;
+    padding-left: 1rem;
+}
+
+.list-group-item{
+   background-color: #f6fafa !important;
+   margin: 1%;
+   padding: 1rem;
+   border-radius: 8px;
+   border-color: #add5d5;
+}
+
+.list-group-item:hover {
+ background-color: #f6fafa;
+ box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1) !important;
+ cursor: pointer;
 }
 
 /* container for left side */
@@ -126,16 +182,15 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     left: 3%;
     top: 30%;
-    bottom: 13%;
+    bottom: 5%;
 }
 
 .detail-preview-left-side {
-    overflow: auto;
     width: 100%;
-    height: 90%;
+    height: 85%;
     padding: 10px;
     font-size: 14px;
-    resize: vertical;
+    overflow-y: scroll;
 }
 
 /* container for right side */
@@ -148,16 +203,15 @@ body {
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: auto;
     right: 3%;
     top: 30%;
-    bottom: 13%;
+    bottom: 5%;
 }
 
 /* textarea json preview */
 .json-preview-right-side textarea {
     width: 100%;
-    height: 400px;
+    height: 85%;
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #ccc;
@@ -174,7 +228,7 @@ body {
     .left-side-container-view-page,
     .json-preview-right-side {
         width: 100%;
-        position: static;
+        height: 100%;
         margin-bottom: 16px;
     }
 

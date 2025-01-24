@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import "/src/Account.css";
 
 const AccountPage = () => {
-    const [userData, setUserData] = useState({ username: null, email: null });
+    const [userData, setUserData] = useState({ username: null, email: null }); // State to hold user data
 
     async function getUserData() {
-        const token = localStorage.getItem("catx-user-session-token");
-        const username = localStorage.getItem("catx-user-session-username");
+        const token = localStorage.getItem("catx-user-session-token"); // Get session token
+        const username = localStorage.getItem("catx-user-session-username"); // Get session username
 
         try {
             const response = await fetch("http://localhost:3000/api/user/" + username, {
@@ -14,46 +14,46 @@ const AccountPage = () => {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": "Bearer " + token,
-                }
-            });
+                },
+            }); // Fetch user data with token
 
             if (response.ok) {
                 const data = await response.json();
                 setUserData({
                     username: username || "Username not available",
-                    email: data.email || "Email not available"
-                });
+                    email: data.email || "Email not available",
+                }); // Update state with user data
             } else {
-                console.error("Fehler beim Abrufen der Daten.");
+                console.error("Fehler beim Abrufen der Daten."); // Log fetch error
             }
         } catch (err) {
-            console.error("Fehler:", err);
+            console.error("Fehler:", err); // Log request failure
         }
     }
 
     useEffect(() => {
-        getUserData();
+        getUserData(); // Fetch user data on component mount
     }, []);
 
     const handleLogout = () => {
-        localStorage.removeItem("catx-user-session-token");
-        localStorage.removeItem("catx-user-session-username");
-        console.log("Logged out successfully!");
-        window.location.href = "/";
+        localStorage.removeItem("catx-user-session-token"); // Clear session token
+        localStorage.removeItem("catx-user-session-username"); // Clear session username
+        console.log("Logged out successfully!"); // Log logout
+        window.location.href = "/"; // Redirect to home
     };
 
     return (
         <div className="account-container">
             <div className="account-content">
                 <ul className="user-data">
-                    <li><strong>Username:</strong> {userData.username}</li>
-                    <li><strong>Email:</strong> {userData.email}</li>
+                    <li><strong>Username:</strong> {userData.username}</li> {/* Display username */}
+                    <li><strong>Email:</strong> {userData.email}</li> {/* Display email */}
                 </ul>
-                <button 
-                    onClick={handleLogout} 
+                <button
+                    onClick={handleLogout}
                     className="logout-button"
                 >
-                    Logout
+                    Logout {/* Logout button */}
                 </button>
             </div>
         </div>
