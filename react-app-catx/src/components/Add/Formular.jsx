@@ -3,24 +3,31 @@ import { useNavigate } from "react-router-dom";
 import TagInput from "./TagInput";
 import Button from "../Button";
 import "/src/Add.css";
-    
+
 const token = localStorage.getItem("catx-user-session-token");
 
 const optionalFieldOptions = [
-    { name: 'mlm:framework', label: 'MLM Framework' },
-    { name: 'mlm:framework_version', label: 'MLM Framework Version' },
-    { name: 'mlm:memory_size', label: 'MLM Memory Size' },
-    { name: 'mlm:total_parameters', label: 'MLM Total Parameters' },
-    { name: 'mlm:pretrained', label: 'MLM Pretrained', type: 'checkbox' },
-    { name: 'mlm:pretrained_source', label: 'MLM Pretrained Source' },
-    { name: 'mlm:batch_size_suggestion', label: 'MLM Batch Size Suggestion' },
-    { name: 'mlm:accelerator', label: 'MLM Accelerator' },
-    { name: 'mlm:accelerator_constrained', label: 'MLM Accelerator Constrained', type: 'checkbox' },
-    { name: 'mlm:accelerator_summary', label: 'MLM Accelerator Summary' },
-    { name: 'mlm:accelerator_count', label: 'MLM Accelerator Count' },
-    { name: 'mlm:input', label: 'MLM Input' },
-    { name: 'mlm:output', label: 'MLM Output' },
-    { name: 'mlm:hyperparameters', label: 'MLM Hyperparameters' }
+    { name: "stac_version", label: "STAC Version" },
+    { name: 'stac_extensions', label: 'STAC Extensions' },
+    { name: 'bbox', label: 'BBox' },
+    { name: 'description', label: "Description" },
+    { name: 'datetime', label: "Datetime" },
+    { name: 'start_datetime', label: "Start Datetime" },
+    { name: 'end_datetime', label: "End Datetime" },
+    { name: 'mlmFramework', label: 'MLM Framework' },
+    { name: 'mlmFramework_version', label: 'MLM Framework Version' },
+    { name: 'mlmMemory_size', label: 'MLM Memory Size' },
+    { name: 'mlmTotal_parameters', label: 'MLM Total Parameters' },
+    { name: 'mlmPretrained', label: 'MLM Pretrained', type: 'checkbox' },
+    { name: 'mlmPretrained_source', label: 'MLM Pretrained Source' },
+    { name: 'mlmBatch_size_suggestion', label: 'MLM Batch Size Suggestion' },
+    { name: 'mlmAccelerator', label: 'MLM Accelerator' },
+    { name: 'mlmAccelerator_constrained', label: 'MLM Accelerator Constrained', type: 'checkbox' },
+    { name: 'mlmAccelerator_summary', label: 'MLM Accelerator Summary' },
+    { name: 'mlmAccelerator_count', label: 'MLM Accelerator Count' },
+    { name: 'mlmInput', label: 'MLM Input' },
+    { name: 'mlmOutput', label: 'MLM Output' },
+    { name: 'mlmHyperparameters', label: 'MLM Hyperparameters' }
 ];
 
 const Formular = () => {
@@ -29,7 +36,7 @@ const Formular = () => {
     const [submitStatus, setSubmitStatus] = useState("");
     const [createNewCollection, setChecked] = useState(false);
     const [optionalFields, setOptionalFields] = useState([]);
-    
+
 
     const handleFileUpload = (event) => {
         const file = event.target.files[0];
@@ -39,6 +46,7 @@ const Formular = () => {
                 try {
                     const json = JSON.parse(e.target.result);
                     setUploadedData(json);
+                    addOptionFormFields(json);
                     populateFormFields(json);
                     setSubmitStatus("File uploaded successfully.");
                 } catch (error) {
@@ -68,31 +76,68 @@ const Formular = () => {
         setChecked(!createNewCollection);
     };
 
+
+    const addOptionFormFields = (json) => {
+        let fieldsToAdd = []
+        for (const field of optionalFieldOptions) {
+            if (field.name.replace(/([A-Z])/, ':$1') in json || field.name.replace(/([A-Z])/, ':$1') in json.properties) {
+                fieldsToAdd.push(field);
+            }
+        }
+        setOptionalFields([...optionalFields, ...fieldsToAdd]);
+    }
+
     const populateFormFields = (json) => {
-        setFormData({
-            title: json.properties?.description || "",
+        setFormData((prev) => ({
+            ...prev,
+            stac_version: json["stac_version"] || "",
+            stac_extensions: json["stac_extensions"]?.join(", ") || "",
             type: json.type || "",
             id: json.id || "",
             collection: json.collection || "",
-            assets: json.assets || "",
+            bbox: json.bbox?.join(", ") || "",
+            assets: JSON.stringify(json.assets, null, 2 ) || "",
             geometry: JSON.stringify(json.geometry, null, 2) || "",
+            description: json.properties?.description || "",
+            datetime: json.properties?.datetime || "",
+            start_datetime: json.properties?.start_datetime || "",
+            end_datetime: json.properties?.end_datetime || "",
             mlmName: json.properties?.["mlm:name"] || "",
             mlmTasks: json.properties?.["mlm:tasks"]?.join(", ") || "",
             mlmArchitecture: json.properties?.["mlm:architecture"] || "",
-        });
+            mlmFramework: json.properties?.["mlm:framework"] || "",
+            mlmFrameworkVersion: json.properties?.["mlm:framework_version"] || "",
+            mlmMemorySize: json.properties?.["mlm:memory_size"] || "",
+            mlmTotalParameters: json.properties?.["mlm:total_parameters"] || "",
+            mlmPretrained: json.properties?.["mlm:pretrained"] || "",
+            mlmPretrainedSource: json.properties?.["mlm:pretrained_source"] || "",
+            mlmBatchSizeSuggestion: json.properties?.["mlm:batch_size_suggestion"] || "",
+            mlmAccelerator: json.properties?.["mlm:accelerator"] || "",
+            mlmAcceleratorConstrained: json.properties?.["mlm:accelerator_constrained"] || "",
+            mlmAcceleratorSummary: json.properties?.["mlm:accelerator_summary"] || "",
+            mlmAcceleratorCount: json.properties?.["mlm:accelerator_count"] || "",
+            mlmInput: json.properties?.["mlm:input"] || "",
+            mlmOutput: json.properties?.["mlm:output"] || "",
+            mlmHyperparameters: json.properties?.["mlm:hyperparameters"] || ""
+        }));
     };
 
     const handleSubmit = async () => {
         try {
             let body = {
-                stac_version: "1.0",
-                title: formData.title,
+                stac_version: formData.stac_version,
+                stac_extensions: formData.stac_extensions,
                 type: formData.type,
                 id: formData.id,
                 collection: formData.collection,
+                bbox: formData.bbox,
                 assets: formData.assets,
                 geometry: formData.geometry,
                 properties: {
+                    description: formData.description,
+                    datetime: formData.datetime,
+                    start_datetime: formData.start_datetime,
+                    end_datetime: formData.end_datetime,
                     'mlm:name': formData.mlmName,
                     'mlm:tasks': formData.mlmTasks,
                     'mlm:architecture': formData.mlmArchitecture,
@@ -150,18 +195,6 @@ const Formular = () => {
             </div>
 
             <br />
-
-            <div className="input-group mb-3">
-                <span className="input-group-text">Title</span>
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Title"
-                    value={formData.title || ""}
-                    name="title"
-                    onChange={handleInputChange}
-                />
-            </div>
 
             <div className="input-group mb-3">
                 <span className="input-group-text">Type</span>
@@ -313,8 +346,6 @@ const Formular = () => {
                     )
                 ))}
             </div>
-
-            <TagInput />
 
             <br />
             <div className="button-container-add" style={{ display: "flex", justifyContent: "flex-end", marginTop: "20px" }}>
