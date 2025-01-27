@@ -9,6 +9,8 @@ const ItemDetail = () => {
     const { itemId } = useParams();  // Get itemId from the URL
     const navigate = useNavigate();  // Use navigate for programmatic navigation
     const [selectedItem, setSelectedItem] = useState(null);
+    const [showMenu, setShowMenu] = useState(false);
+    const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -63,6 +65,39 @@ const ItemDetail = () => {
         return "Unsupported data type";
     };
 
+    const handleContextMenu = (e) => {
+        e.preventDefault();
+        const { clientX, clientY } = e;
+        setMenuPosition({ top: clientY-100, left: clientX });
+        setShowMenu(true);
+    }
+
+    const hideMenu = (e) => {
+        setShowMenu(false)
+    }
+
+    const copyToClipboard = () => {
+        const textToCopy = JSON.stringify(selectedItem, null, 2); // Convert to formatted JSON
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            alert("JSON copied to clipboard!");
+        }).catch((error) => {
+            alert("Failed to copy text: " + error);
+        });
+        hideMenu();
+    };
+
+    // Function to download the JSON as a file
+    const downloadJson = () => {
+        const jsonBlob = new Blob([JSON.stringify(selectedItem, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(jsonBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = selectedItem.id + '.json';
+        link.click();
+        URL.revokeObjectURL(url); // Clean up the URL object
+        hideMenu();
+    };
+
     if (!selectedItem) {
         return <div>Item not found.</div>;
     }
@@ -70,30 +105,60 @@ const ItemDetail = () => {
     return (
         <div className="page-div">
             <div className='view-div'>
-                <div className="custom-container height90 bg-body-tertiary ">
-                    <button onClick={() => navigate("/view")} className="back-button mt-4">Back to List</button>
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="left-side-container-view-page">
-                            <h2 className="text-xl font-bold mb-2">Detailed Info</h2>
-                            <div className="detail-preview-left-side">
-                                <ul className="list-disc pl-4">
-                                    {Object.entries(selectedItem || {}).map(([key, value]) => (
-                                        <li key={key}>
-                                            <strong>{key}:</strong> {renderValue(value)}
-                                        </li>
-                                    ))}
-                                </ul>
+                <div className="custom-container h-100 bg-body-tertiary d-flex flex-column mb-3">
+                    <button onClick={() => navigate("/view")} className="back-button align-self-start mb-2">Back to List</button>
+                    {loading ? (
+                        <div>Loading...</div>
+                    ) : error ? (
+                        <div>Error: {error}</div>
+                    ) :
+                        <div className="d-flex flex-row details gap-3">
+                            <div className="w-50">
+                                <h2 className="text-xl font-bold mb-2 item-detail-h2">Detailed Info</h2>
+                                <div className="border rounded bg-white item-detail-div">
+                                    <ul className="list-disc pl-4">
+                                        {Object.entries(selectedItem || {}).map(([key, value]) => (
+                                            <li key={key}>
+                                                <strong>{key}:</strong> {renderValue(value)}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className="w-50">
+                                <h2 className="text-xl font-bold mb-2 item-detail-h2">JSON View</h2>
+                                <textarea
+                                    readOnly
+                                    value={JSON.stringify(selectedItem, null, 2)}
+                                    className="border rounded bg-white item-detail-div"
+                                    onContextMenu={handleContextMenu}
+                                ></textarea>
+                                {showMenu && (
+                                    <div
+                                        className="custom-context-menu"
+                                        style={{
+                                            position: 'absolute',
+                                            top: menuPosition.top,
+                                            left: menuPosition.left,
+                                            backgroundColor: '#fff',
+                                            border: '1px solid #ccc',
+                                            padding: '10px',
+                                            boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+                                            zIndex: 10
+                                        }}
+                                        onMouseLeave={hideMenu} // Hide menu when mouse leaves
+                                    >
+                                        <div onClick={copyToClipboard} style={{ padding: '5px', cursor: 'pointer' }}>
+                                            Copy JSON to Clipboard
+                                        </div>
+                                        <div onClick={downloadJson} style={{ padding: '5px', cursor: 'pointer' }}>
+                                            Download JSON as File
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
-                        <div className="json-preview-right-side">
-                            <h2 className="text-xl font-bold mb-2">JSON View</h2>
-                            <textarea
-                                readOnly
-                                value={JSON.stringify(selectedItem, null, 2)}
-                                className="w-full h-64 p-2 border rounded bg-white"
-                            ></textarea>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
             <Footer />

@@ -38,21 +38,26 @@ const Filter = ({ selectedTags, setSelectedTags }) => {
         );
     };
 
-    if (isLoading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
-
     return (
-        <div className="custom-container bg-body-tertiary">
-            <h3>Filter by Task</h3>
-            {tags.map((tag) => (
-                <button
-                    key={tag}
-                    onClick={() => toggleTag(tag)}
-                    className={`px-3 py-1 m-1 rounded-lg border ${selectedTags.includes(tag) ? "selected-tag" : "other-tag"}`}
-                >
-                    {tag}
-                </button>
-            ))}
+        <div className="custom-container d-flex search-filter-container bg-body-tertiary">
+            <h3 className="me-3">Filter by Task</h3>
+            <div className="d-flex flex-grow-1">
+                {isLoading ? (
+                    <p>Loading...</p>
+                ) : error ? (
+                    <p>Error: {error}</p>
+                ) : (
+                    tags.map((tag) => (
+                        <button
+                            key={tag}
+                            onClick={() => toggleTag(tag)}
+                            className={`px-3 py-1 m-1 rounded-lg border ${selectedTags.includes(tag) ? "selected-tag" : "other-tag"}`}
+                        >
+                            {tag}
+                        </button>)
+                    ))
+                }
+            </div>
         </div>
     );
 };
