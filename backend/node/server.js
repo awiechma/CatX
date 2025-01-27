@@ -571,7 +571,7 @@ app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), 
         INSERT INTO collections (stac_version, id, description, extent, CREATION_USER, UPDATE_USER)
         VALUES ($1, $2, $2, $3, $4, $4)
         `,
-        values: [stac_version, collection, `{"spatial":{"bbox":[${bbox}]}}`, user]
+        values: [stac_version, collection, `{"spatial":{"bbox":[${bbox}]},"temporal":{"interval": ["1900-01-01T00:00:00Z","9999-12-31T23:59:59Z"]}}`, user]
       }
 
       await db.query(insertCollectionQuery);
