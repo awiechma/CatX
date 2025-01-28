@@ -17,11 +17,11 @@ const SearchBar = ({ searchString, setSearchString }) => {
     }
 
     return (
-        <div className="custom-container bg-body-tertiary">
-            <h3>Search for models</h3>
-            <form className="d-flex" role="search" onSubmit={handleSubmit}>
+        <div className="custom-container search-filter-container d-flex bg-body-tertiary">
+            <h3 className="me-3">Search for models</h3>
+            <form className="d-flex flex-grow-1" role="search" onSubmit={handleSubmit}>
                 <input
-                    className="form-control me-2"
+                    className="form-control me-3"
                     type="search"
                     placeholder="Search"
                     aria-label="Search"
