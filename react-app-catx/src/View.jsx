@@ -8,9 +8,13 @@ import ItemListAndDisplay from "./components/View/ItemListAndDisplay";
 
 const View = () => {
     const location = useLocation();
-    const [searchString, setSearchString] = useState("");
+    const [searchString, setSearchString] = useState(localStorage.getItem("searchTerm") || "");
     const [selectedTags, setSelectedTags] = useState([]);
 
+    useEffect(() => {
+        localStorage.removeItem("searchTerm");
+    }, [searchString]);
+    
     // take the search input from router-state 
     useEffect(() => {
         if (location.state?.searchString) {

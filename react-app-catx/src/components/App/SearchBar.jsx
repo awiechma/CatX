@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-const SearchBar = ({ searchString, setSearchString }) => {
+const SearchBar = () => {
+    const navigate = useNavigate();
     // Local state to manage the input field value
-    const [searchTerm, setSearchTerm] = useState(searchString);
-
-    useEffect(() => {
-        setSearchTerm(searchString);
-    }, [searchString]);
+    const [searchTerm, setSearchTerm] = useState('');
 
     // Handles changes in the search input field
     const handleInputChange = (event) => {
@@ -16,7 +14,8 @@ const SearchBar = ({ searchString, setSearchString }) => {
     // Handles form submission to update the search string in parent component
     const handleSubmit = (e) => {
         e.preventDefault() // Prevents page reload
-        setSearchString(searchTerm); // Passes updated search term to parent component
+        localStorage.setItem("searchTerm", searchTerm)
+        navigate(`/view`) // Passes updated search term to parent component
     }
 
     return (
