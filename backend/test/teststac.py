@@ -1,23 +1,10 @@
-import pystac
+from pystac import Catalog
 
-# Ersetzen Sie dies durch die URL zu Ihrem STAC-Endpoint
-stac_url = "http://localhost:3000/stac"
-
-# Katalog laden
-catalog = pystac.Catalog.from_file(stac_url)
-
-
-# Alternativ, wenn es sich um einen STAC-API-Endpoint handelt:
-#catalog = pystac.Catalog.open(stac_url)
-print(catalog)
-
-# Auflisten von Sammlungen im Katalog
-for collection in catalog.get_collections():
-    print(f"Collection ID: {collection.id}")
-
-# Auflisten von Items in der ersten Sammlung
-first_collection = next(catalog.get_collections())
-items = list(first_collection.get_items())
-
-for item in items:
-    print(f"Item ID: {item.id}")
+def test_stac_endpoints(api_url):
+    root_catalog = Catalog.from_file(api_url)
+    root_catalog.describe()
+    
+if __name__ == "__main__":
+    # Replace with the URL of the STAC API you want to test
+    stac_api_url = "http://localhost:3000/stac/"  # Example STAC API
+    test_stac_endpoints(stac_api_url)

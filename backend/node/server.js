@@ -224,20 +224,20 @@ app.get('/api/recent-items', async (req, res) => {
 });
 
 app.get('/stac/conformance', async (req, res) => {
-  try {
-    res.status(200).json(
-      {
-        "conformsTo": [
-          "http://api.stacspec.org/v1.0.0/core",
-          "https://stac-extensions.github.io/mlm/v1.3.0/schema.json"
-        ]
-      }
-    )
-  } catch (error) {
-    console.error('Error during conformance export', error);
-    res.status(500).json({ message: 'Internal server error' });
+  const query = {
+    text: `
+      SELECT conformsTo AS "conformsTo"
+      FROM catalog
+    `
   }
+  db.query(query)
+    .then(({ rows: conforms }) => res.status(200).json((conforms.length > 0) ? conforms[0] : {}))
+    .catch(error => {
+      console.error('Error during collection export', error);
+      res.status(500).json({ message: 'Internal server error' });
+    });
 })
+
 
 app.get('/stac', async (req, res) => {
   const query = {
@@ -525,7 +525,7 @@ app.get('/api/items/:itemid', async (req, res) => {
 app.post('/api/collections/upload', passport.authenticate('jwt', { session: false }), async (req, res) => {
   const user = req.user.username
   // Destructure the request body
-  const { stac_version = null, stac_extensions = null, type = null, id = null, title = null, description = null, license = null, extent = null, summaries = null, providers = null, keywords = null } = req.body;
+  const { stac_version = null, stac_extensions = [], type = null, id = null, title = "", description = null, license = "", extent = null, summaries = {}, providers = [], keywords = [] } = req.body;
 
   try {
     //  Begin a transaction
@@ -630,10 +630,10 @@ app.post('/api/items/upload', passport.authenticate('jwt', { session: false }), 
       error = "Exception while creating new collection."
       const insertCollectionQuery = {
         text: `
-        INSERT INTO collections (stac_version, id, description, extent, CREATION_USER, UPDATE_USER)
-        VALUES ($1, $2, $2, $3, $4, $4)
+        INSERT INTO collections (stac_version, id, description, extent, summaries, CREATION_USER, UPDATE_USER)
+        VALUES ($1, $2, $2, $3, $4, $5, $5)
         `,
-        values: [stac_version, collection, "{}", user]
+        values: [stac_version, collection, `{"spatial":{"bbox":[${bbox}]},"temporal":{"interval": [["1900-01-01T00:00:00Z","9999-12-31T23:59:59Z"]]}}`, "{}", user]
       }
 
       await db.query(insertCollectionQuery);
