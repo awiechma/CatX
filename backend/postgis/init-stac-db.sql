@@ -3,7 +3,8 @@ CREATE TABLE IF NOT EXISTS catalog (
     stac_version TEXT NOT NULL,
     stac_extensions TEXT [],
     id TEXT PRIMARY KEY,
-    description TEXT NOT NULL
+    description TEXT NOT NULL,
+    conformsTo TEXT []
 );
 
 CREATE TABLE IF NOT EXISTS collections (
@@ -140,6 +141,7 @@ SELECT
     c.type,
     c.id,
     c.description,
+    c.conformsTo AS "conformsTo",
     COALESCE(
         jsonb_agg(
             jsonb_build_object(
@@ -205,7 +207,12 @@ SELECT
         jsonb_agg(
             jsonb_build_object(
                 'href',
-                CONCAT('http://localhost:3000/stac/collections/', c.id, '/items/', i.id),
+                CONCAT(
+                    'http://localhost:3000/stac/collections/',
+                    c.id,
+                    '/items/',
+                    i.id
+                ),
                 'rel',
                 'item',
                 'type',
@@ -320,7 +327,10 @@ SELECT
         )
     ) || jsonb_build_object(
         'href',
-        CONCAT('http://localhost:3000/stac/collections/', i.collection),
+        CONCAT(
+            'http://localhost:3000/stac/collections/',
+            i.collection
+        ),
         'rel',
         'collection',
         'type',
@@ -348,7 +358,8 @@ INSERT INTO
         stac_extensions,
         type,
         id,
-        description
+        description,
+        conformsTo
     )
 VALUES
     (
@@ -356,5 +367,11 @@ VALUES
         ARRAY ['stac', 'mlm'],
         'Catalog',
         'mlm-catalog',
-        'Machine Learning Models Catalog'
+        'Machine Learning Models Catalog',
+        ARRAY [
+            'https://raw.githubusercontent.com/radiantearth/stac-api-spec/refs/heads/release/v1.0.0/stac-spec/catalog-spec/json-schema/catalog.json',
+            'https://raw.githubusercontent.com/radiantearth/stac-api-spec/refs/heads/release/v1.0.0/stac-spec/collection-spec/json-schema/collection.json',
+            'https://raw.githubusercontent.com/radiantearth/stac-api-spec/refs/heads/release/v1.0.0/stac-spec/item-spec/json-schema/item.json',
+            'https://raw.githubusercontent.com/stac-extensions/mlm/refs/heads/main/json-schema/schema.json'
+        ]   
     );
