@@ -15,6 +15,7 @@ body {
   line-height: 1;
 }
 
+/*
 .add-page-container {
   display: flex;
   flex-direction: column;
@@ -28,7 +29,18 @@ body {
   position: absolute;
   width: 96%;
   height: 140%
-} 
+} */
+
+
+.add-page-container {
+  min-height: calc(100vh - 80px); 
+  margin: 0 auto; 
+  margin-top: 4rem; 
+  padding: 1rem; 
+  overflow-y: auto; 
+  max-width: 1200px; 
+}
+
 
 .btn-optional-data {
   color: rgb(255, 255, 255) !important;
@@ -137,3 +149,4 @@ body {
 .btn-primary:hover {
   background-color: #0056b3;
 }
+

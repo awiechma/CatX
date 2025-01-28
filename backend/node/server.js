@@ -262,8 +262,8 @@ app.get('/stac', async (req, res) => {
  * allows search via tasks=<task1,task2,task3> in mlm:tasks
  */
 app.get('/stac/search', async (req, res) => {
-  const limit = req.query.limit || 20;
-  const offset = req.query.offset || 0;
+  const limit = parseInt(req.query.limit) || 10;
+  const offset = parseInt(req.query.offset) || 0;
   const tasks = req.query.tasks || null;
   const searchTerm = req.query.search || null;
 
@@ -271,7 +271,7 @@ app.get('/stac/search', async (req, res) => {
     SELECT *
     FROM items_complete_view
   `;
-  let queryValues = [limit, offset];
+  let queryValues = [limit + 1, offset];
   let filters = [];
 
   if (tasks) {
@@ -293,8 +293,39 @@ app.get('/stac/search', async (req, res) => {
     values: queryValues
   };
 
+  let itemcol = {
+    type: "FeatureCollection",
+    features: [],
+    links: [
+      {
+        rel: "self",
+        href: `http://localhost:3000/stac/search?limit=${limit}&offset=${offset}${tasks ? `&tasks=${tasks}` : ''}${searchTerm ? `&search=${searchTerm}` : ''}`
+      }
+    ],
+    context: {
+      page: (offset / limit) + 1,
+      limit: limit
+    }
+  }
+  if (offset > 0) {
+    itemcol.links.push({
+      rel: "prev",
+      href: `http://localhost:3000/stac/search?limit=${limit}&offset=${(offset - limit) > 0 ? 0 : (offset - limit)}${tasks ? `&tasks=${tasks}` : ''}${searchTerm ? `&search=${searchTerm}` : ''}`
+    })
+  }
   db.query(finalQuery)
-    .then(({ rows: items }) => res.status(200).json(items))
+    .then(({ rows: items }) => {
+      if (items.length > limit) {
+        itemcol.links.push({
+          rel: "next",
+          href: `http://localhost:3000/stac/search?limit=${limit}&offset=${offset + limit}${tasks ? `&tasks=${tasks}` : ''}${searchTerm ? `&search=${searchTerm}` : ''}`
+        })
+        items.pop();
+      }
+      itemcol.context.returned = items.length;
+      itemcol.features = items;
+      res.status(200).json(itemcol);
+    })
     .catch(error => {
       console.error('Error during item export:', error);
       res.status(500).json({ message: 'Internal server error' });
@@ -355,8 +386,8 @@ app.get('/stac/collections/:cid', async (req, res) => {
  * Accepts optional limit and offset parameters in the request body for pagination
  */
 app.get('/stac/collections/:cid/items', async (req, res) => {
-  const limit = req.params.limit || 20;
-  const offset = req.params.offset || 0;
+  const limit = parsInt(req.params.limit) || 10;
+  const offset = parseInt(req.params.offset) || 0;
   const collection_id = req.params.cid;
   const query = {
     text: `
@@ -366,11 +397,42 @@ app.get('/stac/collections/:cid/items', async (req, res) => {
       LIMIT $1
       OFFSET $2
     `,
-    values: [limit, offset, collection_id]
+    values: [limit + 1, offset, collection_id]
   };
 
+  let itemcol = {
+    type: "FeatureCollection",
+    features: [],
+    links: [
+      {
+        rel: "self",
+        href: `http://localhost:3000/stac/collections/${collection_id}/items?limit=${limit}&offset=${offset}`
+      }
+    ],
+    context: {
+      page: (offset / limit) + 1,
+      limit: limit
+    }
+  }
+  if (offset > 0) {
+    itemcol.links.push({
+      rel: "prev",
+      href: `http://localhost:3000/stac/collections/${collection_id}/items?limit=${limit}&offset=${(offset - limit) < 0 ? 0 : offset - limit}`
+    })
+  }
   db.query(query)
-    .then(({ rows: items }) => res.status(200).json(items))
+    .then(({ rows: items }) => {
+      if (items.length > limit) {
+        itemcol.links.push({
+          rel: "next",
+          href: `http://localhost:3000/stac/collections/${collection_id}/items?limit=${limit}&offset=${offset + limit}`
+        })
+        items.pop()
+      }
+      itemcol.context.returned = items.length;
+      itemcol.features = items;
+      res.status(200).json(itemcol);
+    })
     .catch(error => {
       console.error('Error during item export:', error);
       res.status(500).json({ message: 'Internal server error' });
