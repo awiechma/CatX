@@ -3,8 +3,25 @@ body {
   background-color: #e0efef;
 }
 
+.custom-container {
+  justify-content: center;
+  align-items: center;
+  padding: 1.63rem;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 99%;
+  position: relative;
+  margin: 1vh;
+  margin-bottom: 0;
+}
+
 .flex-grow-1 {
   background-color: #e0efef;
+}
+
+main {
+  margin-top: 8vh;
+  height: 84vh;
 }
 
 /* Styling for Navbar */
@@ -199,24 +216,6 @@ body {
   margin-bottom: 2%;
 
 }
-
-
-.view {
-  top: 8%;
-}
-
-.add {
-  top: 29%;
-}
-
-.account {
-  top: 50%
-}
-
-.help {
-  top: 71%;
-}
-
 
 .btn-view {
   color: rgb(0, 0, 0) !important;
