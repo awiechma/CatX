@@ -21,7 +21,7 @@ const ItemListAndDisplay = ({ searchString, selectedTags }) => {
       });
       if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
       const data = await response.json();
-      setItems(data);
+      setItems(data.features);
     } catch (err) {
       setError(err.message);
     } finally {
