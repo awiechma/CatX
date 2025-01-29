@@ -261,7 +261,7 @@ app.get('/stac', async (req, res) => {
  * allows search via search=<searchTerm> in descripition or item id
  * allows search via tasks=<task1,task2,task3> in mlm:tasks
  */
-app.get('/stac/search', async (req, res) => {
+app.get('/api/search', async (req, res) => {
   const limit = parseInt(req.query.limit) || 10;
   const offset = parseInt(req.query.offset) || 0;
   const tasks = req.query.tasks || null;
