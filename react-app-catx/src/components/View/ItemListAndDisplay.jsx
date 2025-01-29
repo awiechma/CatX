@@ -34,7 +34,7 @@ const ItemListAndDisplay = ({ searchString, selectedTags }) => {
   }, [searchString, selectedTags]);
 
   return (
-    <div className="custom-container bg-body-tertiary items-container">
+    <div className="custom-container-results bg-body-tertiary items-container">
       <h3>Results</h3>
       {isLoading ? (
         <p>Loading...</p>

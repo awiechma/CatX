@@ -63,6 +63,23 @@ body {
     margin-bottom: 0;
 }
 
+.custom-container-results {
+    justify-content: center;
+    align-items: center;
+    padding: 1.63rem;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 99%;
+    position: relative;
+    margin: 1vh;
+    margin-bottom: 0;
+    overflow-y: auto;
+}
+
+.custom-container-results.bg-body-tertiary {
+    background-color: #e0efef !important;
+}
+
 .custom-container.bg-body-tertiary {
     background-color: #e0efef !important;
 }
