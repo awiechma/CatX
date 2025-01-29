@@ -13,7 +13,7 @@ const ItemListAndDisplay = ({ searchString, selectedTags }) => {
     setIsLoading(true);
     setError(null);
     try {
-      const endpoint = `http://localhost:3000/stac/search?${selectedTags.length > 0 ? `tasks=${selectedTags.join(",")}` : ""
+      const endpoint = `http://localhost:3000/api/search?${selectedTags.length > 0 ? `tasks=${selectedTags.join(",")}` : ""
         }${searchString ? `&search=${searchString}` : ""}`;
       const response = await fetch(endpoint, {
         method: "GET",
