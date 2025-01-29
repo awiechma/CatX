@@ -38,9 +38,7 @@ main {
 .navbar-brand {
   display: flex;
   align-items: center;
-  /* color: #343a40; */
   font-weight: bold;
-  /* text-decoration: none; */
 }
 
 .navbar-brand img {
@@ -65,11 +63,6 @@ main {
   color: #bedddd !important;
 }
 
-/* Toggler Button Styling for mobile devices 
-.navbar-toggler {
-  /* border: none; 
-} */
-
 .navbar-toggler-icon {
   filter: brightness(0) invert(1);
 }
@@ -77,72 +70,6 @@ main {
 .container-fluid {
   background-color: #bedddd;
 }
-
-/* Container for Searchbar 
-.SearchBar-container {
-  justify-content: center;
-  align-items: center;
-  padding: 1.63rem;
-  background-color: #dfe8ef;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  width: 50%;
-  margin: auto;
-  position: absolute;
-  top: 13.5%;
-  right: 3%;
-} */
-
-/* Input for Searchbar 
-.searchbar-whitespace {
-  width: 100%;
-  padding: 0.5rem;
-  font-size: 1.1rem;
-  border: 1px solid #94b5ce;
-  border-radius: 4px;
-  outline: none;
-} 
-
-.searchbar-whitespace::placeholder {
-  padding-right: 5rem;
-} */
-
-
-/* Searchbutton Styling  
-.btn-outline-searchbar {
-  border-color: #94b5ce !important;
-  color: #000000 !important;
-  font-weight: bold;
-  padding: 0.5rem 1rem;
-  margin-left: 0.5rem;
-  transition: all 0.3s ease;
-} 
-
-.btn-outline-searchbar:hover {
-  background-color: #94b5ce !important;
-  color: white !important;
-} */
-
-
-
-
-/* Container for text to start search 
-.start-search {
-  display: flex;
-  justify-content: center;
-  padding: 1rem;
-  background-color: #f8f9fa;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  width: 100%;
-  max-width: 350px;
-  margin: auto;
-  position: absolute;
-  top: 13.5%;
-  left: 3%;
-  font-weight: bold;
-} */
-
 
 /* container on the right side for list */
 .right-aligned-container {
@@ -160,16 +87,6 @@ main {
   padding: 2%;
   height: 91%;
 }
-
-/* for small devices 
-@media (max-width: 768px) {
-  .right-aligned-container {
-    align-self: center; 
-    width: 100%; 
-    margin: 2% 0; 
-    flex-direction: column;
-  }
-} */
 
 /* style for heading */
 .right-aligned-container h3 {
@@ -195,8 +112,6 @@ main {
   flex-direction: column;
   background-color: #315e5e;
   height: 100%;
-
-
 }
 
 /*Homepage Button View*/
@@ -207,7 +122,6 @@ main {
   padding-right: 1.5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  /* background-color: #dfe8ef; */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   background-color: #e0efef;
@@ -219,87 +133,6 @@ main {
   font-weight: bold;
   flex-direction: column;
   margin-bottom: 2%;
-
-}
-
-.btn-view {
-  color: rgb(0, 0, 0) !important;
-  background-color: #f6fafa !important;
-  border: 1px solid #add5d5 !important;
-  padding: 0.25rem 7.5rem;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s, border-color 0.3s;
-}
-
-/* Hover-effect for button */
-.btn-view:hover {
-  background-color: #f6fafa !important;
-  border-color: #add5d5 !important;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  border: 2px solid;
-}
-
-.btn-add {
-  color: rgb(0, 0, 0) !important;
-  background-color: #f6fafa !important;
-  border: 1px solid #add5d5 !important;
-  padding: 0.15rem 8.0rem;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s, border-color 0.3s;
-}
-
-/* Hover-effect for button */
-.btn-add:hover {
-  background-color: #f6fafa !important;
-  border-color: #bedddd !important;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  border: 2px solid;
-}
-
-.btn-account {
-  color: rgb(0, 0, 0) !important;
-  background-color: #f6fafa !important;
-  border: 1px solid #add5d5 !important;
-  padding: 0.20rem 7.5rem;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s, border-color 0.3s;
-}
-
-/* Hover-effect for button */
-.btn-account:hover {
-  background-color: #f6fafa !important;
-  border-color: #add5d5 !important;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  border: 2px solid;
-}
-
-.btn-help {
-  color: rgb(0, 0, 0) !important;
-  background-color: #f6fafa !important;
-  border: 1px solid #add5d5 !important;
-  padding: 0.25rem 7.5rem;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s, border-color 0.3s;
-}
-
-/* Hover-effect for button */
-.btn-help:hover {
-  background-color: #f6fafa !important;
-  border-color: #add5d5 !important;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  border: 2px solid;
 }
 
 .w-100 {
@@ -350,9 +183,6 @@ main {
   bottom: 0;
 }
 
-
-
-
 .recent-items-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -402,7 +232,6 @@ main {
   font-size: 1rem;
   color: #666;
 }
-
 
 /* Media query to hide left-aligned containers on small screens */
 @media (max-width: 768px) {

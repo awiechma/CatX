@@ -16,23 +16,23 @@
     }
 }
 
-.log-in-button{
-color: rgb(0, 0, 0) !important;
-background-color: #bedddd!important;
-border: 1px solid #bedddd !important;
-padding: 0.5rem 1rem;
-border-radius: 4px;
-font-size: 1rem;
-cursor: pointer;
-transition: background-color 0.3s, border-color 0.3s;
+.log-in-button {
+    color: rgb(0, 0, 0) !important;
+    background-color: #bedddd !important;
+    border: 1px solid #bedddd !important;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
 /* Hover-effect for button */
 .log-in-button:hover {
-background-color: #f6fafa !important;
-border-color: #add5d5 !important;
-box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-border: 2px solid;
+    background-color: #f6fafa !important;
+    border-color: #add5d5 !important;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border: 2px solid;
 }
 
 
@@ -71,7 +71,7 @@ border: 2px solid;
 /* Logout-Button */
 .logout-button {
     padding: 10px 20px;
-    background-color: #892626 ;
+    background-color: #892626;
     color: white;
     border: none;
     border-radius: 5px;
@@ -85,21 +85,25 @@ border: 2px solid;
 }
 
 /* Button Styling  */
-.register-button{
+.register-button {
     color: rgb(0, 0, 0) !important;
-    background-color: #bedddd!important;
+    background-color: #bedddd !important;
     border: 1px solid #bedddd !important;
     padding: 0.5rem 1rem;
     border-radius: 4px;
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s, border-color 0.3s;
-    }
-    
+}
+
 /* Hover-effect for button */
 .register-button:hover {
     background-color: #f6fafa !important;
     border-color: #add5d5 !important;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     border: 2px solid;
-    }
+}
+
+.align-items-center-account {
+    background-color: #e0efef;
+}

@@ -96,7 +96,7 @@ const LogInSignIn = () => {
                             {/* Login Fields */}
                             <div className="col-md-8 col-lg-6 col-xl-4">
                                 <form onSubmit={handleLogin}>
-                                    <div className="divider d-flex align-items-center my-4">
+                                    <div className="divider d-flex align-items-center-account my-4">
                                         <p className="text-center fw-bold mx-3 mb-0">Login</p>
                                     </div>
                                     <div className="form-outline mb-4">
@@ -145,7 +145,7 @@ const LogInSignIn = () => {
                             {/* Registration Fields */}
                             <div className="col-md-9 col-lg-6 col-xl-5 offset-xl-1">
                                 <form onSubmit={handleRegister}>
-                                    <div className="divider d-flex align-items-center my-4">
+                                    <div className="divider d-flex align-items-center-account my-4">
                                         <p className="text-center fw-bold mx-3 mb-0">Registration</p>
                                     </div>
                                     <div className="form-outline mb-4">
