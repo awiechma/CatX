@@ -193,7 +193,7 @@ main {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: 100%;
   padding: 1rem;
   background-color: #e0efef;

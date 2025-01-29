@@ -92,7 +92,7 @@ const LogInSignIn = () => {
             <section>
                 <div className="d-flex flex-column min-vh-100">
                     <main className="flex-grow-1">
-                        <div className="row d-flex justify-content-center align-items-start" style={{ marginTop: '10%' }}>
+                        <div className="row d-flex justify-content-center align-items-start">
                             {/* Login Fields */}
                             <div className="col-md-8 col-lg-6 col-xl-4">
                                 <form onSubmit={handleLogin}>

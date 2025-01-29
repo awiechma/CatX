@@ -42,10 +42,10 @@ function App() {
                     </div>
 
                     <div className="w-75 flex-grow d-flex flex-column">
-                        <SearchBar className="h-50" />
-                        <div className="custom-container flex-fill">
+                        <SearchBar className="h-25" />
+                        <div className="custom-container h-75 flex-fill d-flex flex-column align-items-start">
                             <h3>Recently Added Models</h3>
-                            <RecentItems />
+                            <RecentItems className="flex-fill" />
                         </div>
                     </div>
                 </main>

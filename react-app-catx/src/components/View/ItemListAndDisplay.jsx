@@ -104,10 +104,10 @@ const ItemListAndDisplay = ({ searchString, selectedTags }) => {
                       }}
                     >
                       <span className="mb-1">
-                        <strong>User:</strong> {item.properties["CHANGE_USER"]}
+                        {/*<strong>User:</strong> {item.properties["CHANGE_USER"]}*/}
                       </span>
                       <span>
-                        <strong>Date:</strong> {item.properties["CHANGE_DATE"]}
+                        {/*<strong>Date:</strong> {item.properties["CHANGE_DATE"]}*/}
                       </span>
                     </div>
                   </div>
