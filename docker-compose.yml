@@ -7,9 +7,9 @@ services:
       POSTGRES_USER: stac_user     
       POSTGRES_PASSWORD: stac_password
     volumes:
-      - ./backend/postgis/postgres_data:/var/lib/postgresql/data
-      - ./backend/postgis/init-stac-db.sql:/docker-entrypoint-initdb.d/init-stac-db.sql 
-      - ./backend/postgis/init-user-db.sql:/docker-entrypoint-initdb.d/init-user-db.sql
+      - ./backend/postgres/data:/var/lib/postgresql/data
+      - ./backend/postgres/init/init-stac-db.sql:/docker-entrypoint-initdb.d/init-stac-db.sql 
+      - ./backend/postgres/init/init-user-db.sql:/docker-entrypoint-initdb.d/init-user-db.sql
     ports:
       - "5432:5432"
 
