@@ -25,7 +25,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
   react:
-    build: ./react-app-catx/
+    build: ./frontend/react
     container_name: react
     ports:
       - 5173:5173
