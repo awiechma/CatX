@@ -19,7 +19,7 @@ const SearchBar = () => {
     }
 
     return (
-        <div className="custom-container search-filter-container d-flex bg-body-tertiary">
+        <div className="custom-container search-filter-container d-flex">
             <h3 className="me-3">Search for models</h3>
             <form className="d-flex flex-grow-1" role="search" onSubmit={handleSubmit}>
                 <input
@@ -31,7 +31,7 @@ const SearchBar = () => {
                     onChange={handleInputChange} // Updates state on user input
                     style={{ width: '100%' }}
                 />
-                <button className="btn-outline-searchbar" type="submit">
+                <button className="btn small-button" type="submit">
                     Search
                 </button>
             </form>

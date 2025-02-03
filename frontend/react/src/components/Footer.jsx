@@ -4,16 +4,14 @@ import "../App.css";
 // creates default footer
 
 const Footer = () => {
-    return (
-        <footer className="bg-body-tertiary text-center shadow-lg text-black py-3 mt-4">
-            <div className="footer-container">
-                <p>&copy; {new Date().getFullYear()} CatX. All rights reserved.</p>
-                <nav className="footer-nav">
-                    <a href="/about" className="footer-link">About us</a>
-                </nav>
-            </div>
-        </footer>
-    );
+  return (
+    <footer className="bg-body-tertiary text-center shadow-lg fixed-bottom text-black py-1">
+      <p>&copy; {new Date().getFullYear()} CatX. All rights reserved.</p>
+      <a href="/about" className="footer-link">
+        About us
+      </a>
+    </footer>
+  );
 };
 
 export default Footer;

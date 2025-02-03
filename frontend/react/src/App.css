@@ -1,6 +1,21 @@
 html,
-body {
+body,
+#root {
   background-color: #e0efef;
+  height: 100vh;
+  overflow-y: hidden;
+}
+
+.bg-bedddd {
+  background-color: #bedddd;
+}
+
+.content-div {
+  height: 84vh;
+  margin-top: 8vh;
+  margin-bottom: 8vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .custom-container {
@@ -16,22 +31,12 @@ body {
   background-color: #bedddd;
 }
 
-.flex-grow-1 {
-  background-color: #e0efef;
-}
-
-main {
-  margin-top: 8vh;
-  height: 84vh;
-}
 
 /* Styling for Navbar */
 .navbar {
-  background-color: #e9f3f3 !important;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 0.5rem 1rem;
   font-family: Arial, sans-serif;
-  height: 8%;
+  height: 8vh;
 }
 
 /* our CatX-Logo in Navbar */
@@ -67,75 +72,7 @@ main {
   filter: brightness(0) invert(1);
 }
 
-.container-fluid {
-  background-color: #bedddd;
-}
-
-/* container on the right side for list */
-.right-aligned-container {
-  position: absolute;
-  top: 8%;
-  bottom: 8%;
-  right: 0%;
-  width: 65%;
-  background-color: #bedddd;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  margin-top: 2%;
-  display: flex;
-  flex-direction: column;
-  padding: 2%;
-  height: 91%;
-}
-
-/* style for heading */
-.right-aligned-container h3 {
-  padding: 1rem;
-  position: absolute;
-  top: 0;
-  left: 0;
-
-}
-
-.align-items-center {
-  background-color: #315e5e;
-}
-
-.left-aligned-container {
-  display: flex;
-  top: 8%;
-  bottom: 8%;
-  width: 28%;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  margin-top: 2%;
-  flex-direction: column;
-  background-color: #315e5e;
-  height: 100%;
-}
-
-/*Homepage Button View*/
-.left-aligned-container-small {
-  display: flex;
-  justify-content: center;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  background-color: #e0efef;
-  max-width: 350px;
-  margin-top: 2%;
-  margin-left: 2%;
-  position: absolute;
-  left: 0%;
-  font-weight: bold;
-  flex-direction: column;
-  margin-bottom: 2%;
-}
-
-.w-100 {
+.small-button {
   color: rgb(0, 0, 0) !important;
   background-color: #f6fafa !important;
   border: 1px solid #add5d5 !important;
@@ -147,40 +84,11 @@ main {
   transition: background-color 0.3s, border-color 0.3s;
 }
 
-.w-100:hover {
+.small-button:hover {
   background-color: #f6fafa !important;
   border-color: #add5d5 !important;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   border: 2px solid;
-}
-
-/* App Container */
-.app-container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  margin: 0;
-}
-
-/* Main Content */
-.start-search,
-.left-aligned-container,
-.right-aligned-container {
-  flex: 1;
-}
-
-/* Footer Styles */
-.bg-custom {
-  background-color: #f8f9fa;
-  position: relative;
-  z-index: 10;
-}
-
-.footer-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-  bottom: 0;
 }
 
 .recent-items-grid {
@@ -234,6 +142,14 @@ main {
   color: #666;
 }
 
+.left-aligned-container {
+  width: 25%;
+}
+
+.right-aligned-container {
+  width: 75%;
+}
+
 /* Media query to hide left-aligned containers on small screens */
 @media (max-width: 768px) {
   .left-aligned-container {
@@ -242,6 +158,5 @@ main {
 
   .right-aligned-container {
     width: 100%;
-    right: 0%
   }
 }

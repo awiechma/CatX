@@ -8,8 +8,8 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar fixed-top navbar-expand-lg primary">
-      <div className="container-fluid">
+    <nav className="navbar fixed-top navbar-expand-lg bg-bedddd">
+      <div className="container-fluid bg-bedddd">
         <a className="navbar-brand" onClick={handleLogoClick} href="#" style={{ fontSize: '1.5rem', marginRight: '1rem', marginLeft: '1rem' }}>
           <img src="../../CatX_Logo.png" alt="Logo" width="35" height="35" className="d-inline-block align-text-top" style={{ fontSize: '1.5rem', marginRight: '1rem' }} />
           Cat <p style={{ fontFamily: 'Times New Roman' }}> &chi;</p>
