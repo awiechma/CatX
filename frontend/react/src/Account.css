@@ -1,109 +1,105 @@
 .divider:after,
 .divider:before {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: #eee;
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
 }
 
 .h-custom {
-    height: calc(100% - 73px);
+  height: calc(100% - 73px);
 }
 
 @media (max-width: 450px) {
-    .h-custom {
-        height: 100%;
-    }
+  .h-custom {
+    height: 100%;
+  }
 }
 
 .log-in-button {
-    color: rgb(0, 0, 0) !important;
-    background-color: #bedddd !important;
-    border: 1px solid #bedddd !important;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s, border-color 0.3s;
+  color: rgb(0, 0, 0) !important;
+  background-color: #bedddd !important;
+  border: 1px solid #bedddd !important;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
 }
 
 /* Hover-effect for button */
 .log-in-button:hover {
-    background-color: #f6fafa !important;
-    border-color: #add5d5 !important;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    border: 2px solid;
-}
-
-
-/* Container for centering */
-.account-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #e0efef;
-}
-
-/* Inner Content-Container */
-.account-content {
-    text-align: center;
-    background: #f6fafa;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 300px;
+  background-color: #f6fafa !important;
+  border-color: #add5d5 !important;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border: 2px solid;
 }
 
 /* List of user data */
 .user-data {
-    list-style: none;
-    padding: 0;
-    margin-bottom: 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1.5rem;
 }
 
 .user-data li {
-    margin-bottom: 0.5rem;
-    font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
 }
-
 
 /* Logout-Button */
 .logout-button {
-    padding: 10px 20px;
-    background-color: #892626;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    /* cursor: pointer; */
-    font-size: 16px;
-    transition: background-color 0.3s ease;
+  padding: 10px 20px;
+  background-color: #892626;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  /* cursor: pointer; */
+  font-size: 16px;
+  transition: background-color 0.3s ease;
 }
 
 .logout-button:hover {
-    background-color: #c82333;
+  background-color: #c82333;
 }
 
 /* Button Styling  */
 .register-button {
-    color: rgb(0, 0, 0) !important;
-    background-color: #bedddd !important;
-    border: 1px solid #bedddd !important;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s, border-color 0.3s;
+  color: rgb(0, 0, 0) !important;
+  background-color: #bedddd !important;
+  border: 1px solid #bedddd !important;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
 }
 
 /* Hover-effect for button */
 .register-button:hover {
-    background-color: #f6fafa !important;
-    border-color: #add5d5 !important;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    border: 2px solid;
+  background-color: #f6fafa !important;
+  border-color: #add5d5 !important;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border: 2px solid;
 }
 
-.align-items-center-account {
-    background-color: #e0efef;
+.form-container {
+  flex-direction: row;
+}
+
+.login-form,
+.register-form {
+  width: 50%;
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    flex-direction: column;
+  }
+
+  .login-form,
+  .register-form {
+    width: 100%;
+    margin-bottom: 10%; /* Optional: Add some space between the forms */
+  }
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import "./Add.css";
+import "./global.css";
 import Formular from "./components/Add/Formular";
-import Footer from "./components/Footer";
 import useAuthStatus from "./components/UserAuth";
 import { useNavigate } from "react-router-dom";
 
@@ -32,19 +32,14 @@ const Add = () => {
   }
 
   return (
-    <>
-      <div className="add-page-container">
-        <div className="content">
-          <div className="heading-add-page">
-            <h3>Form for metadata</h3>
-          </div>
-          <div className="formular-form">
-            <Formular />
-          </div>
-        </div>
+    <div className="content-div ">
+      <div className="heading-add-page custom-container">
+        <h3>Form for metadata</h3>
       </div>
-      <Footer />
-    </>
+      <div className="formular-form">
+        <Formular />
+      </div>
+    </div>
   );
 };
 

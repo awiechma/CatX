@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import "./global.css"
 import Button from "./components/Button";
 import SearchBar from "./components/App/SearchBar";
 import { Link } from "react-router-dom";
@@ -9,7 +10,7 @@ function App() {
   return (
     <div className="content-div">
       <div className="d-flex flex-row h-100">
-        <div className="d-flex flex-column align-items-center left-aligned-container">
+        <div className="flex-column align-items-center left-aligned-container">
           <div className="custom-container w-75 m-auto">
             <p>Specify your search?</p>
             <Link to="/view" className="border rounded bg-white w-75">
@@ -36,11 +37,11 @@ function App() {
           </div>
         </div>
 
-        <div className="w-75 flex-grow d-flex flex-column right-aligned-container">
+        <div className="flex-grow d-flex flex-column right-aligned-container">
           <SearchBar className="h-25" />
           <div className="custom-container h-75 flex-fill align-items-start">
             <h3 className="mb-1">Recently Added Models</h3>
-            <RecentItems className="flex-fill" />
+            <RecentItems />
           </div>
         </div>
       </div>

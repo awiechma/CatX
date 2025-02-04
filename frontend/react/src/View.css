@@ -1,29 +1,3 @@
-html,
-body {
-    margin: 3%;
-    padding: 3%;
-    height: 100%;
-    background-color: #315e5e;
-}
-
-.page-div {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    margin-top: 8vh;
-    background-color: #315e5e;
-}
-
-.view-div {
-    display: flex;
-    flex-direction: column;
-    height: 84%;
-    width: 100%;
-    position: relative;
-    background-color: #315e5e;
-    gap: 2px;
-}
-
 .btn-outline-searchbar {
     color: rgb(0, 0, 0) !important;
     background-color: #f6fafa !important;
@@ -43,26 +17,6 @@ body {
     border: 2px solid;
 }
 
-.height90 {
-    height: 90vh;
-}
-
-.search-filter-container {
-    height: 10%;
-}
-
-.custom-container {
-    justify-content: center;
-    align-items: center;
-    padding: 1.63rem;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    width: 99%;
-    position: relative;
-    margin: 1vh;
-    margin-bottom: 0;
-}
-
 .custom-container-results {
     justify-content: center;
     align-items: center;
@@ -78,14 +32,6 @@ body {
 
 .custom-container-results.bg-body-tertiary {
     background-color: #e0efef !important;
-}
-
-.custom-container.bg-body-tertiary {
-    background-color: #e0efef !important;
-}
-
-.items-container {
-    flex: 1;
 }
 
 /* Container FilterableListGroup */
@@ -174,25 +120,6 @@ body {
     width: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-}
-
-.list-group {
-    background-color: #bedddd;
-    padding: 1rem;
-}
-
-.list-group-item {
-    background-color: #f6fafa !important;
-    margin-bottom: 1%;
-    margin-left: 1%;
-    border-radius: 8px;
-    border-color: #add5d5;
-}
-
-.list-group-item:hover {
-    background-color: #f6fafa;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1) !important;
-    cursor: pointer;
 }
 
 .detail-preview-left-side {

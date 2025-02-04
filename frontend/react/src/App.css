@@ -1,77 +1,3 @@
-html,
-body,
-#root {
-  background-color: #e0efef;
-  height: 100vh;
-  overflow-y: hidden;
-}
-
-.bg-bedddd {
-  background-color: #bedddd;
-}
-
-.content-div {
-  height: 84vh;
-  margin-top: 8vh;
-  margin-bottom: 8vh;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.custom-container {
-  justify-content: center;
-  align-items: center;
-  padding: 1.63rem;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  width: 99%;
-  position: relative;
-  margin: 1vh;
-  margin-bottom: 0;
-  background-color: #bedddd;
-}
-
-
-/* Styling for Navbar */
-.navbar {
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
-  height: 8vh;
-}
-
-/* our CatX-Logo in Navbar */
-.navbar-brand {
-  display: flex;
-  align-items: center;
-  font-weight: bold;
-}
-
-.navbar-brand img {
-  margin-right: 0.5rem;
-  border-radius: 5px;
-}
-
-/* Navbar-Links Styling */
-.nav-link {
-  color: #000000 !important;
-  font-size: 1.2rem;
-  font-weight: 500;
-  transition: color 0.2s ease-in-out;
-}
-
-.nav-link:hover {
-  color: #315e5e !important;
-}
-
-/* active Link */
-.nav-link.active {
-  color: #bedddd !important;
-}
-
-.navbar-toggler-icon {
-  filter: brightness(0) invert(1);
-}
-
 .small-button {
   color: rgb(0, 0, 0) !important;
   background-color: #f6fafa !important;
@@ -144,6 +70,7 @@ body,
 
 .left-aligned-container {
   width: 25%;
+  display: flex;
 }
 
 .right-aligned-container {
@@ -153,7 +80,8 @@ body,
 /* Media query to hide left-aligned containers on small screens */
 @media (max-width: 768px) {
   .left-aligned-container {
-    display: none;
+    display: none !important;
+    width: 0%;
   }
 
   .right-aligned-container {

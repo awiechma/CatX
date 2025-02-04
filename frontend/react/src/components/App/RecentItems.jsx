@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import ListItem from "../ListItem";
 
 const RecentItems = () => {
   const [recentItems, setRecentItems] = useState([]);
@@ -20,29 +20,15 @@ const RecentItems = () => {
     fetchRecentItems();
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
   return (
-    <div className="recent-items-list">
+    <div className="d-flex flex-column h-95 overflow-auto">
       {loading ? (
         <p>Loading...</p>
       ) : recentItems.length === 0 ? (
         <p>No recent items</p>
       ) : (
         Array.isArray(recentItems) &&
-        recentItems.map((item) => (
-          <Link
-            to={`/view/${item.id}`}
-            key={item.id}
-            className="recent-item-box mb-3"
-          >
-            <div className="recent-item-content center-vertical">
-              <strong>{item.properties["mlm:name"]}</strong>
-              <p>{item.properties.description}</p>
-            </div>
-          </Link>
-        ))
+        recentItems.map((item) => <ListItem item={item} />)
       )}
     </div>
   );

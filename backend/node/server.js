@@ -352,7 +352,13 @@ app.get('/stac/collections', async (req, res) => {
   };
 
   db.query(query)
-    .then(({ rows: collections }) => res.status(200).json(collections))
+    .then(({ rows: collections }) => {
+      const sanitizedCollections = collections.map(collection => {
+        const { audit, ...rest } = collection;
+        return rest;
+      });
+      res.status(200).json(sanitizedCollections);
+    })
     .catch(error => {
       console.error('Error during collection export', error);
       res.status(500).json({ message: 'Internal server error' });
@@ -374,7 +380,13 @@ app.get('/stac/collections/:cid', async (req, res) => {
   };
 
   db.query(query)
-    .then(({ rows: collections }) => res.status(200).json((collections.length > 0) ? collections[0] : {}))
+    .then(({ rows: collections }) => {
+      const sanitizedCollections = collections.map(collection => {
+        const { audit, ...rest } = collection;
+        return rest;
+      });
+      res.status(200).json((sanitizedCollections.length > 0) ? sanitizedCollections[0] : {});
+    })
     .catch(error => {
       console.error('Error during collection export', error);
       res.status(500).json({ message: 'Internal server error' });
@@ -422,15 +434,19 @@ app.get('/stac/collections/:cid/items', async (req, res) => {
   }
   db.query(query)
     .then(({ rows: items }) => {
-      if (items.length > limit) {
+      const sanitizedItems = items.map(item => {
+        const { audit, ...rest } = item;
+        return rest;
+      });
+      if (sanitizedItems.length > limit) {
         itemcol.links.push({
           rel: "next",
           href: `http://localhost:3000/stac/collections/${collection_id}/items?limit=${limit}&offset=${offset + limit}`
-        })
-        items.pop()
+        });
+        sanitizedItems.pop();
       }
-      itemcol.context.returned = items.length;
-      itemcol.features = items;
+      itemcol.context.returned = sanitizedItems.length;
+      itemcol.features = sanitizedItems;
       res.status(200).json(itemcol);
     })
     .catch(error => {
@@ -457,7 +473,13 @@ app.get('/stac/collections/:cid/items/:iid', async (req, res) => {
   };
 
   db.query(query)
-    .then(({ rows: items }) => res.status(200).json((items.length > 0) ? items[0] : {}))
+    .then(({ rows: items }) => {
+      const sanitizedItems = items.map(item => {
+        const { audit, ...rest } = item;
+        return rest;
+      });
+      res.status(200).json((sanitizedItems.length > 0) ? sanitizedItems[0] : {});
+    })
     .catch(error => {
       console.error('Error during item export:', error);
       res.status(500).json({ message: 'Internal server error' });

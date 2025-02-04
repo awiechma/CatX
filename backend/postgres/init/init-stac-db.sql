@@ -34,17 +34,6 @@ CREATE TABLE IF NOT EXISTS providers (
     PRIMARY KEY(id, provider)
 );
 
-CREATE VIEW providers_view AS
-SELECT
-    provider,
-    COUNT(*)
-FROM
-    providers
-GROUP BY
-    provider
-ORDER BY
-    COUNT(*);
-
 CREATE TABLE IF NOT EXISTS keywords (
     id TEXT REFERENCES collections(id) ON DELETE CASCADE,
     keyword TEXT NOT NULL,
@@ -230,7 +219,13 @@ SELECT
         'self',
         'type',
         'application/json'
-    ) AS links
+    ) AS links,
+    jsonb_build_object(
+        'datetime',
+        c.UPDATE_DATE,
+        'user',
+        c.UPDATE_USER
+    ) AS audit
 FROM
     collections c
     LEFT JOIN items i ON c.id = i.collection
@@ -335,7 +330,13 @@ SELECT
         'collection',
         'type',
         'application/json'
-    ) AS links
+    ) AS links,
+    jsonb_build_object(
+        'datetime',
+        i.UPDATE_DATE,
+        'user',
+        i.UPDATE_USER
+    ) AS audit
 FROM
     items i
     LEFT JOIN properties p ON i.collection = p.collection
