@@ -22,7 +22,7 @@ const ListItem = ({ item }) => {
 
   return (
     <Link
-      to={`/view/${item.id}`}
+      to={`/view/items/${item.id}`}
       style={{ textDecoration: "none", color: "inherit" }}
     >
       <div className="d-flex justify-content-between align-items-start w-100 p-2 mb-2 bg-light listitem">

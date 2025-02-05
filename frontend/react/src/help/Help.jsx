@@ -1,9 +1,9 @@
 // import all the components used in the app
 import React from "react";
 import "./Help.css";
-import Navbar from "./components/Navbar";
-import ScrollSpy from "./components/Help/Scrollspy";
-import Footer from "./components/Footer";
+import Navbar from "../shared/Navbar";
+import ScrollSpy from "./components/Scrollspy";
+import Footer from "../shared/Footer";
 
 const Help = () => {
   return (

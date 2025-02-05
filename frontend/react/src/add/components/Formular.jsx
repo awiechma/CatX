@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import Button from "../Button";
-import "/src/Add.css";
+import Button from "../../shared/Button";
 
 const token = localStorage.getItem("catx-user-session-token");
 

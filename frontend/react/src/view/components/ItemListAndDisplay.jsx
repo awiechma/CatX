@@ -1,7 +1,6 @@
 // ItemListAndDisplay.jsx
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import ListItem from "../ListItem";
+import ListItem from "../../shared/ListItem";
 
 const ItemListAndDisplay = ({ searchString, selectedTags }) => {
   const [items, setItems] = useState([]);

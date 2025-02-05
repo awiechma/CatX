@@ -1,7 +1,6 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import "../../global.css";
-import "../../View.css";
+import "../global.css";
 import { useState, useEffect } from "react";
 
 const ItemDetail = () => {
@@ -80,7 +79,7 @@ const ItemDetail = () => {
   const handleContextMenu = (e) => {
     e.preventDefault();
     const { clientX, clientY } = e;
-    setMenuPosition({ top: clientY - 100, left: clientX });
+    setMenuPosition({ top: clientY, left: clientX });
     setShowMenu(true);
   };
 
@@ -142,13 +141,15 @@ const ItemDetail = () => {
             <div>
               <h1>{selectedItem.properties?.["mlm:name"]}</h1>
               <h4 className="text-gray-600">{`/${selectedItem["collection"]}/${selectedItem["id"]}`}</h4>
-              <h5 className="fst-italic fw-lighter">{`Uploaded by ${selectedItem.audit?.["user"]} on ${formatDate(selectedItem.audit?.["datetime"])}.`}</h5>
+              <h5 className="fst-italic fw-lighter">{`Uploaded by ${
+                selectedItem.audit?.["user"]
+              } on ${formatDate(selectedItem.audit?.["datetime"])}.`}</h5>
             </div>
           )}
         </div>
         <div className="custom-container w-25">
           <button
-            onClick={() => navigate("/view")}
+            onClick={() => navigate("/view/items")}
             className="back-button align-self-start mb-2"
           >
             Back to List
@@ -186,35 +187,36 @@ const ItemDetail = () => {
               value={JSON.stringify(selectedItem, null, 2)}
               className="border rounded bg-white item-detail-div"
               onContextMenu={handleContextMenu}
-            ></textarea>
-          )}
-          {showMenu && (
-            <div
-              style={{
-                position: "absolute",
-                top: menuPosition.top,
-                left: menuPosition.left,
-                backgroundColor: "#fff",
-                border: "1px solid #ccc",
-                padding: "10px",
-                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
-                zIndex: 10,
-              }}
-              onMouseLeave={hideMenu} // Hide menu when mouse leaves
             >
-              <div
-                onClick={copyToClipboard}
-                style={{ padding: "5px", cursor: "pointer" }}
-              >
-                Copy JSON to Clipboard
-              </div>
-              <div
-                onClick={downloadJson}
-                style={{ padding: "5px", cursor: "pointer" }}
-              >
-                Download JSON as File
-              </div>
-            </div>
+              {showMenu ? (
+                <div
+                  style={{
+                    position: "absolute",
+                    top: menuPosition.top,
+                    left: menuPosition.left,
+                    backgroundColor: "#fff",
+                    border: "1px solid #ccc",
+                    padding: "10px",
+                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+                    zIndex: 10,
+                  }}
+                  onMouseLeave={hideMenu} // Hide menu when mouse leaves
+                >
+                  <div
+                    onClick={copyToClipboard}
+                    style={{ padding: "5px", cursor: "pointer" }}
+                  >
+                    Copy JSON to Clipboard
+                  </div>
+                  <div
+                    onClick={downloadJson}
+                    style={{ padding: "5px", cursor: "pointer" }}
+                  >
+                    Download JSON as File
+                  </div>
+                </div>
+              ) : null}
+            </textarea>
           )}
         </div>
       </div>

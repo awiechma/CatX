@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import "./View.css";
-import "./global.css";
-import SearchBar from "./components/View/SearchBar";
-import Filter from "./components/View/Filter";
-import Footer from "./components/Footer";
-import ItemListAndDisplay from "./components/View/ItemListAndDisplay";
+import "./ItemView.css";
+import "../global.css";
+import SearchBar from "./components/SearchBar";
+import Filter from "./components/Filter";
+import ItemListAndDisplay from "./components/ItemListAndDisplay";
 
-const View = () => {
+const CollectionView = () => {
   const location = useLocation();
   const [searchString, setSearchString] = useState(
     localStorage.getItem("searchTerm") || ""
@@ -46,4 +45,4 @@ const View = () => {
   );
 };
 
-export default View;
+export default CollectionView;

@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "../../View.css";
 
 const Filter = ({ selectedTags, setSelectedTags }) => {
   //store existing tags

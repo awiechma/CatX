@@ -1,8 +1,8 @@
 import React from "react";
 import "./Add.css";
-import "./global.css";
-import Formular from "./components/Add/Formular";
-import useAuthStatus from "./components/UserAuth";
+import "../global.css";
+import Formular from "./components/Formular";
+import useAuthStatus from "../shared/UserAuth";
 import { useNavigate } from "react-router-dom";
 
 const Add = () => {

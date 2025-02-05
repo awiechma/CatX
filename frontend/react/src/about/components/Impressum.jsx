@@ -1,5 +1,4 @@
 import React from "react";
-import "/src/About.css";
 
 const Impressum = () => {
   return (

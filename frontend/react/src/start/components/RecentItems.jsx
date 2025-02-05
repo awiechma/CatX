@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ListItem from "../ListItem";
+import ListItem from "../../shared/ListItem";
 
 const RecentItems = () => {
   const [recentItems, setRecentItems] = useState([]);

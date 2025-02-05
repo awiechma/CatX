@@ -1,10 +1,10 @@
 import React from "react";
 import "./App.css";
-import "./global.css"
-import Button from "./components/Button";
-import SearchBar from "./components/App/SearchBar";
+import "../global.css"
+import Button from "../shared/Button";
+import SearchBar from "./components/SearchBar";
 import { Link } from "react-router-dom";
-import RecentItems from "./components/App/RecentItems";
+import RecentItems from "./components/RecentItems";
 
 function App() {
   return (
