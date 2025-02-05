@@ -42,12 +42,19 @@ const ItemDetail = () => {
       typeof value === "number" ||
       typeof value === "boolean"
     ) {
+      if (typeof value === "string" && value.includes("://")) {
+        return (
+          <a href={value} className="text-decoration-none" target="_blank">
+            {value}
+          </a>
+        );
+      }
       return value.toString();
     } else if (Array.isArray(value)) {
       if (
         value.every(
           (item) =>
-            typeof item === "string" ||
+            (typeof item === "string" && !item.includes("://")) ||
             typeof item === "number" ||
             typeof item === "boolean"
         )
@@ -140,7 +147,16 @@ const ItemDetail = () => {
           ) : (
             <div>
               <h1>{selectedItem.properties?.["mlm:name"]}</h1>
-              <h4 className="text-gray-600">{`/${selectedItem["collection"]}/${selectedItem["id"]}`}</h4>
+              <h4 className="text-gray-600">
+                /
+                <a
+                  href={"/view/collections/" + selectedItem["collection"]}
+                  className="text-decoration-none"
+                >
+                  {selectedItem["collection"]}
+                </a>
+                /{selectedItem["id"]}
+              </h4>
               <h5 className="fst-italic fw-lighter">{`Uploaded by ${
                 selectedItem.audit?.["user"]
               } on ${formatDate(selectedItem.audit?.["datetime"])}.`}</h5>

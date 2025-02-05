@@ -15,7 +15,7 @@ const SearchBar = () => {
     const handleSubmit = (e) => {
         e.preventDefault() // Prevents page reload
         localStorage.setItem("searchTerm", searchTerm)
-        navigate(`/view`) // Passes updated search term to parent component
+        navigate(`/view/items`) // Passes updated search term to parent component
     }
 
     return (

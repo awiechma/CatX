@@ -28,7 +28,7 @@ const RecentItems = () => {
         <p>No recent items</p>
       ) : (
         Array.isArray(recentItems) &&
-        recentItems.map((item) => <ListItem item={item} />)
+        recentItems.map((item) => <ListItem item={item} key={item.id}/>)
       )}
     </div>
   );

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "bootstrap/dist/js/bootstrap.bundle.min";
 
 // creates navbar with different subpages
 const Navbar = () => {
@@ -26,7 +27,6 @@ const Navbar = () => {
             width="35"
             height="35"
             className="d-inline-block align-text-top"
-            style={{ fontSize: "1.5rem", marginRight: "1rem" }}
           />
           Cat <p style={{ fontFamily: "Times New Roman" }}> &chi;</p>
         </a>
@@ -44,11 +44,7 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link
-                className="nav-link"
-                to="/"
-                style={{ fontSize: "1.5rem", marginRight: "1rem" }}
-              >
+              <Link className="nav-link" to="/">
                 Home
               </Link>
             </li>
@@ -59,11 +55,10 @@ const Navbar = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
                 id="navbarDropdown"
-                style={{ fontSize: "1.5rem", marginRight: "1rem" }}
               >
                 View
               </Link>
-              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+              <div className="dropdown-menu bg-bedddd" aria-labelledby="navbarDropdown">
                 <Link className="dropdown-item" to="/view/collections">
                   Collections
                 </Link>
@@ -72,30 +67,32 @@ const Navbar = () => {
                 </Link>
               </div>
             </li>
-            <li className="nav-item">
+            <li className="nav-item dropdown">
               <Link
-                className="nav-link"
-                to="/add"
-                style={{ fontSize: "1.5rem", marginRight: "1rem" }}
+                className="nav-link dropdown-toggle"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                id="navbarDropdown"
               >
                 Add
               </Link>
+              <div className="dropdown-menu bg-bedddd" aria-labelledby="navbarDropdown">
+                <Link className="dropdown-item" to="/add/collection">
+                  Collection
+                </Link>
+                <Link className="dropdown-item" to="/add/item">
+                  Item
+                </Link>
+              </div>
             </li>
             <li className="nav-item">
-              <Link
-                className="nav-link"
-                to="/account"
-                style={{ fontSize: "1.5rem", marginRight: "1rem" }}
-              >
+              <Link className="nav-link" to="/account">
                 Account
               </Link>
             </li>
             <li className="nav-item">
-              <Link
-                className="nav-link"
-                to="/help"
-                style={{ fontSize: "1.5rem", marginRight: "1rem" }}
-              >
+              <Link className="nav-link" to="/help">
                 Help
               </Link>
             </li>

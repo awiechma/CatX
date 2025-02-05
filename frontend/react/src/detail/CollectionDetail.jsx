@@ -4,35 +4,35 @@ import "../global.css";
 import { useState, useEffect } from "react";
 
 const CollectionDetail = () => {
-  const { itemId } = useParams(); // Get itemId from the URL
+  const { collectionId } = useParams(); // Get collectionId from the URL
   const navigate = useNavigate(); // Use navigate for programmatic navigation
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedCollection, setSelectedCollection] = useState(null);
   const [showMenu, setShowMenu] = useState(false);
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchItem = async () => {
+    const fetchCollection = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/items/${itemId}`
+          `http://localhost:3000/api/collections/${collectionId}`
         );
         if (!response.ok) {
           throw new Error(`HTTP Error: ${response.status}`);
         }
         const data = await response.json();
-        setSelectedItem(data);
+        setSelectedCollection(data);
       } catch (error) {
-        console.error("Error fetching item:", error);
-        setError("Error fetching item.");
+        console.error("Error fetching collection:", error);
+        setError("Error fetching collection.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchItem();
-  }, [itemId]);
+    fetchCollection();
+  }, [collectionId]);
 
   const renderValue = (value) => {
     if (value === null || value === undefined) {
@@ -42,12 +42,19 @@ const CollectionDetail = () => {
       typeof value === "number" ||
       typeof value === "boolean"
     ) {
+      if (typeof value === "string" && value.includes("://")) {
+        return (
+          <a href={value} className="text-decoration-none" target="_blank">
+            {value}
+          </a>
+        );
+      }
       return value.toString();
     } else if (Array.isArray(value)) {
       if (
         value.every(
           (item) =>
-            typeof item === "string" ||
+            (typeof item === "string" && !item.includes("://")) ||
             typeof item === "number" ||
             typeof item === "boolean"
         )
@@ -88,7 +95,7 @@ const CollectionDetail = () => {
   };
 
   const copyToClipboard = () => {
-    const textToCopy = JSON.stringify(selectedItem, null, 2); // Convert to formatted JSON
+    const textToCopy = JSON.stringify(selectedCollection, null, 2); // Convert to formatted JSON
     navigator.clipboard
       .writeText(textToCopy)
       .then(() => {
@@ -113,20 +120,20 @@ const CollectionDetail = () => {
 
   // Function to download the JSON as a file
   const downloadJson = () => {
-    const jsonBlob = new Blob([JSON.stringify(selectedItem, null, 2)], {
+    const jsonBlob = new Blob([JSON.stringify(selectedCollection, null, 2)], {
       type: "application/json",
     });
     const url = URL.createObjectURL(jsonBlob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = selectedItem.id + ".json";
+    link.download = selectedCollection.id + ".json";
     link.click();
     URL.revokeObjectURL(url); // Clean up the URL object
     hideMenu();
   };
 
-  if (!selectedItem) {
-    return <div>Item not found.</div>;
+  if (!selectedCollection) {
+    return <div>Collection not found.</div>;
   }
 
   return (
@@ -139,17 +146,17 @@ const CollectionDetail = () => {
             <div>Error: {error}</div>
           ) : (
             <div>
-              <h1>{selectedItem.properties?.["mlm:name"]}</h1>
-              <h4 className="text-gray-600">{`/${selectedItem["collection"]}/${selectedItem["id"]}`}</h4>
+              <h1>{selectedCollection["title"] || "title"}</h1>
+              <h4 className="text-gray-600">{`/${selectedCollection["id"]}`}</h4>
               <h5 className="fst-italic fw-lighter">{`Uploaded by ${
-                selectedItem.audit?.["user"]
-              } on ${formatDate(selectedItem.audit?.["datetime"])}.`}</h5>
+                selectedCollection.audit?.["user"]
+              } on ${formatDate(selectedCollection.audit?.["datetime"])}.`}</h5>
             </div>
           )}
         </div>
         <div className="custom-container w-25">
           <button
-            onClick={() => navigate("/view/items")}
+            onClick={() => navigate("/view/collections")}
             className="back-button align-self-start mb-2"
           >
             Back to List
@@ -157,7 +164,7 @@ const CollectionDetail = () => {
         </div>
       </div>
       <div className="d-flex flex-row h-75 justify-content-center">
-        <div className="custom-container w-50">
+        <div className="custom-container">
           <h3>Detailed Info</h3>
           {loading ? (
             <div>Loading...</div>
@@ -165,17 +172,19 @@ const CollectionDetail = () => {
             <div>Error: {error}</div>
           ) : (
             <div className="border rounded bg-white item-detail-div overflow-auto">
-              <ul className="list-disc pl-4">
-                {Object.entries(selectedItem || {}).map(([key, value]) => (
-                  <li key={key}>
-                    <strong>{key}:</strong> {renderValue(value)}
-                  </li>
-                ))}
+              <ul className="list-unstyled pl-4">
+                {Object.entries(selectedCollection || {}).map(
+                  ([key, value]) => (
+                    <li key={key}>
+                      <strong>{key}:</strong> {renderValue(value)}
+                    </li>
+                  )
+                )}
               </ul>
             </div>
           )}
         </div>
-        <div className="custom-container w-50">
+        <div className="custom-container">
           <h3>JSON View</h3>
           {loading ? (
             <div>Loading...</div>
@@ -184,7 +193,7 @@ const CollectionDetail = () => {
           ) : (
             <textarea
               readOnly
-              value={JSON.stringify(selectedItem, null, 2)}
+              value={JSON.stringify(selectedCollection, null, 2)}
               className="border rounded bg-white item-detail-div"
               onContextMenu={handleContextMenu}
             >
@@ -217,6 +226,36 @@ const CollectionDetail = () => {
                 </div>
               ) : null}
             </textarea>
+          )}
+        </div>
+        <div className="custom-container">
+          <h3>Models in this Collection</h3>
+          {loading ? (
+            <div>Loading...</div>
+          ) : error ? (
+            <div>Error: {error}</div>
+          ) : (
+            <div className="border rounded bg-white item-detail-div overflow-auto">
+              <ul className="list-unstyled pl-4">
+                {Object.entries(selectedCollection["links"] || {})
+                  .filter(([_, link]) => link.rel === "item")
+                  .map(([key, link]) => {
+                    const itemId = link.href.split("/").pop();
+                    return (
+                      <li className="m-2" key={key}>
+                        <strong>
+                          <a
+                            className="text-decoration-none"
+                            href={`/view/items/` + itemId}
+                          >
+                            {itemId}
+                          </a>
+                        </strong>
+                      </li>
+                    );
+                  })}
+              </ul>
+            </div>
           )}
         </div>
       </div>

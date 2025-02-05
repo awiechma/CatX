@@ -4,7 +4,7 @@ import "./ItemView.css";
 import "../global.css";
 import SearchBar from "./components/SearchBar";
 import Filter from "./components/Filter";
-import ItemListAndDisplay from "./components/ItemListAndDisplay";
+import ItemList from "./components/ItemList";
 
 const ItemView = () => {
   const location = useLocation();
@@ -36,7 +36,7 @@ const ItemView = () => {
       <Filter selectedTags={selectedTags} setSelectedTags={setSelectedTags} />
       <div className="custom-container h-80">
         <h3>Results</h3>
-        <ItemListAndDisplay
+        <ItemList
           searchString={searchString}
           selectedTags={selectedTags}
         />

@@ -1,11 +1,11 @@
 import React from "react";
-import "./Add.css";
+import "./ItemAdd.css";
 import "../global.css";
 import Formular from "./components/Formular";
 import useAuthStatus from "../shared/UserAuth";
 import { useNavigate } from "react-router-dom";
 
-const Add = () => {
+const ItemAdd = () => {
   const isLoggedIn = useAuthStatus();
   const navigate = useNavigate();
 
@@ -43,4 +43,4 @@ const Add = () => {
   );
 };
 
-export default Add;
+export default ItemAdd;

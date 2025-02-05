@@ -209,6 +209,27 @@ app.get('/api/mlmtasks', async (req, res) => {
     });
 })
 
+app.get('/api/collections', async (req, res) => {
+  const limit = req.params.limit || 20;
+  const offset = req.params.offset || 0;
+  const query = {
+    text: `
+      SELECT 
+        *
+      FROM collections_complete_view
+      LIMIT $1
+      OFFSET $2
+    `,
+    values: [limit, offset],
+  }
+  db.query(query)
+    .then(({ rows: collections }) => res.status(200).json(collections))
+    .catch(error => {
+      console.error('Error during collection export', error);
+      res.status(500).json({ message: 'Internal server error' });
+    });
+});
+
 app.get('/api/recent-items', async (req, res) => {
   try {
     const result = await db.query(`
@@ -536,6 +557,31 @@ app.get('/api/items/:itemid', async (req, res) => {
     })
     .catch(error => {
       console.error('Error during item export:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    });
+});
+
+app.get('/api/collections/:collectionid', async (req, res) => {
+  const collectionId = req.params.collectionid;
+  const query = {
+    text: `
+      SELECT * 
+      FROM collections_complete_view
+      WHERE id = $1
+    `,
+    values: [collectionId]
+  };
+
+  db.query(query)
+    .then(({ rows: collections }) => {
+      if (collections.length > 0) {
+        res.status(200).json(collections[0]);
+      } else {
+        res.status(404).json({ message: 'Collection not found' });
+      }
+    })
+    .catch(error => {
+      console.error('Error during collection export:', error);
       res.status(500).json({ message: 'Internal server error' });
     });
 });

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import ListItem from "../../shared/ListItem";
 
-const ItemListAndDisplay = ({ searchString, selectedTags }) => {
+const ItemList = ({ searchString, selectedTags }) => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -47,4 +47,4 @@ const ItemListAndDisplay = ({ searchString, selectedTags }) => {
   );
 };
 
-export default ItemListAndDisplay;
+export default ItemList;
