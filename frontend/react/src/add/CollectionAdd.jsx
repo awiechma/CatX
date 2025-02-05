@@ -1,7 +1,7 @@
 import React from "react";
 import "./ItemAdd.css";
 import "../global.css";
-import Formular from "./components/Formular";
+import ItemFormular from "./components/CollectionFormular";
 import useAuthStatus from "../shared/UserAuth";
 import { useNavigate } from "react-router-dom";
 
@@ -33,11 +33,11 @@ const CollectionAdd = () => {
 
   return (
     <div className="content-div ">
-      <div className="heading-add-page custom-container">
-        <h3>Form for metadata</h3>
+      <div className="custom-container">
+        <h3>Add a new Collection</h3>
       </div>
       <div className="formular-form">
-        <Formular />
+        <ItemFormular />
       </div>
     </div>
   );

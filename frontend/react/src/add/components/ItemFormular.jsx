@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../../shared/Button";
+import { Link } from "react-router-dom";
 
 const token = localStorage.getItem("catx-user-session-token");
 
@@ -35,12 +36,13 @@ const optionalFieldOptions = [
   },
 ];
 
-const Formular = () => {
-  const [formData, setFormData] = useState({});
+const ItemFormular = () => {
+  const [formData, setFormData] = useState({ type: "Feature" }); // Default type is Feature
   const [uploadedData, setUploadedData] = useState({});
   const [submitStatus, setSubmitStatus] = useState("");
   const [createNewCollection, setChecked] = useState(false);
   const [optionalFields, setOptionalFields] = useState([]);
+  const [collectionOptions, setCollectionOptions] = useState([]);
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -50,7 +52,8 @@ const Formular = () => {
         try {
           const json = JSON.parse(e.target.result);
           setUploadedData(json);
-          addOptionFormFields(json);
+          setOptionalFields([]);
+          setOptionFieldFromJson(json);
           populateFormFields(json);
         } catch (error) {
           console.error("Error parsing JSON:", error);
@@ -60,6 +63,28 @@ const Formular = () => {
       reader.readAsText(file);
     }
   };
+
+  const fetchCollections = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/collections", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP Error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setCollectionOptions(data.map((collection) => collection.id));
+    } catch (error) {
+      console.error("Error fetching collections:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCollections();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, type, value, checked } = e.target;
@@ -79,7 +104,7 @@ const Formular = () => {
     setChecked(!createNewCollection);
   };
 
-  const addOptionFormFields = (json) => {
+  const setOptionFieldFromJson = (json) => {
     let fieldsToAdd = [];
     for (const field of optionalFieldOptions) {
       if (
@@ -91,7 +116,7 @@ const Formular = () => {
         fieldsToAdd.push(field);
       }
     }
-    setOptionalFields([...optionalFields, ...fieldsToAdd]);
+    setOptionalFields(fieldsToAdd);
   };
 
   const populateFormFields = (json) => {
@@ -201,7 +226,6 @@ const Formular = () => {
             ? JSON.parse(formData.mlmHyperparameters)
             : null,
         }),
-        createNewCollection,
       });
       const response = await fetch("http://localhost:3000/api/items/upload", {
         method: "POST",
@@ -229,7 +253,7 @@ const Formular = () => {
 
   return (
     <div className="formular-form">
-      <div className="mb-3">
+      <div className="custom-container">
         <label htmlFor="file-upload" className="form-label">
           Upload File
         </label>
@@ -241,191 +265,186 @@ const Formular = () => {
           onChange={handleFileUpload}
         />
       </div>
+      <div className="custom-container">
+        <h3>Key Attributes</h3>
+        <div className="input-group mb-3">
+          <span className="input-group-text">Type</span>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Type (e.g., Feature)"
+            value={formData.type || ""}
+            name="type"
+            onChange={handleInputChange}
+            disabled={true}
+          />
+        </div>
 
-      <br />
+        <div className="input-group mb-3">
+          <span className="input-group-text">ID</span>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Unique ID"
+            value={formData.id || ""}
+            name="id"
+            onChange={handleInputChange}
+          />
+        </div>
 
-      <div className="input-group mb-3">
-        <span className="input-group-text">Type</span>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Type (e.g., Feature)"
-          value={formData.type || ""}
-          name="type"
-          onChange={handleInputChange}
-        />
-      </div>
+        <div className="input-group mb-3">
+          <span className="input-group-text">Geometry</span>
+          <textarea
+            className="form-control"
+            placeholder="Enter geometry in JSON format"
+            value={formData.geometry || ""}
+            name="geometry"
+            onChange={handleInputChange}
+          ></textarea>
+        </div>
 
-      <div className="input-group mb-3">
-        <span className="input-group-text">ID</span>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Unique ID"
-          value={formData.id || ""}
-          name="id"
-          onChange={handleInputChange}
-        />
-      </div>
+        <div className="input-group mb-3">
+          <span className="input-group-text">Assets</span>
+          <textarea
+            className="form-control"
+            placeholder="Enter assets in JSON format"
+            value={formData.assets || ""}
+            name="assets"
+            onChange={handleInputChange}
+          />
+        </div>
 
-      <div className="input-group mb-3">
-        <span className="input-group-text">Geometry</span>
-        <textarea
-          className="form-control"
-          placeholder="Enter geometry in JSON format"
-          value={formData.geometry || ""}
-          name="geometry"
-          onChange={handleInputChange}
-        ></textarea>
-      </div>
-
-      <div className="input-group mb-3">
-        <span className="input-group-text">Assets</span>
-        <textarea
-          className="form-control"
-          placeholder="Enter assets in JSON format"
-          value={formData.assets || ""}
-          name="assets"
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div className="input-group mb-3">
-        <span className="input-group-text">Collection</span>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Collection"
-          value={formData.collection || ""}
-          name="collection"
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div className="form-check form-switch">
-        <input
-          className="form-check-input"
-          type="checkbox"
-          id="newCollectionSwitch"
-          name="newCollection"
-          checked={createNewCollection}
-          onChange={handleToggle}
-        />
-        <label className="form-check-label" htmlFor="newCollectionSwitch">
-          Create new Collection?
-        </label>
+        <div className="input-group">
+          <span className="input-group-text">Collection</span>
+          <select
+            className="form-select"
+            value={formData.collection || ""}
+            name="collection"
+            onChange={handleInputChange}
+          >
+            {collectionOptions.map((collection) => (
+              <option key={collection} value={collection}>
+                {collection}
+              </option>
+            ))}
+          </select>
+          <span className="input-group-append border rounded-end bg-light">
+            <Link to="/add/collection">
+              <Button text="+" />
+            </Link>
+          </span>
+        </div>
       </div>
 
       {/* MLM Input Fields */}
-      <div className="input-group mb-3 mt-5">
-        <span className="input-group-text">MLM Name</span>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="MLM Name"
-          value={formData.mlmName || ""}
-          name="mlmName"
-          onChange={handleInputChange}
-        />
-      </div>
+      <div className="custom-container">
+        <h3>Properties</h3>
+        <div className="input-group mb-3">
+          <span className="input-group-text">MLM Name</span>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="MLM Name"
+            value={formData.mlmName || ""}
+            name="mlmName"
+            onChange={handleInputChange}
+          />
+        </div>
 
-      <div className="input-group mb-3">
-        <span className="input-group-text">MLM Tasks</span>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Comma-separated tasks (e.g., classification, segmentation)"
-          value={formData.mlmTasks || ""}
-          name="mlmTasks"
-          onChange={handleInputChange}
-        />
-      </div>
+        <div className="input-group mb-3">
+          <span className="input-group-text">MLM Tasks</span>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Comma-separated tasks (e.g., classification, segmentation)"
+            value={formData.mlmTasks || ""}
+            name="mlmTasks"
+            onChange={handleInputChange}
+          />
+        </div>
 
-      <div className="input-group mb-3">
-        <span className="input-group-text">MLM Architecture</span>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Model architecture (e.g., ResNet, Transformer)"
-          value={formData.mlmArchitecture || ""}
-          name="mlmArchitecture"
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div className="h3">Optional Data</div>
-
-      {optionalFields.map((field, index) => (
-        <div className="input-group mb-3" key={index}>
-          <span className="input-group-text">{field.label}</span>
-          {field.type === "checkbox" ? (
-            <div className="form-check form-switch">
-              <input
-                type="checkbox"
-                className="form-check-input form-switch"
-                checked={formData[field.name] || false}
+        <div className="input-group mb-3">
+          <span className="input-group-text">MLM Architecture</span>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Model architecture (e.g., ResNet, Transformer)"
+            value={formData.mlmArchitecture || ""}
+            name="mlmArchitecture"
+            onChange={handleInputChange}
+          />
+        </div>
+        <h3>Optional Properties</h3>
+        {optionalFields.map((field, index) => (
+          <div className="input-group mb-3" key={index}>
+            <span className="input-group-text">{field.label}</span>
+            {field.type === "checkbox" ? (
+              <div className="border bg-light p-2">
+                <input
+                  type="checkbox"
+                  className="from-control form-switch"
+                  checked={formData[field.name] || false}
+                  name={field.name}
+                  onChange={(e) => handleInputChange(e)}
+                />
+              </div>
+            ) : field.type === "textarea" ? (
+              <textarea
+                className="form-control"
+                placeholder={field.label}
+                value={formData[field.name] || ""}
                 name={field.name}
-                onChange={(e) => handleInputChange(e)}
+                onChange={handleInputChange}
               />
-            </div>
-          ) : field.type === "textarea" ? (
-            <textarea
-              className="form-control"
-              placeholder={field.label}
-              value={formData[field.name] || ""}
-              name={field.name}
-              onChange={handleInputChange}
-            />
-          ) : (
-            <input
-              type="text"
-              className="form-control"
-              placeholder={field.label}
-              value={formData[field.name] || ""}
-              name={field.name}
-              onChange={handleInputChange}
-            />
+            ) : (
+              <input
+                type="text"
+                className="form-control"
+                placeholder={field.label}
+                value={formData[field.name] || ""}
+                name={field.name}
+                onChange={handleInputChange}
+              />
+            )}
+            <span className="input-group-append border rounded-end bg-light">
+              <Button
+                text="X"
+                onClick={() => {
+                  setOptionalFields(optionalFields.filter((f) => f !== field));
+                  setFormData((prev) => ({ ...prev, [field.name]: "" }));
+                }}
+              />
+            </span>
+          </div>
+        ))}
+
+        <div className="mb-3">
+          {optionalFieldOptions.map(
+            (field, index) =>
+              !optionalFields.includes(field) && (
+                <button
+                  key={index}
+                  type="button"
+                  className="btn-optional-data"
+                  onClick={() => handleAddOptionalField(field)}
+                >
+                  Add {field.label}
+                </button>
+              )
           )}
         </div>
-      ))}
-
-      <div className="mb-3">
-        {optionalFieldOptions.map(
-          (field, index) =>
-            !optionalFields.includes(field) && (
-              <button
-                key={index}
-                type="button"
-                className="btn-optional-data"
-                onClick={() => handleAddOptionalField(field)}
-              >
-                Add {field.label}
-              </button>
-            )
-        )}
       </div>
-
-      <br />
-      <div
-        className="button-container-add"
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          marginTop: "20px",
-        }}
-      >
+      <div className="custom-container text-center d-flex flex-column">
+        <span className="submit-status">{submitStatus}</span>
         <Button
-          text="Submit"
           className="upload-button"
+          text="Submit"
           onClick={handleSubmit}
           disabled={isSubmitDisabled}
-        >
-          Submit
-        </Button>
-        <span className="submit-status">{submitStatus}</span>
+        />
       </div>
     </div>
   );
 };
 
-export default Formular;
+export default ItemFormular;
