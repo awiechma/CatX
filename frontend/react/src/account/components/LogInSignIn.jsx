@@ -44,7 +44,7 @@ const LogInSignIn = () => {
       localStorage.setItem("catx-user-session-token", token);
       localStorage.setItem("catx-user-session-username", username);
 
-      window.location.href = "/account"; // redirect after login
+      window.location.href = "/"; // redirect after login
     } catch (err) {
       console.error("Error during login", err);
       setError("Something went wrong. Please try again.");
