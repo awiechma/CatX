@@ -202,8 +202,8 @@ const ItemFormular = () => {
         bbox: formData.bbox
           ? formData.bbox.split(", ").map((x) => parseFloat(x))
           : null,
-        assets: formData.assets, // ? JSON.parse(formData.assets) : null,
-        geometry: formData.geometry, //? JSON.parse(formData.geometry) : null,
+        assets: formData.assets ? JSON.parse(formData.assets) : null,
+        geometry: formData.geometry ? JSON.parse(formData.geometry) : null,
         properties: removeEmpty({
           description: formData.description,
           datetime: formData.datetime,
@@ -223,13 +223,13 @@ const ItemFormular = () => {
           "mlm:accelerator_constrained": formData.mlmAccelerator_constrained,
           "mlm:accelerator_summary": formData.mlmAccelerator_summary,
           "mlm:accelerator_count": formData.mlmAccelerator_count,
-          "mlm:input": formData.mlmInput, // ? JSON.parse(formData.mlmInput) : null,
-          "mlm:output": formData.mlmOutput , /*
+          "mlm:input": formData.mlmInput ? JSON.parse(formData.mlmInput) : null,
+          "mlm:output": formData.mlmOutput 
             ? JSON.parse(formData.mlmOutput)
-            : null , */
-          "mlm:hyperparameters": formData.mlmHyperparameters, /*
+            : null , 
+          "mlm:hyperparameters": formData.mlmHyperparameters
             ? JSON.parse(formData.mlmHyperparameters)
-            : null, */
+            : null, 
         }),
       });
       const response = await fetch("http://localhost:3000/api/items/upload", {
