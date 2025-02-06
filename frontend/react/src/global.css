@@ -95,3 +95,12 @@ body,
 .navbar-toggler-icon {
   filter: brightness(0) invert(1);
 }
+
+.dropdown-item:hover {
+  background-color: #f6fafa;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1) !important;
+  cursor: pointer;
+  color:#315e5e;
+}
+
+
