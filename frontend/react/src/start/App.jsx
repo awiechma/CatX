@@ -13,13 +13,13 @@ function App() {
         <div className="flex-column align-items-center left-aligned-container">
           <div className="custom-container w-75 m-auto">
             <p>Specify your search?</p>
-            <Link to="/view" className="border rounded bg-white w-75">
+            <Link to="/view/items" className="border rounded bg-white w-75">
               <Button className="small-button w-100" text="View " />
             </Link>
           </div>
           <div className="custom-container w-75 m-auto">
             <p>Add models?</p>
-            <Link to="/add" className="border rounded bg-white w-75">
+            <Link to="/add/collection" className="border rounded bg-white w-75">
               <Button className="small-button w-100" text="Add" />
             </Link>
           </div>
