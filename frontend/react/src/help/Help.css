@@ -1,27 +1,28 @@
-/* Margin for left and right */
-.col-4,
-.col-8 {
-    padding-left: 3%;
-    padding-right: 3%;
-}
-
-.intro-to-help{
-    padding-top: 8%;
-    padding-left: 3%;
-    padding-right: 3%;
+.nav-link.active {
+  background-color: #bedddd !important ;
+  color: #000000 !important;
 }
 
 #navbar-example3 {
-    position: sticky;
-    top: 0;
-    max-height: 100vh;
-    overflow-y: auto;
-    background-color: #bedddd;
-    border-radius: 8px;
+  width: 25%;
+}
+#scrollspy-div {
+  width: 75%;
 }
 
-.nav-link.active{
-    background-color:#bedddd !important ;
-    color: #000000 !important;
+.scroll-link{
+    font-size: medium;
+    padding-top: 0rem;
+    padding-bottom: 0rem;
 }
 
+@media (max-width: 1000px) {
+  #navbar-example3 {
+    display: none !important;
+    width: 0%;
+  }
+
+  #scrollspy-div {
+    width: 100%;
+  }
+}

@@ -1,15 +1,12 @@
 // import all the components used in the app
 import React from "react";
 import "./Help.css";
-import Navbar from "../shared/Navbar";
 import ScrollSpy from "./components/Scrollspy";
-import Footer from "../shared/Footer";
 
 const Help = () => {
   return (
-    <div>
-      <Navbar />
-      <div className="intro-to-help">
+    <div className="content-div d-flex flex-column overflow-auto h-18">
+      <div className="p-2">
         <h3>User Guide for STAC Metadata Integration</h3>
         <p>
           This guide introduces what STAC is and how to work with STAC clients
@@ -20,8 +17,7 @@ const Help = () => {
         </p>
       </div>
 
-      <ScrollSpy />
-      <Footer />
+      <ScrollSpy className="h-80" />
     </div>
   );
 };

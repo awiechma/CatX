@@ -30,6 +30,10 @@ body,
   height: 95%;
 }
 
+.h-18 {
+  height: 18%;
+}
+
 .bg-bedddd {
   background-color: #bedddd;
 }
