@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 const token = localStorage.getItem("catx-user-session-token");
 
 const optionalFieldOptions = [
-  { name: "stac_version", label: "STAC Version" },
   {
     name: "stac_extensions",
     label: "STAC Extensions",
@@ -222,6 +221,18 @@ const CollectionFormular = () => {
             placeholder="Description"
             value={formData.description || ""}
             name="description"
+            onChange={handleInputChange}
+          />
+        </div>
+
+      <div className="input-group mb-3">
+          <span className="input-group-text">Stac Version</span>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Stac Version"
+            value={formData.stac_version || ""}
+            name="stac_version"
             onChange={handleInputChange}
           />
         </div>

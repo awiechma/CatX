@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 const token = localStorage.getItem("catx-user-session-token");
 
 const optionalFieldOptions = [
-  { name: "stac_version", label: "STAC Version" },
   { name: "stac_extensions", label: "STAC Extensions" },
   { name: "bbox", label: "BBox" },
   { name: "description", label: "Description" },
@@ -38,9 +37,7 @@ const optionalFieldOptions = [
 
 const ItemFormular = () => {
   const [formData, setFormData] = useState({ type: "Feature" }); // Default type is Feature
-  const [uploadedData, setUploadedData] = useState({});
   const [submitStatus, setSubmitStatus] = useState("");
-  const [createNewCollection, setChecked] = useState(false);
   const [optionalFields, setOptionalFields] = useState([]);
   const [collectionOptions, setCollectionOptions] = useState([]);
 
@@ -51,13 +48,13 @@ const ItemFormular = () => {
       reader.onload = (e) => {
         try {
           const json = JSON.parse(e.target.result);
-          setUploadedData(json);
           setOptionalFields([]);
           setOptionFieldFromJson(json);
           populateFormFields(json);
-        } catch (error) {
+          checkCollectionExists(json.collection);
+        } catch (error) { 
           console.error("Error parsing JSON:", error);
-          setSubmitStatus("Error parsing the  JSON file.");
+          setSubmitStatus("Error parsing the JSON file.");
         }
       };
       reader.readAsText(file);
@@ -82,6 +79,13 @@ const ItemFormular = () => {
     }
   };
 
+  const checkCollectionExists = (collectionId) => {
+    if (!collectionOptions.includes(collectionId)) {
+      setSubmitStatus(`Error: Collection ${collectionId} does not exist. Please create the collection first.`);
+      alert(`Error: Collection ${collectionId} does not exist. Please create the collection first.`);
+    }
+  };
+
   useEffect(() => {
     fetchCollections();
   }, []);
@@ -98,10 +102,6 @@ const ItemFormular = () => {
     if (!optionalFields.includes(field)) {
       setOptionalFields([...optionalFields, field]);
     }
-  };
-
-  const handleToggle = () => {
-    setChecked(!createNewCollection);
   };
 
   const setOptionFieldFromJson = (json) => {
@@ -186,6 +186,11 @@ const ItemFormular = () => {
 
   const handleSubmit = async () => {
     try {
+      if (formData.collection == null){
+        setSubmitStatus("Error: Collection is required.");
+        return;
+      }
+      console.log("Submitting data:", formData);
       let body = removeEmpty({
         stac_version: formData.stac_version,
         stac_extensions: formData.stac_extensions
@@ -197,8 +202,8 @@ const ItemFormular = () => {
         bbox: formData.bbox
           ? formData.bbox.split(", ").map((x) => parseFloat(x))
           : null,
-        assets: formData.assets ? JSON.parse(formData.assets) : null,
-        geometry: formData.geometry ? JSON.parse(formData.geometry) : null,
+        assets: formData.assets, // ? JSON.parse(formData.assets) : null,
+        geometry: formData.geometry, //? JSON.parse(formData.geometry) : null,
         properties: removeEmpty({
           description: formData.description,
           datetime: formData.datetime,
@@ -218,13 +223,13 @@ const ItemFormular = () => {
           "mlm:accelerator_constrained": formData.mlmAccelerator_constrained,
           "mlm:accelerator_summary": formData.mlmAccelerator_summary,
           "mlm:accelerator_count": formData.mlmAccelerator_count,
-          "mlm:input": formData.mlmInput ? JSON.parse(formData.mlmInput) : null,
-          "mlm:output": formData.mlmOutput
+          "mlm:input": formData.mlmInput, // ? JSON.parse(formData.mlmInput) : null,
+          "mlm:output": formData.mlmOutput , /*
             ? JSON.parse(formData.mlmOutput)
-            : null,
-          "mlm:hyperparameters": formData.mlmHyperparameters
+            : null , */
+          "mlm:hyperparameters": formData.mlmHyperparameters, /*
             ? JSON.parse(formData.mlmHyperparameters)
-            : null,
+            : null, */
         }),
       });
       const response = await fetch("http://localhost:3000/api/items/upload", {
@@ -322,6 +327,7 @@ const ItemFormular = () => {
             name="collection"
             onChange={handleInputChange}
           >
+            <option value="">Bitte auswählen</option>
             {collectionOptions.map((collection) => (
               <option key={collection} value={collection}>
                 {collection}
@@ -371,6 +377,18 @@ const ItemFormular = () => {
             placeholder="Model architecture (e.g., ResNet, Transformer)"
             value={formData.mlmArchitecture || ""}
             name="mlmArchitecture"
+            onChange={handleInputChange}
+          />
+        </div>
+
+        <div className="input-group mb-3">
+          <span className="input-group-text">Stac Version</span>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Enter a Stac Version"
+            value={formData.stac_version || ""}
+            name="stac_version"
             onChange={handleInputChange}
           />
         </div>
