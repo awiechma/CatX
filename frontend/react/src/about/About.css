@@ -1,7 +1,7 @@
 .impressum {
     position: relative;
     margin: 6% auto 2%;
-    background-color: #bedddd;
+    background-color: #bedddd !important;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     padding: 1rem;
