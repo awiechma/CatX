@@ -146,7 +146,7 @@ const CollectionDetail = () => {
             <div>Error: {error}</div>
           ) : (
             <div>
-              <h1>{selectedCollection["title"] || "title"}</h1>
+              <h1>{selectedCollection["title"] || selectedCollection["id"]}</h1>
               <h4 className="text-gray-600">{`/${selectedCollection["id"]}`}</h4>
               <h5 className="fst-italic fw-lighter">{`Uploaded by ${
                 selectedCollection.audit?.["user"]

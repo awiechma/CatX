@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Button from "../../shared/Button";
 import { Link } from "react-router-dom";
 
+import { useNavigate } from "react-router-dom";
+
 const token = localStorage.getItem("catx-user-session-token");
 
 const optionalFieldOptions = [
@@ -19,9 +21,9 @@ const optionalFieldOptions = [
 ];
 
 const CollectionFormular = () => {
-  const [formData, setFormData] = useState({ type: "Collection" }); // Default type is Feature
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({ type: "Collection" });
   const [uploadedData, setUploadedData] = useState({});
-  const [submitStatus, setSubmitStatus] = useState("");
   const [createNewCollection, setChecked] = useState(false);
   const [optionalFields, setOptionalFields] = useState([]);
 
@@ -37,8 +39,7 @@ const CollectionFormular = () => {
           setOptionFieldFromJson(json);
           populateFormFields(json);
         } catch (error) {
-          console.error("Error parsing JSON:", error);
-          setSubmitStatus("Error parsing the  JSON file.");
+          alert("Error: Could not parse the JSON-file.");
         }
       };
       reader.readAsText(file);
@@ -161,11 +162,10 @@ const CollectionFormular = () => {
       }
 
       const data = await response.json();
-      setSubmitStatus("Upload successful!");
-      console.log("Upload successful:", data);
+      alert(data.message);
+      navigate("/view/collections/" + data.id);
     } catch (error) {
-      console.error("Error uploading data:", error);
-      setSubmitStatus("Error uploading data.");
+      alert("Error uploading data.");
     }
   };
 
@@ -225,7 +225,7 @@ const CollectionFormular = () => {
           />
         </div>
 
-      <div className="input-group mb-3">
+        <div className="input-group mb-3">
           <span className="input-group-text">Stac Version</span>
           <input
             type="text"
@@ -301,7 +301,6 @@ const CollectionFormular = () => {
         </div>
       </div>
       <div className="custom-container text-center d-flex flex-column">
-        <span className="submit-status">{submitStatus}</span>
         <Button
           className="upload-button"
           text="Submit"

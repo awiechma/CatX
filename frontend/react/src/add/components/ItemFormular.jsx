@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Button from "../../shared/Button";
 import { Link } from "react-router-dom";
 
+import { useNavigate } from "react-router-dom";
+
 const token = localStorage.getItem("catx-user-session-token");
 
 const optionalFieldOptions = [
@@ -36,8 +38,8 @@ const optionalFieldOptions = [
 ];
 
 const ItemFormular = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({ type: "Feature" }); // Default type is Feature
-  const [submitStatus, setSubmitStatus] = useState("");
   const [optionalFields, setOptionalFields] = useState([]);
   const [collectionOptions, setCollectionOptions] = useState([]);
 
@@ -52,9 +54,8 @@ const ItemFormular = () => {
           setOptionFieldFromJson(json);
           populateFormFields(json);
           checkCollectionExists(json.collection);
-        } catch (error) { 
-          console.error("Error parsing JSON:", error);
-          setSubmitStatus("Error parsing the JSON file.");
+        } catch (error) {
+          alert("Error: Could not parse the JSON-file.");
         }
       };
       reader.readAsText(file);
@@ -81,8 +82,9 @@ const ItemFormular = () => {
 
   const checkCollectionExists = (collectionId) => {
     if (!collectionOptions.includes(collectionId)) {
-      setSubmitStatus(`Error: Collection ${collectionId} does not exist. Please create the collection first.`);
-      alert(`Error: Collection ${collectionId} does not exist. Please create the collection first.`);
+      alert(
+        `Error: Collection ${collectionId} does not exist. Please create the collection first.`
+      );
     }
   };
 
@@ -186,11 +188,6 @@ const ItemFormular = () => {
 
   const handleSubmit = async () => {
     try {
-      if (formData.collection == null){
-        setSubmitStatus("Error: Collection is required.");
-        return;
-      }
-      console.log("Submitting data:", formData);
       let body = removeEmpty({
         stac_version: formData.stac_version,
         stac_extensions: formData.stac_extensions
@@ -224,12 +221,12 @@ const ItemFormular = () => {
           "mlm:accelerator_summary": formData.mlmAccelerator_summary,
           "mlm:accelerator_count": formData.mlmAccelerator_count,
           "mlm:input": formData.mlmInput ? JSON.parse(formData.mlmInput) : null,
-          "mlm:output": formData.mlmOutput 
+          "mlm:output": formData.mlmOutput
             ? JSON.parse(formData.mlmOutput)
-            : null , 
+            : null,
           "mlm:hyperparameters": formData.mlmHyperparameters
             ? JSON.parse(formData.mlmHyperparameters)
-            : null, 
+            : null,
         }),
       });
       const response = await fetch("http://localhost:3000/api/items/upload", {
@@ -245,11 +242,10 @@ const ItemFormular = () => {
       }
 
       const data = await response.json();
-      setSubmitStatus("Upload successful!");
-      console.log("Upload successful:", data);
+      alert(data.message);
+      navigate("/view/items/" + formData.id);
     } catch (error) {
-      console.error("Error uploading data:", error);
-      setSubmitStatus("Error uploading data.");
+      alert("Error uploading data.");
     }
   };
 
@@ -319,7 +315,7 @@ const ItemFormular = () => {
           />
         </div>
 
-        <div className="input-group">
+        <div className="input-group mb-3">
           <span className="input-group-text">Collection</span>
           <select
             className="form-select"
@@ -339,6 +335,18 @@ const ItemFormular = () => {
               <Button text="+" />
             </Link>
           </span>
+        </div>
+
+        <div className="input-group mb-3">
+          <span className="input-group-text">Stac Version</span>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Enter a Stac Version"
+            value={formData.stac_version || ""}
+            name="stac_version"
+            onChange={handleInputChange}
+          />
         </div>
       </div>
 
@@ -377,18 +385,6 @@ const ItemFormular = () => {
             placeholder="Model architecture (e.g., ResNet, Transformer)"
             value={formData.mlmArchitecture || ""}
             name="mlmArchitecture"
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div className="input-group mb-3">
-          <span className="input-group-text">Stac Version</span>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Enter a Stac Version"
-            value={formData.stac_version || ""}
-            name="stac_version"
             onChange={handleInputChange}
           />
         </div>
@@ -453,7 +449,6 @@ const ItemFormular = () => {
         </div>
       </div>
       <div className="custom-container text-center d-flex flex-column">
-        <span className="submit-status">{submitStatus}</span>
         <Button
           className="upload-button"
           text="Submit"

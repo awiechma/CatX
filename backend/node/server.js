@@ -630,23 +630,25 @@ app.post(
   "/api/collections/upload",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    const user = req.user.username;
-    // Destructure the request body
-    const {
-      stac_version = null,
-      stac_extensions = [],
-      type = null,
-      id = null,
-      title = "",
-      description = null,
-      license = "",
-      extent = null,
-      summaries = {},
-      providers = [],
-      keywords = [],
-    } = req.body;
-
+    let errorMessage = "";
     try {
+      errorMessage = "Exception while parsing input.";
+      const user = req.user.username;
+      // Destructure the request body
+      const {
+        stac_version = null,
+        stac_extensions = [],
+        type = null,
+        id = null,
+        title = "",
+        description = null,
+        license = "",
+        extent = null,
+        summaries = {},
+        providers = [],
+        keywords = [],
+      } = req.body;
+
       //  Begin a transaction
       await db.query("BEGIN");
 
@@ -669,6 +671,7 @@ app.post(
           user,
         ],
       };
+      errorMessage = "Exception while inserting collection.";
       await db.query(insertCollectionQuery);
 
       // Insert the providers
@@ -680,6 +683,7 @@ app.post(
       `,
         };
         for (const provider of providers) {
+          errorMessage = "Exception while inserting providers.";
           await db.query(insertProviderQuery, [id, provider, user]);
         }
       }
@@ -693,6 +697,7 @@ app.post(
       `,
         };
         for (const keyword of keywords) {
+          errorMessage = "Exception while inserting keywords.";
           await db.query(insertKeywordQuery, [id, keyword, user]);
         }
       }
@@ -702,7 +707,12 @@ app.post(
       res.status(200).json({ message: "Collection uploaded successfully" });
     } catch (error) {
       await db.query("ROLLBACK");
-      res.status(500).json({ message: "Internal server error" });
+      res
+        .status(500)
+        .json({
+          message: "Internal server error: " + errorMessage,
+          reason: `${error}`,
+        });
     }
   }
 );
@@ -715,47 +725,48 @@ app.post(
   "/api/items/upload",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    let error = "Exception while parsing input.";
-    const user = req.user.username;
-
-    // Destructure the request body
-    const {
-      stac_version = null,
-      stac_extensions = null,
-      type = null,
-      id = null,
-      collection = null,
-      geometry = null,
-      bbox = null,
-      properties = null,
-      assets = null,
-    } = req.body;
-    // Destructure the properties
-    const {
-      description = null,
-      datetime = null,
-      start_datetime = null,
-      end_datetime = null,
-      "mlm:name": mlmName = null,
-      "mlm:tasks": mlmTasks = null,
-      "mlm:architecture": mlmArchitecture = null,
-      "mlm:framework": mlmFramework = null,
-      "mlm:framework_version": mlmFrameworkVersion = null,
-      "mlm:memory_size": mlmMemorySize = null,
-      "mlm:total_parameters": mlmTotalParameters = null,
-      "mlm:pretrained": mlmPretrained = null,
-      "mlm:pretrained_source": mlmPretrainedSource = null,
-      "mlm:batch_size_suggestion": mlmBatchSizeSuggestion = null,
-      "mlm:accelerator": mlmAccelerator = null,
-      "mlm:accelerator_constrained": mlmAcceleratorConstrained = null,
-      "mlm:accelerator_summary": mlmAcceleratorSummary = null,
-      "mlm:accelerator_count": mlmAcceleratorCount = null,
-      "mlm:input": mlmInput = null,
-      "mlm:output": mlmOutput = null,
-      "mlm:hyperparameters": mlmHyperparameters = null,
-    } = properties;
-
+    let errorMessage = "";
     try {
+      errorMessage = "Exception while parsing input.";
+      const user = req.user.username;
+
+      // Destructure the request body
+      const {
+        stac_version = null,
+        stac_extensions = null,
+        type = null,
+        id = null,
+        collection = null,
+        geometry = null,
+        bbox = null,
+        properties = null,
+        assets = null,
+      } = req.body;
+      // Destructure the properties
+      const {
+        description = null,
+        datetime = null,
+        start_datetime = null,
+        end_datetime = null,
+        "mlm:name": mlmName = null,
+        "mlm:tasks": mlmTasks = null,
+        "mlm:architecture": mlmArchitecture = null,
+        "mlm:framework": mlmFramework = null,
+        "mlm:framework_version": mlmFrameworkVersion = null,
+        "mlm:memory_size": mlmMemorySize = null,
+        "mlm:total_parameters": mlmTotalParameters = null,
+        "mlm:pretrained": mlmPretrained = null,
+        "mlm:pretrained_source": mlmPretrainedSource = null,
+        "mlm:batch_size_suggestion": mlmBatchSizeSuggestion = null,
+        "mlm:accelerator": mlmAccelerator = null,
+        "mlm:accelerator_constrained": mlmAcceleratorConstrained = null,
+        "mlm:accelerator_summary": mlmAcceleratorSummary = null,
+        "mlm:accelerator_count": mlmAcceleratorCount = null,
+        "mlm:input": mlmInput = null,
+        "mlm:output": mlmOutput = null,
+        "mlm:hyperparameters": mlmHyperparameters = null,
+      } = properties;
+
       // Begin a transaction
       await db.query("BEGIN");
 
@@ -822,7 +833,7 @@ app.post(
           JSON.stringify([[start_datetime, end_datetime]]),
         ],
       };
-      error = "Exception while updating collection.";
+      errorMessage = "Exception while updating collection.";
       await db.query(updateCollectionQuery);
 
       // Insert the item
@@ -853,7 +864,7 @@ app.post(
           user,
         ],
       };
-      error = "Exception while inserting item.";
+      errorMessage = "Exception while inserting item.";
       await db.query(insertItemsQuery);
 
       // Insert the properties
@@ -912,7 +923,7 @@ app.post(
           user,
         ],
       };
-      error = "Exception while inserting properties.";
+      errorMessage = "Exception while inserting properties.";
       await db.query(insertPropertiesQuery);
 
       // Insert the tasks
@@ -931,7 +942,7 @@ app.post(
       `,
         };
 
-        error = "Exception while inserting tasks.";
+        errorMessage = "Exception while inserting tasks.";
         for (const task of mlmTasks.split(",")) {
           await db.query(insertTasksQuery, [id, collection, task.trim(), user]);
         }
@@ -942,7 +953,10 @@ app.post(
       res.status(200).json({ message: "Item uploaded successfully" });
     } catch (error) {
       await db.query("ROLLBACK");
-      res.status(500).json({ message: "Internal server error: " + error });
+      res.status(500).json({
+        message: `Internal server error: ${errorMessage}`,
+        reason: `${error}`,
+      });
     }
   }
 );

@@ -5,10 +5,8 @@ import Impressum from "./components/Impressum";
 
 const About = () => {
   return (
-    <div>
-      <Navbar />
+    <div className="content-div">
       <Impressum />
-      <Footer />
     </div>
   );
 };

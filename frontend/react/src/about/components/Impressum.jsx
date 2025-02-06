@@ -3,7 +3,7 @@ import "../About.css";
 
 const Impressum = () => {
   return (
-    <div className="impressum">
+    <div className="custom-container">
       <section>
         <h1>About Us</h1>
         <br></br>

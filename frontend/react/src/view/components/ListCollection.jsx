@@ -27,7 +27,7 @@ const ListCollection = ({ collection }) => {
     >
       <div className="d-flex justify-content-between align-items-start w-100 p-2 mb-2 bg-light listitem">
         <div className="flex-grow-1 m-2">
-          <h4 className="mb-1">{collection["title"] || "title"}</h4>
+          <h4 className="mb-1">{collection["title"] || collection["id"]}</h4>
           <p
             className="mb-1"
             style={{
