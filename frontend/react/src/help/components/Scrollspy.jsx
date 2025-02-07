@@ -184,7 +184,7 @@ const ScrollSpyComponent = () => {
             </li>
             <br></br>
             <li>
-              <strong>Keywords: </strong>Description: Concise labels to describe the dataset. Input: A JSONB format. <br></br>
+              <strong>Keywords: </strong>Description: Concise labels to describe the dataset. Input: A comma-separated list of keywords. <br></br>
               Example: Landsat-8, OLI, TIRS, 30, 0-100%
             </li>
 
@@ -264,6 +264,11 @@ const ScrollSpyComponent = () => {
               Example: 1.0.0
             </li>
             <br></br>
+            <h5>Here is a screenshot to help you understand the process:</h5>
+            <div>
+              <img src="../../ItemsAddKeyAttributes.jpeg" alt="Screenshot of item addition" width="820" />
+            </div>
+            <br></br>
             <h5>Properties</h5>
             <li>
               <strong>MLM Name: </strong>Description: Name of the Machine Learning Model. Input: An alphanumeric string. <br></br>
@@ -336,7 +341,7 @@ const ScrollSpyComponent = () => {
             <br></br>
             <li>
               <strong>MLM Pretrained Source: </strong>Description: The dataset or repository from which the pretrained model was obtained. Input: An alphanumeric string. <br></br>
-              Example:EuroSat Sentinel-2
+              Example: EuroSat Sentinel-2
             </li>
             <br></br>
             <li>
@@ -350,11 +355,11 @@ const ScrollSpyComponent = () => {
             </li>
             <br></br>
             <li>
-              <strong>MLM Accelerator COnstrained: </strong>Description:  Indicates whether the model has specific constraints related to the accelerator type or availability. Input: Tick the box or not.
+              <strong>MLM Accelerator Constrained: </strong>Description:  Indicates whether the model has specific constraints related to the accelerator type or availability. Input: Tick the box or not.
             </li>
             <br></br>
             <li>.
-              <strong>MLM Accelerator Summary</strong>Description:  A brief description of the hardware acceleration setup. Input: An alphanumeric string. <br></br>
+              <strong>MLM Accelerator Summary: </strong>Description:  A brief description of the hardware acceleration setup. Input: An alphanumeric string. <br></br>
               Example: Unknown
             </li>
             <br></br>
@@ -469,7 +474,13 @@ const ScrollSpyComponent = () => {
             <br></br>
             <h5>Here is a screenshot to help you understand the process:</h5>
             <div>
-              <img src="../../ItemsAddData.jpeg" alt="Screenshot of item addition" width="820" />
+              <img src="../../ItemsAddRequiredData.jpeg" alt="Screenshot of item addition" width="820" />
+            </div>
+            <div>
+              <img src="../../ItemsAddOptional1.jpeg" alt="Screenshot of item addition" width="820" />
+            </div>
+            <div>
+              <img src="../../ItemsAddOptional2.jpeg" alt="Screenshot of item addition" width="820" />
             </div>
             <br></br>
 
