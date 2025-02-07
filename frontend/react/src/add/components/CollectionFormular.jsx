@@ -163,7 +163,7 @@ const CollectionFormular = () => {
 
       const data = await response.json();
       alert(data.message);
-      navigate("/view/collections/" + data.id);
+      navigate("/view/collections/" + formData.id);
     } catch (error) {
       alert("Error uploading data.");
     }
