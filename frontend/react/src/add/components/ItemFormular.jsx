@@ -207,7 +207,7 @@ const ItemFormular = () => {
           start_datetime: formData.start_datetime,
           end_datetime: formData.end_datetime,
           "mlm:name": formData.mlmName,
-          "mlm:tasks": formData.mlmTasks ? formData.mlmTasks.split(",") : null,
+          "mlm:tasks": formData.mlmTasks,
           "mlm:architecture": formData.mlmArchitecture,
           "mlm:framework": formData.mlmFramework,
           "mlm:framework_version": formData.mlmFramework_version,
