@@ -155,7 +155,11 @@ const ScrollSpyComponent = () => {
             <li>
               <strong>Stac_version: </strong>Description: Specifies the STAC version used. Input: A valid STAC version number. <br></br>Example: 1.0.0
             </li>
-
+            <br></br>
+            <h5>Here is a screenshot to help you understand the process:</h5>
+            <div>
+              <img src="../../CollectionsAddRequiredData.jpeg" alt="Screenshot of collection creation" width="820" />
+            </div>
             <br></br>
             <li>
               <strong>STAC Extensions: </strong>Description: A list of STAC extensions used in this collection. Input: A comma-separated list of URLs pointing to extension schemas. <br></br>Example: https://stac-extensions.github.io/projection/v1.0.0/schema.json, https://stac-extensions.github.io/eo/v1.0.0/schema.json
@@ -204,7 +208,12 @@ const ScrollSpyComponent = () => {
               <strong>Summaries: </strong>Description: Contains aggregated information about the collection. Input: Key-value pairs summarizing the dataset’s properties. <br></br>Example: &#123; "platform": ["Landsat-8"], "instruments": ["OLI", "TIRS"], "cloud_cover": [0, 100],
               "bands": ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B11"] &#125;
             </li>
-
+            <br></br>
+            <h5>Here is a screenshot to help you understand the process:</h5>
+            <div>
+              <img src="../../CollectionsAddOptionalData.jpeg" alt="Screenshot of STAC metadata upload" width="820" />
+            </div>
+            <br></br>
           </ul>
         </div>
         <div id="item-2-2">
