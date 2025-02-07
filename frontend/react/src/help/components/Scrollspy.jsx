@@ -139,16 +139,17 @@ const ScrollSpyComponent = () => {
           <ul>
             After signing in with your personal account, you can click on the tab "Add/Collection" to add a new collection. There, you find a formular to insert metadata about your collection. Either simply upload a valid JSON file or manually fill in the gaps. The key attributes are mandatory information, all other attributes are optional.
             Here you can find an example collection with all data types required:
+            <br></br>
             <li>
               <strong>Type: </strong>Description: Defines the type of the collection. Input: Default 'Collection' is given.
             </li>
             <br></br>
             <li>
-              <strong>ID: </strong>Description: A unique identifier for the collection. Input: An alphanumeric string without spaces. <br></br> Example: my-custom-collection
+              <strong>ID: </strong>Description: A unique identifier for the collection. Input: An alphanumeric string without spaces. <br></br> Example: landsat-8-global-imagery
             </li>
             <br></br>
             <li>
-              <strong>Description: </strong>Description: A detailed description of the collection. Input: Free text describing the dataset. <br></br>Example: This collection contains multispectral imagery from the Landsat 8 satellite, covering various locations worldwide.
+              <strong>Description: </strong>Description: A detailed description of the collection. Input: Free text describing the dataset. <br></br>Example: This collection contains multispectral imagery from the Landsat 8 satellite.
             </li>
             <br></br>
             <li>
@@ -156,14 +157,12 @@ const ScrollSpyComponent = () => {
             </li>
 
             <br></br>
-
-            <br></br>
             <li>
-              <strong>STAC Extensions: </strong>Description: A list of STAC extensions used in this collection. Input: A comma-separated list of URLs pointing to extension schemas. <br></br>Example: https://stac-extensions.github.io/projection/v1.0.0/schema.json
+              <strong>STAC Extensions: </strong>Description: A list of STAC extensions used in this collection. Input: A comma-separated list of URLs pointing to extension schemas. <br></br>Example: https://stac-extensions.github.io/projection/v1.0.0/schema.json, https://stac-extensions.github.io/eo/v1.0.0/schema.json
             </li>
             <br></br>
             <li>
-              <strong>Title: </strong>Description: A human-readable title for the collection. Input: Any text describing the collection. <br></br>Example: Landsat 8 Satellite Images
+              <strong>Title: </strong>Description: A human-readable title for the collection. Input: Any text describing the collection. <br></br>Example: Landsat 8 Global Imagery Dataset
             </li>
             <br></br>
             <li>
@@ -171,24 +170,39 @@ const ScrollSpyComponent = () => {
             </li>
             <br></br>
             <li>
-              <strong>Provider: </strong>
+              <strong>Provider: </strong>Description: Who provides this collection. Input: A JSONB array containing provider information. <br></br>Example:
+              &#91;
+              &#123; "name": "Wherebots", "roles": [ "producer" ], "url": "https://wherobots.com/" &#125;, <br></br>
+              &#123; "name": "Terradue", "roles": [ "producer" ], "url": "https://www.terradue.com/portal/" &#125;, <br></br>
+              &#123; "name": "IFGI", "roles": [ "server" ], "url": "https://www.uni-muenster.de/Geoinformatics/" &#125;
+              &#93;
+
             </li>
             <br></br>
             <li>
-              <strong>Keywords: </strong>Description: Input: A JSONB format. <br></br>
-              Example: &#123; "platform": ["Landsat-8"], "instruments": ["OLI", "TIRS"] &#125;
+              <strong>Keywords: </strong>Description: Concise labels to describe the dataset. Input: A JSONB format. <br></br>
+              Example: &#123; "platform": ["Landsat-8"], "instruments": ["OLI", "TIRS"], "gsd": [30], "cloud_cover": ["0-100%"] &#125;
             </li>
 
             <br></br>
             <li>
               <strong>Item Assets: </strong>Description: Defines the available assets in the collection.
               Input: A structured JSON-like format listing asset details. <br></br>
-              Example: &#123; "B1": &#123; "type": "image/png", "roles": ["visual"], "title": "Band 1 (Ultra Blue)" &#125; &#125;
+              Example: &#123;
+              "B1": &#123;
+              "type": "image/tiff",
+              "roles": ["reflectance", "visual"],
+              "title": "Band 1 (Ultra Blue, 0.43-0.45 µm)",
+              "href": "https://example.com/data/B1.tif"
+              &#125;
+              &#125;
+
             </li>
 
             <br></br>
             <li>
-              <strong>Summaries: </strong>Description: Contains aggregated information about the collection. Input: Key-value pairs summarizing the dataset’s properties. <br></br>Example: &#123; "platform": ["Landsat-8"], "instruments": ["OLI", "TIRS"] &#125;
+              <strong>Summaries: </strong>Description: Contains aggregated information about the collection. Input: Key-value pairs summarizing the dataset’s properties. <br></br>Example: &#123; "platform": ["Landsat-8"], "instruments": ["OLI", "TIRS"], "cloud_cover": [0, 100],
+              "bands": ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B11"] &#125;
             </li>
 
           </ul>
