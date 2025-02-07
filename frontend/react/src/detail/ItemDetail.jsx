@@ -7,8 +7,6 @@ const ItemDetail = () => {
   const { itemId } = useParams(); // Get itemId from the URL
   const navigate = useNavigate(); // Use navigate for programmatic navigation
   const [selectedItem, setSelectedItem] = useState(null);
-  const [showMenu, setShowMenu] = useState(false);
-  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -83,30 +81,6 @@ const ItemDetail = () => {
     return "Unsupported data type";
   };
 
-  const handleContextMenu = (e) => {
-    e.preventDefault();
-    const { clientX, clientY } = e;
-    setMenuPosition({ top: clientY, left: clientX });
-    setShowMenu(true);
-  };
-
-  const hideMenu = () => {
-    setShowMenu(false);
-  };
-
-  const copyToClipboard = () => {
-    const textToCopy = JSON.stringify(selectedItem, null, 2); // Convert to formatted JSON
-    navigator.clipboard
-      .writeText(textToCopy)
-      .then(() => {
-        alert("JSON copied to clipboard!");
-      })
-      .catch((error) => {
-        alert("Failed to copy text: " + error);
-      });
-    hideMenu();
-  };
-
   const formatDate = (dateString) => {
     const options = {
       year: "numeric",
@@ -116,20 +90,6 @@ const ItemDetail = () => {
       minute: "2-digit",
     };
     return new Date(dateString).toLocaleDateString("de-DE", options);
-  };
-
-  // Function to download the JSON as a file
-  const downloadJson = () => {
-    const jsonBlob = new Blob([JSON.stringify(selectedItem, null, 2)], {
-      type: "application/json",
-    });
-    const url = URL.createObjectURL(jsonBlob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = selectedItem.id + ".json";
-    link.click();
-    URL.revokeObjectURL(url); // Clean up the URL object
-    hideMenu();
   };
 
   if (!selectedItem) {
@@ -202,37 +162,7 @@ const ItemDetail = () => {
               readOnly
               value={JSON.stringify(selectedItem, null, 2)}
               className="border rounded bg-white item-detail-div"
-              onContextMenu={handleContextMenu}
-            >
-              {showMenu ? (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: menuPosition.top,
-                    left: menuPosition.left,
-                    backgroundColor: "#fff",
-                    border: "1px solid #ccc",
-                    padding: "10px",
-                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
-                    zIndex: 10,
-                  }}
-                  onMouseLeave={hideMenu} // Hide menu when mouse leaves
-                >
-                  <div
-                    onClick={copyToClipboard}
-                    style={{ padding: "5px", cursor: "pointer" }}
-                  >
-                    Copy JSON to Clipboard
-                  </div>
-                  <div
-                    onClick={downloadJson}
-                    style={{ padding: "5px", cursor: "pointer" }}
-                  >
-                    Download JSON as File
-                  </div>
-                </div>
-              ) : null}
-            </textarea>
+            ></textarea>
           )}
         </div>
       </div>
