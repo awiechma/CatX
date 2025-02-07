@@ -140,6 +140,7 @@ const ScrollSpyComponent = () => {
             After signing in with your personal account, you can click on the tab "Add/Collection" to add a new collection. There, you find a formular to insert metadata about your collection. Either simply upload a valid JSON file or manually fill in the gaps. The key attributes are mandatory information, all other attributes are optional.
             Here you can find an example collection with all data types required:
             <br></br>
+            <br></br>
             <li>
               <strong>Type: </strong>Description: Defines the type of the collection. Input: Default 'Collection' is given.
             </li>
@@ -153,7 +154,7 @@ const ScrollSpyComponent = () => {
             </li>
             <br></br>
             <li>
-              <strong>Stac_version: </strong>Description: Specifies the STAC version used. Input: A valid STAC version number. <br></br>Example: 1.0.0
+              <strong>STAC version: </strong>Description: Specifies the STAC version used. Input: A valid STAC version number. <br></br>Example: 1.0.0
             </li>
             <br></br>
             <h5>Here is a screenshot to help you understand the process:</h5>
@@ -296,13 +297,13 @@ const ScrollSpyComponent = () => {
             </li>
             <br></br>
             <li>
-              <strong>Description</strong>Description: Detailed textual explanation of the dataset or model. Input: An alphanumeric string. <br></br>
+              <strong>Description: </strong>Description: Detailed textual explanation of the dataset or model. Input: An alphanumeric string. <br></br>
               Example: Sourced from torchgeo python library, identifier is ResNet18_Weights.SENTINEL2_ALL_MOCO. The batch size suggestion is 3300, which almost maxes out an NVIDIA 3090's 24 GB CUDA memory.
             </li>
             <br></br>
             <li>
-              <strong>Datetime: </strong>Description: A timestamp indicating a specific date and time associated with the data or model. Input: A timestamp. <br></br>
-              Example:
+              <strong>Datetime: </strong>Description: A timestamp indicating a specific date and time associated with the data or model. Input: A timestamp (either datetime OR start and end datetime is advised). <br></br>
+              Example: 2022-01-01T12:34:56Z
             </li>
             <br></br>
             <li>
