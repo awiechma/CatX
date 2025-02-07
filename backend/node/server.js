@@ -644,6 +644,7 @@ app.post(
         description = null,
         license = "",
         extent = null,
+        item_assets = null,
         summaries = {},
         providers = [],
         keywords = [],
@@ -655,7 +656,7 @@ app.post(
       // Insert the collection
       const insertCollectionQuery = {
         text: `
-        INSERT INTO collections (stac_version, stac_extensions, type, id, title, description, license, extent, summaries, CREATION_USER, UPDATE_USER)
+        INSERT INTO collections (stac_version, stac_extensions, type, id, title, description, license, extent, item_assets, summaries, CREATION_USER, UPDATE_USER)
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $10)
       `,
         values: [
@@ -667,6 +668,7 @@ app.post(
           description,
           license,
           extent,
+          item_assets,
           summaries,
           user,
         ],
@@ -707,12 +709,10 @@ app.post(
       res.status(200).json({ message: "Collection uploaded successfully" });
     } catch (error) {
       await db.query("ROLLBACK");
-      res
-        .status(500)
-        .json({
-          message: "Internal server error: " + errorMessage,
-          reason: `${error}`,
-        });
+      res.status(500).json({
+        message: "Internal server error: " + errorMessage,
+        reason: `${error}`,
+      });
     }
   }
 );
