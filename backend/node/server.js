@@ -657,7 +657,7 @@ app.post(
       const insertCollectionQuery = {
         text: `
         INSERT INTO collections (stac_version, stac_extensions, type, id, title, description, license, extent, item_assets, summaries, CREATION_USER, UPDATE_USER)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $10)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $11)
       `,
         values: [
           stac_version,
