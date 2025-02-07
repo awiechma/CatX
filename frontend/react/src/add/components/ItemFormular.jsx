@@ -125,11 +125,11 @@ const ItemFormular = () => {
     setFormData((prev) => ({
       ...prev,
       stac_version: json["stac_version"] || "",
-      stac_extensions: json["stac_extensions"]?.join(", ") || "",
+      stac_extensions: json["stac_extensions"]?.join(",") || "",
       type: json.type || "",
       id: json.id || "",
       collection: json.collection || "",
-      bbox: json.bbox?.join(", ") || "",
+      bbox: json.bbox?.join(",") || "",
       assets: JSON.stringify(json.assets, null, 2) || "",
       geometry: JSON.stringify(json.geometry, null, 2) || "",
       description: json.properties?.description || "",
@@ -137,7 +137,7 @@ const ItemFormular = () => {
       start_datetime: json.properties?.start_datetime || "",
       end_datetime: json.properties?.end_datetime || "",
       mlmName: json.properties?.["mlm:name"] || "",
-      mlmTasks: json.properties?.["mlm:tasks"]?.join(", ") || "",
+      mlmTasks: json.properties?.["mlm:tasks"]?.join(",") || "",
       mlmArchitecture: json.properties?.["mlm:architecture"] || "",
       mlmFramework: json.properties?.["mlm:framework"] || "",
       mlmFramework_version: json.properties?.["mlm:framework_version"] || "",
@@ -191,13 +191,13 @@ const ItemFormular = () => {
       let body = removeEmpty({
         stac_version: formData.stac_version,
         stac_extensions: formData.stac_extensions
-          ? formData.stac_extensions.split(", ")
+          ? formData.stac_extensions.split(",")
           : null,
         type: formData.type,
         id: formData.id,
         collection: formData.collection,
         bbox: formData.bbox
-          ? formData.bbox.split(", ").map((x) => parseFloat(x))
+          ? formData.bbox.split(",").map((x) => parseFloat(x))
           : null,
         assets: formData.assets ? JSON.parse(formData.assets) : null,
         geometry: formData.geometry ? JSON.parse(formData.geometry) : null,
@@ -207,7 +207,7 @@ const ItemFormular = () => {
           start_datetime: formData.start_datetime,
           end_datetime: formData.end_datetime,
           "mlm:name": formData.mlmName,
-          "mlm:tasks": formData.mlmTasks,
+          "mlm:tasks": formData.mlmTasks ? formData.mlmTasks.split(",") : null,
           "mlm:architecture": formData.mlmArchitecture,
           "mlm:framework": formData.mlmFramework,
           "mlm:framework_version": formData.mlmFramework_version,
