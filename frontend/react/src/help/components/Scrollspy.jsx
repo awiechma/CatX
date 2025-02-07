@@ -185,7 +185,7 @@ const ScrollSpyComponent = () => {
             <br></br>
             <li>
               <strong>Keywords: </strong>Description: Concise labels to describe the dataset. Input: A JSONB format. <br></br>
-              Example: &#123; "platform": ["Landsat-8"], "instruments": ["OLI", "TIRS"], "gsd": [30], "cloud_cover": ["0-100%"] &#125;
+              Example: Landsat-8, OLI, TIRS, 30, 0-100%
             </li>
 
             <br></br>
@@ -221,6 +221,260 @@ const ScrollSpyComponent = () => {
           <ul>
             After signing in with your personal account, you can click on the tab "Add/Item" to add a new item.
           </ul>
+          <ul>
+            <h5>Key attributes</h5>
+            <li>
+              <strong>Type: </strong>Description: Defines the type of the item. Input: Default 'Feature' is given.
+            </li>
+            <br></br>
+            <li>
+              <strong>ID: </strong>Description: A unique identifier for the item. Input: An alphanumeric string without spaces. <br></br>
+              Example: item_solar_satlas_sentinel2
+            </li>
+            <br></br>
+            <li>
+              <strong>Geometry: </strong>Description: Defines the spatial coverage of the item. Input: A GeoJSON object representing the item's geometry. <br></br>
+              Example: &#123;
+              "type": "Polygon", <br></br>
+              "coordinates": [[[ -7.88, 37.13 ], [ -7.88, 58.21 ], [ 27.91, 58.21 ], [ 27.91, 37.13 ], [ -7.88, 37.13 ]]]
+              &#125;
+            </li>
+            <br></br>
+            <li>
+              <strong>Assets: </strong>Description: Lists the data files related to the item.
+              Input: A JSONB object containing asset details. <br></br>
+              Example: &#123;
+              "model": &#123;
+              "href": "s3://wherobots-modelhub-prod/professional/semantic-segmentation/solar-satlas-sentinel2/inductor/gpu/aot_inductor_gpu_tensor_cores.zip", <br></br>
+              "type": "application/zip; application=pytorch", <br></br>
+              "title": "AOTInductor model exported from private, edited, hard fork of Satlas GitHub repo.", <br></br>
+              "mlm_artifact_type": "torch.jit.script" <br></br>
+              &#125;
+              &#125;
+            </li>
+            <br></br>
+            <li>
+              <strong>Collection: </strong>Description: Specifies the collection to which this item belongs. Input: A valid collection ID, taken from dropdown menu. If no collections exist, please firstly create one.
+              <br></br>
+              <a href="#item-2-1">Learn here!</a>
+            </li>
+            <br></br>
+            <li>
+              <strong>STAC Version: </strong>Description: Specifies the STAC version used. Input: A valid STAC version number. <br></br>
+              Example: 1.0.0
+            </li>
+            <br></br>
+            <h5>Properties</h5>
+            <li>
+              <strong>MLM Name: </strong>Description: Name of the Machine Learning Model. Input: An alphanumeric string. <br></br>
+              Example: Satlas Solar Farm Segmentation
+            </li>
+            <br></br>
+            <li>
+              <strong>MLM Task: </strong>Description: The specific task that the MLM is designed for, such as classification, segmentation,... Input: Comma-separated list of tasks. <br></br>
+              Example: semantic-segmentation, segmentation
+            </li>
+            <br></br>
+            <li>
+              <strong>MLM Architecture: </strong>Description: The structure of the MLM. Input: An alphanumeric string. <br></br>
+              Example: PyTorch
+            </li>
+            <br></br>
+            <h5>Optional Properties</h5>
+            <li>
+              <strong>STAC Extensions: </strong>Description: Additional metadata extensions in the Spatial Temporal Asset Catalog (STAC) format. Input: A comma-separated list of URLs pointing to extension schemas. <br></br>Example: https://stac-extensions.github.io/projection/v1.0.0/schema.json, https://stac-extensions.github.io/eo/v1.0.0/schema.json
+            </li>
+            <br></br>
+            <li>
+              <strong>BBox: </strong>Description: The geographic boundary of an item. Input:  A GeoJSON object representing the item's geometry.<br></br>
+              Example: -7.882190080512502, 37.13739173208318, 27.911651652899923, 58.21798141355221
+            </li>
+            <br></br>
+            <li>
+              <strong>Description</strong>Description: Detailed textual explanation of the dataset or model. Input: An alphanumeric string. <br></br>
+              Example: Sourced from torchgeo python library, identifier is ResNet18_Weights.SENTINEL2_ALL_MOCO. The batch size suggestion is 3300, which almost maxes out an NVIDIA 3090's 24 GB CUDA memory.
+            </li>
+            <br></br>
+            <li>
+              <strong>Datetime: </strong>Description: A timestamp indicating a specific date and time associated with the data or model. Input: A timestamp. <br></br>
+              Example:
+            </li>
+            <br></br>
+            <li>
+              <strong>Start Datetime: </strong>Description: The beginning timestamp for the dataset or model's validity period. Input: A timestamp. <br></br>
+              Example: 2021-01-01T00:00:00Z
+            </li>
+            <br></br>
+            <li>
+              <strong>End Datetime: </strong>Description: The end timestamp for the dataset or model's validity period. Input: A timestamp. <br></br>
+              Example: 2023-12-01T00:00:00Z
+            </li>
+            <br></br>
+            <li>
+              <strong>MLM Framework: </strong>Description: The software framework used to develop and train the model. Input: An alphanumeric string. <br></br>
+              Example: pytorch
+            </li>
+            <br></br>
+            <li>
+              <strong>MLM Framework Version: </strong>Description: The specific version of the framework used for model training and inference. Input: An alphanumeric string. <br></br>
+              Example: 2.3.0+cu121
+            </li>
+            <br></br>
+            <li>
+              <strong>MLM Memory Size: </strong>Description: The amount of memory (RAM) required to load and run the model. Input: An integer. <br></br>
+              Example: 94452432
+            </li>
+            <br></br>
+            <li>
+              <strong>MLM Total Parameters: </strong>Description: The total number of trainable parameters in the model, representing its complexity. Input: An integer <br></br>
+              Example: 11700000
+            </li>
+            <br></br>
+            <li>
+              <strong>MLM Pretrained: </strong>Description:  Indicates whether the model is pretrained on another dataset before fine-tuning. Input: Tick the box or not.
+            </li>
+            <br></br>
+            <li>
+              <strong>MLM Pretrained Source: </strong>Description: The dataset or repository from which the pretrained model was obtained. Input: An alphanumeric string. <br></br>
+              Example:EuroSat Sentinel-2
+            </li>
+            <br></br>
+            <li>
+              <strong>MLM Batch Size Suggestion: </strong>Description: The recommended number of samples to process in one batch during training or inference. Input: An integer. <br></br>
+              Example: 3300
+            </li>
+            <br></br>
+            <li>
+              <strong>MLM Accelerator: </strong>Description: The type of hardware accelerator used. Input: An alphanumeric string. <br></br>
+              Example: cuda
+            </li>
+            <br></br>
+            <li>
+              <strong>MLM Accelerator COnstrained: </strong>Description:  Indicates whether the model has specific constraints related to the accelerator type or availability. Input: Tick the box or not.
+            </li>
+            <br></br>
+            <li>.
+              <strong>MLM Accelerator Summary</strong>Description:  A brief description of the hardware acceleration setup. Input: An alphanumeric string. <br></br>
+              Example: Unknown
+            </li>
+            <br></br>
+            <li>
+              <strong>MLM Accelerator Count: </strong>Description: The number of accelerators (e.g., GPUs) used for training or inference. Input: An integer. <br></br>
+              Example: 1
+            </li>
+            <br></br>
+            <li>
+              <strong>MLM Input: </strong>Description: The format and structure of input data required by the model. Input: A JSONB file. <br></br>
+              Example: [
+              &#123;
+              "name": "13 Band Sentinel-2 Batch",
+              "bands": [
+              "B01",
+              "B02",
+              "B03",
+              "B04",
+              "B05",
+              "B06",
+              "B07",
+              "B08",
+              "B8A",
+              "B09",
+              "B10",
+              "B11",
+              "B12"
+              ],
+              "input": &#123;
+              "shape": [
+              -1,
+              13,
+              64,
+              64
+              ],
+              "dim_order": [
+              "batch",
+              "channel",
+              "height",
+              "width"
+              ],
+              "data_type": "float32"
+              &#125;,
+              "norm_by_channel": true,
+              "norm_type": "z-score",
+              "statistics": [
+              &#123;
+              "mean": 1354.40546513,
+              "stddev": 245.71762908
+              &#125;,
+              &#123;
+              "mean": 1118.24399958,
+              "stddev": 333.00778264
+              &#125;
+              ],
+              "pre_processing_function": &#123;
+              "format": "python",
+              "expression": "torchgeo.datamodules.eurosat.EuroSATDataModule.collate_fn"
+              &#125;
+              &#125;
+              ]
+            </li>
+            <br></br>
+            <li>
+              <strong>MLM Output: </strong>Description: he format and structure of the output produced by the model. Input: A JSONB file. <br></br>
+              Example:[
+              &#123;
+              "name": "scene-classification",
+              "tasks": [
+              "scene-classification"
+              ],
+              "result": &#123;
+              "shape": [
+              -1,
+              10
+              ],
+              "dim_order": [
+              "batch",
+              "class"
+              ],
+              "data_type": "float32"
+              &#125;,
+              "classification:classes": [
+              &#123;
+              "value": 0,
+              "name": "Annual Crop",
+              "description": "Annual Crop"
+              &#125;,
+              &#123;
+              "value": 1,
+              "name": "Forest",
+              "description": "Forest"
+              &#125;
+              ],
+              "post_processing_function": null
+              &#125;
+              ]
+
+            </li>
+            <br></br>
+            <li>
+              <strong>MLM Hyperparameters: </strong>Description: The set of adjustable parameters that control the learning process of the model. Input: A JSONB file. <br></br>
+              Example: &#123;
+              "learning_rate": 0.001,
+              "batch_size": 32,
+              "epochs": 50,
+              "optimizer": "Adam",
+              "dropout": 0.3,
+              "loss_function": "cross_entropy"
+              &#125;
+            </li>
+            <br></br>
+            <h5>Here is a screenshot to help you understand the process:</h5>
+            <div>
+              <img src="../../ItemsAddData.jpeg" alt="Screenshot of item addition" width="820" />
+            </div>
+            <br></br>
+
+          </ul>
+
           <hr />
           <br></br>
 
