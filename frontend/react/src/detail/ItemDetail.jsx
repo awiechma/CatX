@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../global.css";
-import { useState, useEffect } from "react";
 
 const ItemDetail = () => {
   const { itemId } = useParams(); // Get itemId from the URL
@@ -9,6 +8,7 @@ const ItemDetail = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [contextMenu, setContextMenu] = useState(null);
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -31,6 +31,42 @@ const ItemDetail = () => {
 
     fetchItem();
   }, [itemId]);
+
+  const handleDownload = () => {
+    const json = JSON.stringify(selectedItem, null, 2);
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${selectedItem.id}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleCopy = () => {
+    const json = JSON.stringify(selectedItem, null, 2);
+    navigator.clipboard.writeText(json).then(
+      () => {
+        alert("JSON copied to clipboard!");
+      },
+      (err) => {
+        console.error("Could not copy text: ", err);
+      }
+    );
+  };
+
+  const handleContextMenu = (event) => {
+    event.preventDefault();
+    console.log("Right-click detected");
+    setContextMenu({
+      mouseX: event.clientX - 2,
+      mouseY: event.clientY - 4,
+    });
+  };
+
+  const handleCloseContextMenu = () => {
+    setContextMenu(null);
+  };
 
   const renderValue = (value) => {
     if (value === null || value === undefined) {
@@ -97,7 +133,7 @@ const ItemDetail = () => {
   }
 
   return (
-    <div className="content-div d-flex flex-column">
+    <div className="content-div d-flex flex-column" >
       <div className="h-10 d-flex flex-row">
         <div className="custom-container w-100">
           {loading ? (
@@ -151,7 +187,7 @@ const ItemDetail = () => {
             </div>
           )}
         </div>
-        <div className="custom-container w-50">
+        <div className="custom-container w-50" onContextMenu={handleContextMenu}>
           <h3>JSON View</h3>
           {loading ? (
             <div>Loading...</div>
@@ -166,6 +202,19 @@ const ItemDetail = () => {
           )}
         </div>
       </div>
+      {contextMenu && (
+        <ul
+          className="context-menu"
+          style={{
+            top: contextMenu.mouseY,
+            left: contextMenu.mouseX,
+          }}
+          onClick={handleCloseContextMenu}
+        >
+          <li onClick={handleDownload}>Download JSON</li>
+          <li onClick={handleCopy}>Copy JSON</li>
+        </ul>
+      )}
     </div>
   );
 };
