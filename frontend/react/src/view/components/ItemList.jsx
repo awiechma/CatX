@@ -89,7 +89,7 @@ const ItemList = ({ searchString, selectedTags }) => {
               <li className="page-item page-link">{page}</li>
               <li
                 className={`page-item page-link ${
-                  page === totalPages ? "disabled" : ""
+                  page >= totalPages ? "disabled" : ""
                 }`}
                 onClick={() => switchPage(page + 1)}
               >
@@ -97,7 +97,7 @@ const ItemList = ({ searchString, selectedTags }) => {
               </li>
               <li
                 className={`page-item page-link ${
-                  page === totalPages ? "disabled" : ""
+                  page >= totalPages ? "disabled" : ""
                 }`}
                 onClick={() => switchPage(totalPages)}
               >
