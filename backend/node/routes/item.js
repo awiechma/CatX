@@ -50,33 +50,45 @@ router.get("/search", async (req, res) => {
   const tasks = req.query.tasks || null;
   const searchTerm = req.query.search || null;
 
+  let countQuery = `
+    SELECT COUNT(*)
+    FROM items_complete_view
+  `;
+
   let baseQuery = `
     SELECT *
     FROM items_complete_view
   `;
-  let queryValues = [limit + 1, offset];
+  let queryValues = [];
   let filters = [];
 
   if (tasks) {
-    filters.push(`properties->'mlm:tasks' @> $${filters.length + 3}`);
+    filters.push(`properties->'mlm:tasks' @> $${filters.length + 1}`);
     queryValues.push(JSON.stringify(tasks.split(",")));
   }
 
   if (searchTerm) {
     filters.push(
-      `(properties->>'description' ILIKE $${filters.length + 3} OR id ILIKE $${
-        filters.length + 3
-      })`
+      `(
+        properties->>'description' ILIKE $${filters.length + 1}
+        OR id ILIKE $${filters.length + 1}
+        OR properties->>'mlm:name' ILIKE $${filters.length + 1}
+      )`
     );
     queryValues.push(`%${searchTerm}%`);
   }
 
   if (filters.length > 0) {
     baseQuery += ` WHERE ${filters.join(" AND ")}`;
+    countQuery += ` WHERE ${filters.join(" AND ")}`;
   }
 
+  queryValues.push(limit+1, offset);
+
   const finalQuery = {
-    text: `${baseQuery} LIMIT $1 OFFSET $2`,
+    text: `${baseQuery} LIMIT $${filters.length + 1} OFFSET $${
+      filters.length + 2
+    }`,
     values: queryValues,
   };
 
@@ -86,7 +98,7 @@ router.get("/search", async (req, res) => {
     links: [
       {
         rel: "self",
-        href: `http://localhost:3000/stac/search?limit=${limit}&offset=${offset}${
+        href: `http://localhost:3000/api/search?limit=${limit}&offset=${offset}${
           tasks ? `&tasks=${tasks}` : ""
         }${searchTerm ? `&search=${searchTerm}` : ""}`,
       },
@@ -96,22 +108,35 @@ router.get("/search", async (req, res) => {
       limit: limit,
     },
   };
+
+  //get count of possible results
+  await db
+    .query(countQuery, queryValues.slice(0, -2))
+    .then(({ rows: count }) => {
+      itemcol.context.matched = parseInt(count[0].count);
+    })
+    .catch((error) => {
+      console.error("Error during item export:", error);
+      res.status(500).json({ message: "Internal server error" });
+    });
+
   if (offset > 0) {
     itemcol.links.push({
       rel: "prev",
-      href: `http://localhost:3000/stac/search?limit=${limit}&offset=${
+      href: `http://localhost:3000/api/search?limit=${limit}&offset=${
         offset - limit > 0 ? 0 : offset - limit
       }${tasks ? `&tasks=${tasks}` : ""}${
         searchTerm ? `&search=${searchTerm}` : ""
       }`,
     });
   }
+
   db.query(finalQuery)
     .then(({ rows: items }) => {
       if (items.length > limit) {
         itemcol.links.push({
           rel: "next",
-          href: `http://localhost:3000/stac/search?limit=${limit}&offset=${
+          href: `http://localhost:3000/api/search?limit=${limit}&offset=${
             offset + limit
           }${tasks ? `&tasks=${tasks}` : ""}${
             searchTerm ? `&search=${searchTerm}` : ""

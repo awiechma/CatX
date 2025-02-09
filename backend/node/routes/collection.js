@@ -65,10 +65,58 @@ router.get("/collections", async (req, res) => {
       LIMIT $1
       OFFSET $2
     `,
-    values: [limit, offset],
+    values: [limit + 1, offset],
   };
+  const countQuery = {
+    text: `SELECT COUNT(*) FROM collections_complete_view`,
+  };
+  let returnedJson = {
+    collections: [],
+    links: [
+      {
+        rel: "self",
+        href: `http://localhost:3000/api/collections?limit=${limit}&offset=${offset}`,
+      },
+    ],
+    context: {
+      page: offset / limit + 1,
+      limit: limit,
+    },
+  };
+  await db
+    .query(countQuery)
+    .then(({ rows: count }) => {
+      returnedJson.context.matched = parseInt(count[0].count);
+    })
+    .catch((error) => {
+      console.error("Error during collection export", error);
+      res.status(500).json({ message: "Internal server error" });
+    });
+
+  if (offset > 0) {
+    returnedJson.links.push({
+      rel: "prev",
+      href: `http://localhost:3000/api/collections?limit=${limit}&offset=${
+        offset - limit > 0 ? 0 : offset - limit
+      }`,
+    });
+  }
+
   db.query(query)
-    .then(({ rows: collections }) => res.status(200).json(collections))
+    .then(({ rows: collections }) => {
+      if (collections.length > limit) {
+        returnedJson.links.push({
+          rel: "next",
+          href: `http://localhost:3000/api/collections?limit=${limit}&offset=${
+            offset + limit
+          }`,
+        });
+        collections.pop();
+      }
+      returnedJson.context.returned = collections.length;
+      returnedJson.collections = collections;
+      res.status(200).json(returnedJson);
+    })
     .catch((error) => {
       console.error("Error during collection export", error);
       res.status(500).json({ message: "Internal server error" });

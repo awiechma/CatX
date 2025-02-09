@@ -5,7 +5,8 @@ import "../global.css";
 const ItemDetail = () => {
   const { itemId } = useParams(); // Get itemId from the URL
   const navigate = useNavigate(); // Use navigate for programmatic navigation
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [itemData, setItemData] = useState(null);
+  const [auditData, setAuditData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [contextMenu, setContextMenu] = useState(null);
@@ -20,7 +21,10 @@ const ItemDetail = () => {
           throw new Error(`HTTP Error: ${response.status}`);
         }
         const data = await response.json();
-        setSelectedItem(data);
+
+        let { audit, ...rest } = data;
+        setItemData(rest);
+        setAuditData(audit);
       } catch (error) {
         console.error("Error fetching item:", error);
         setError("Error fetching item.");
@@ -33,18 +37,18 @@ const ItemDetail = () => {
   }, [itemId]);
 
   const handleDownload = () => {
-    const json = JSON.stringify(selectedItem, null, 2);
+    const json = JSON.stringify(itemData, null, 2);
     const blob = new Blob([json], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `${selectedItem.id}.json`;
+    a.download = `${itemData.id}.json`;
     a.click();
     URL.revokeObjectURL(url);
   };
 
   const handleCopy = () => {
-    const json = JSON.stringify(selectedItem, null, 2);
+    const json = JSON.stringify(itemData, null, 2);
     navigator.clipboard.writeText(json).then(
       () => {
         alert("JSON copied to clipboard!");
@@ -128,12 +132,12 @@ const ItemDetail = () => {
     return new Date(dateString).toLocaleDateString("de-DE", options);
   };
 
-  if (!selectedItem) {
+  if (!itemData) {
     return <div>Item not found.</div>;
   }
 
   return (
-    <div className="content-div d-flex flex-column" >
+    <div className="content-div d-flex flex-column">
       <div className="h-10 d-flex flex-row">
         <div className="custom-container w-100">
           {loading ? (
@@ -142,20 +146,20 @@ const ItemDetail = () => {
             <div>Error: {error}</div>
           ) : (
             <div>
-              <h1>{selectedItem.properties?.["mlm:name"]}</h1>
+              <h1>{itemData.properties?.["mlm:name"]}</h1>
               <h4 className="text-gray-600">
                 /
                 <a
-                  href={"/view/collections/" + selectedItem["collection"]}
+                  href={"/view/collections/" + itemData["collection"]}
                   className="text-decoration-none"
                 >
-                  {selectedItem["collection"]}
+                  {itemData["collection"]}
                 </a>
-                /{selectedItem["id"]}
+                /{itemData["id"]}
               </h4>
               <h5 className="fst-italic fw-lighter">{`Uploaded by ${
-                selectedItem.audit?.["user"]
-              } on ${formatDate(selectedItem.audit?.["datetime"])}.`}</h5>
+                auditData["user"]
+              } on ${formatDate(auditData["datetime"])}.`}</h5>
             </div>
           )}
         </div>
@@ -178,7 +182,7 @@ const ItemDetail = () => {
           ) : (
             <div className="border rounded bg-white item-detail-div overflow-auto">
               <ul className="list-disc pl-4">
-                {Object.entries(selectedItem || {}).map(([key, value]) => (
+                {Object.entries(itemData || {}).map(([key, value]) => (
                   <li key={key}>
                     <strong>{key}:</strong> {renderValue(value)}
                   </li>
@@ -187,7 +191,10 @@ const ItemDetail = () => {
             </div>
           )}
         </div>
-        <div className="custom-container w-50" onContextMenu={handleContextMenu}>
+        <div
+          className="custom-container w-50"
+          onContextMenu={handleContextMenu}
+        >
           <h3>JSON View</h3>
           {loading ? (
             <div>Loading...</div>
@@ -196,7 +203,7 @@ const ItemDetail = () => {
           ) : (
             <textarea
               readOnly
-              value={JSON.stringify(selectedItem, null, 2)}
+              value={JSON.stringify(itemData, null, 2)}
               className="border rounded bg-white item-detail-div"
             ></textarea>
           )}
@@ -210,6 +217,7 @@ const ItemDetail = () => {
             left: contextMenu.mouseX,
           }}
           onClick={handleCloseContextMenu}
+          onMouseLeave={handleCloseContextMenu}
         >
           <li onClick={handleDownload}>Download JSON</li>
           <li onClick={handleCopy}>Copy JSON</li>

@@ -6,10 +6,7 @@ import CollectionList from "./components/CollectionList";
 const CollectionView = () => {
   return (
     <div className="content-div">
-      <div className="custom-container h-95">
-        <h3>Collections</h3>
-        <CollectionList />
-      </div>
+      <CollectionList />
     </div>
   );
 };

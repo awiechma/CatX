@@ -34,13 +34,7 @@ const ItemView = () => {
         setSearchString={setSearchString}
       />
       <Filter selectedTags={selectedTags} setSelectedTags={setSelectedTags} />
-      <div className="custom-container h-80">
-        <h3>Results</h3>
-        <ItemList
-          searchString={searchString}
-          selectedTags={selectedTags}
-        />
-      </div>
+      <ItemList searchString={searchString} selectedTags={selectedTags} />
     </div>
   );
 };

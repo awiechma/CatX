@@ -6,7 +6,8 @@ import { useState, useEffect } from "react";
 const CollectionDetail = () => {
   const { collectionId } = useParams(); // Get collectionId from the URL
   const navigate = useNavigate(); // Use navigate for programmatic navigation
-  const [selectedCollection, setSelectedCollection] = useState(null);
+  const [collectionData, setCollectionData] = useState(null);
+  const [auditData, setAuditData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -20,7 +21,9 @@ const CollectionDetail = () => {
           throw new Error(`HTTP Error: ${response.status}`);
         }
         const data = await response.json();
-        setSelectedCollection(data);
+        let { audit, ...rest } = data;
+        setCollectionData(rest);
+        setAuditData(audit);
       } catch (error) {
         console.error("Error fetching collection:", error);
         setError("Error fetching collection.");
@@ -92,7 +95,7 @@ const CollectionDetail = () => {
     return new Date(dateString).toLocaleDateString("de-DE", options);
   };
 
-  if (!selectedCollection) {
+  if (!collectionData) {
     return <div>Collection not found.</div>;
   }
 
@@ -106,11 +109,11 @@ const CollectionDetail = () => {
             <div>Error: {error}</div>
           ) : (
             <div>
-              <h1>{selectedCollection["title"] || selectedCollection["id"]}</h1>
-              <h4 className="text-gray-600">{`/${selectedCollection["id"]}`}</h4>
+              <h1>{collectionData["title"] || collectionData["id"]}</h1>
+              <h4 className="text-gray-600">{`/${collectionData["id"]}`}</h4>
               <h5 className="fst-italic fw-lighter">{`Uploaded by ${
-                selectedCollection.audit?.["user"]
-              } on ${formatDate(selectedCollection.audit?.["datetime"])}.`}</h5>
+                auditData["user"]
+              } on ${formatDate(auditData["datetime"])}.`}</h5>
             </div>
           )}
         </div>
@@ -124,7 +127,7 @@ const CollectionDetail = () => {
         </div>
       </div>
       <div className="d-flex flex-row h-75 justify-content-center">
-        <div className="custom-container">
+        <div className="custom-container w-33">
           <h3>Detailed Info</h3>
           {loading ? (
             <div>Loading...</div>
@@ -132,19 +135,17 @@ const CollectionDetail = () => {
             <div>Error: {error}</div>
           ) : (
             <div className="border rounded bg-white item-detail-div overflow-auto">
-              <ul className="list-unstyled pl-4">
-                {Object.entries(selectedCollection || {}).map(
-                  ([key, value]) => (
-                    <li key={key}>
-                      <strong>{key}:</strong> {renderValue(value)}
-                    </li>
-                  )
-                )}
+              <ul className="list-disc pl-4">
+                {Object.entries(collectionData || {}).map(([key, value]) => (
+                  <li key={key}>
+                    <strong>{key}:</strong> {renderValue(value)}
+                  </li>
+                ))}
               </ul>
             </div>
           )}
         </div>
-        <div className="custom-container">
+        <div className="custom-container w-33">
           <h3>JSON View</h3>
           {loading ? (
             <div>Loading...</div>
@@ -153,12 +154,12 @@ const CollectionDetail = () => {
           ) : (
             <textarea
               readOnly
-              value={JSON.stringify(selectedCollection, null, 2)}
+              value={JSON.stringify(collectionData, null, 2)}
               className="border rounded bg-white item-detail-div"
             ></textarea>
           )}
         </div>
-        <div className="custom-container">
+        <div className="custom-container w-33">
           <h3>Models in this Collection</h3>
           {loading ? (
             <div>Loading...</div>
@@ -167,7 +168,7 @@ const CollectionDetail = () => {
           ) : (
             <div className="border rounded bg-white item-detail-div overflow-auto">
               <ul className="list-unstyled pl-4">
-                {Object.entries(selectedCollection["links"] || {})
+                {Object.entries(collectionData["links"] || {})
                   .filter(([_, link]) => link.rel === "item")
                   .map(([key, link]) => {
                     const itemId = link.href.split("/").pop();
