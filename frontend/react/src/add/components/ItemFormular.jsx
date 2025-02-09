@@ -74,7 +74,7 @@ const ItemFormular = () => {
       }
 
       const data = await response.json();
-      setCollectionOptions(data.map((collection) => collection.id));
+      setCollectionOptions(data.collections.map((collection) => collection.id));
     } catch (error) {
       console.error("Error fetching collections:", error);
     }
