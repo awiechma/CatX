@@ -8,7 +8,8 @@ const ItemList = ({ searchString, selectedTags }) => {
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const limit = 10;
+  const [matched, setMatched] = useState(0);
+  const [limit, setLimit] = useState(10);
 
   const switchPage = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) setPage(newPage);
@@ -30,6 +31,7 @@ const ItemList = ({ searchString, selectedTags }) => {
       if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
       const data = await response.json();
       setTotalPages(Math.ceil(data.context?.matched / limit));
+      setMatched(data.context?.matched);
       setItems(data.features);
     } catch (err) {
       setError(err.message);
@@ -40,13 +42,32 @@ const ItemList = ({ searchString, selectedTags }) => {
 
   useEffect(() => {
     fetchItems();
-  }, [searchString, selectedTags, page]);
+  }, [searchString, selectedTags, page, limit]);
 
   return (
     <div className="custom-container h-80">
       <div className="d-flex flex-row">
-        <h3 className="w-50">Results (&lsaquo;{limit*totalPages})</h3>
-        <div className="w-50">
+        <h3 className="w-50">Results ({matched})</h3>
+        <div className="w-50 d-flex justify-content-end">
+          <div className="dropdown me-2">
+            <button
+              className="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Limit: {limit}
+            </button>
+            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              {[10, 20, 50].map((option) => (
+                <li className="dropdown-item" onClick={() => setLimit(option)}>
+                  {option}
+                </li>
+              ))}
+            </ul>
+          </div>
           <nav>
             <ul className="pagination justify-content-end">
               <li
