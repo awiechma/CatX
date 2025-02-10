@@ -5,8 +5,8 @@ const db = require("../db");
 const router = express.Router();
 
 router.get("/mlmtasks", async (req, res) => {
-  const limit = req.params.limit || 20;
-  const offset = req.params.offset || 0;
+  const limit = req.query.limit || 20;
+  const offset = req.query.offset || 0;
   const query = {
     text: `
       SELECT 
@@ -154,30 +154,6 @@ router.get("/search", async (req, res) => {
     });
 });
 
-/**
- * Endpoint to retrieve items from the database
- * Accepts optional limit and offset parameters in the request body for pagination
- */
-router.get("/items", async (req, res) => {
-  const limit = req.params.limit || 20;
-  const offset = req.params.offset || 0;
-  const query = {
-    text: `
-      SELECT * 
-      FROM items_complete_view
-      LIMIT $1
-      OFFSET $2
-    `,
-    values: [limit, offset],
-  };
-
-  db.query(query)
-    .then(({ rows: items }) => res.status(200).json(items))
-    .catch((error) => {
-      console.error("Error during item export:", error);
-      res.status(500).json({ message: "Internal server error" });
-    });
-});
 
 /**
  * Endpoint to retrieve a single item by its ID from the database
