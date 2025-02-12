@@ -78,6 +78,18 @@ First you need to have Docker installed and running.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
+If you wish to use demo data:
+
+1. Navigate into the directory
+   ```sh
+    cd ./demo_data
+   ```
+ 
+2. Run the script in the terminal:
+    ```sh
+    bash insert_demo.sh
+   ```
+
 After starting the app, visit http://localhost:5173 in your browser. Use the intuitive interface to explore and upload ML models.
 
 
