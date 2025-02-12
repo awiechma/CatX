@@ -1,0 +1,268 @@
+{
+    "type": "Feature",
+    "stac_version": "1.0.0",
+    "collection" : "ml-models-rs",
+    "id": "item_landcover_eurosat_sentinel2",
+    "properties": {
+        "start_datetime": "2021-01-01T00:00:00Z",
+        "end_datetime": "2023-12-01T00:00:00Z",
+        "description": "Sourced from torchgeo python library, identifier is ResNet18_Weights.SENTINEL2_ALL_MOCO. The batch size suggestion is 3300, which almost maxes out an NVIDIA 3090's 24 GB CUDA memory.",
+        "mlm:framework": "pytorch",
+        "mlm:framework_version": "2.3.0+cu121",
+        "file:size": 91000000,
+        "mlm:memory_size": 94452432,
+        "mlm:batch_size_suggestion": 3300,
+        "mlm:accelerator": "cuda",
+        "mlm:accelerator_constrained": false,
+        "mlm:accelerator_summary": "Unknown",
+        "mlm:name": "Resnet-18 Sentinel-2 ALL MOCO",
+        "mlm:architecture": "ResNet-18",
+        "mlm:tasks": [
+            "scene-classification"
+        ],
+        "mlm:input": [
+            {
+                "name": "13 Band Sentinel-2 Batch",
+                "bands": [
+                    "B01",
+                    "B02",
+                    "B03",
+                    "B04",
+                    "B05",
+                    "B06",
+                    "B07",
+                    "B08",
+                    "B8A",
+                    "B09",
+                    "B10",
+                    "B11",
+                    "B12"
+                ],
+                "input": {
+                    "shape": [
+                        -1,
+                        13,
+                        64,
+                        64
+                    ],
+                    "dim_order": [
+                        "batch",
+                        "channel",
+                        "height",
+                        "width"
+                    ],
+                    "data_type": "float32"
+                },
+                "norm_by_channel": true,
+                "norm_type": "z-score",
+                "statistics": [
+                    {
+                        "mean": 1354.40546513,
+                        "stddev": 245.71762908
+                    },
+                    {
+                        "mean": 1118.24399958,
+                        "stddev": 333.00778264
+                    },
+                    {
+                        "mean": 1042.92983953,
+                        "stddev": 395.09249139
+                    },
+                    {
+                        "mean": 947.62620298,
+                        "stddev": 593.75055589
+                    },
+                    {
+                        "mean": 1199.47283961,
+                        "stddev": 566.4170017
+                    },
+                    {
+                        "mean": 1999.79090914,
+                        "stddev": 861.18399006
+                    },
+                    {
+                        "mean": 2369.22292565,
+                        "stddev": 1086.63139075
+                    },
+                    {
+                        "mean": 2296.82608323,
+                        "stddev": 1117.98170791
+                    },
+                    {
+                        "mean": 732.08340178,
+                        "stddev": 404.91978886
+                    },
+                    {
+                        "mean": 12.11327804,
+                        "stddev": 4.77584468
+                    },
+                    {
+                        "mean": 1819.01027855,
+                        "stddev": 1002.58768311
+                    },
+                    {
+                        "mean": 1118.92391149,
+                        "stddev": 761.30323499
+                    },
+                    {
+                        "mean": 2594.14080798,
+                        "stddev": 1231.58581042
+                    }
+                ],
+                "pre_processing_function": {
+                    "format": "python",
+                    "expression": "torchgeo.datamodules.eurosat.EuroSATDataModule.collate_fn"
+                }
+            }
+        ],
+        "mlm:output": [
+            {
+                "name": "scene-classification",
+                "tasks": [
+                    "scene-classification"
+                ],
+                "result": {
+                    "shape": [
+                        -1,
+                        10
+                    ],
+                    "dim_order": [
+                        "batch",
+                        "class"
+                    ],
+                    "data_type": "float32"
+                },
+                "classification:classes": [
+                    {
+                        "value": 0,
+                        "name": "Annual Crop",
+                        "description": "Annual Crop"
+                    },
+                    {
+                        "value": 1,
+                        "name": "Forest",
+                        "description": "Forest"
+                    },
+                    {
+                        "value": 2,
+                        "name": "Herbaceous Vegetation",
+                        "description": "Herbaceous Vegetation"
+                    },
+                    {
+                        "value": 3,
+                        "name": "Highway",
+                        "description": "Highway"
+                    },
+                    {
+                        "value": 4,
+                        "name": "Industrial Buildings",
+                        "description": "Industrial Buildings"
+                    },
+                    {
+                        "value": 5,
+                        "name": "Pasture",
+                        "description": "Pasture"
+                    },
+                    {
+                        "value": 6,
+                        "name": "Permanent Crop",
+                        "description": "Permanent Crop"
+                    },
+                    {
+                        "value": 7,
+                        "name": "Residential Buildings",
+                        "description": "Residential Buildings"
+                    },
+                    {
+                        "value": 8,
+                        "name": "River",
+                        "description": "River"
+                    },
+                    {
+                        "value": 9,
+                        "name": "SeaLake",
+                        "description": "SeaLake"
+                    }
+                ],
+                "post_processing_function": null
+            }
+        ],
+        "mlm:total_parameters": 11700000,
+        "mlm:pretrained": true,
+        "mlm:pretrained_source": "EuroSat Sentinel-2",
+        "datetime": null
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -7.882190080512502,
+                    37.13739173208318
+                ],
+                [
+                    -7.882190080512502,
+                    58.21798141355221
+                ],
+                [
+                    27.911651652899923,
+                    58.21798141355221
+                ],
+                [
+                    27.911651652899923,
+                    37.13739173208318
+                ],
+                [
+                    -7.882190080512502,
+                    37.13739173208318
+                ]
+            ]
+        ]
+    },
+    "links": [
+        {
+            "rel": "derived_from",
+            "href": "https://earth-search.aws.element84.com/v1/collections/sentinel-2-l2a",
+            "type": "application/json"
+        },
+        {
+            "rel": "self",
+            "href": "s3://wherobots-modelhub-prod/community/classification/landcover-eurosat-sentinel2/model-metadata.json/item_landcover_eurosat_sentinel2.json",
+            "type": "application/json"
+        }
+    ],
+    "assets": {
+        "model": {
+            "href": "s3://wherobots-modelhub-prod/community/classification/landcover-eurosat-sentinel2/scripting/model.pt",
+            "type": "application/octet-stream; application=pytorch",
+            "title": "Pytorch weights checkpoint",
+            "description": "A Resnet-18 classification model trained on normalized Sentinel-2 imagery with Eurosat landcover labels with torchgeo.",
+            "mlm_artifact_type": "torch.jit.script",
+            "file:size": 43000000,
+            "roles": [
+                "mlm:model",
+                "data"
+            ]
+        },
+        "source_code": {
+            "href": "https://github.com/microsoft/torchgeo/blob/61efd2e2c4df7ebe3bd03002ebbaeaa3cfe9885a/torchgeo/models/resnet.py#L207",
+            "type": "text/x-python",
+            "title": "Model implementation.",
+            "description": "Source code to run the model.",
+            "roles": [
+                "mlm:model",
+                "code"
+            ]
+        }
+    },
+    "bbox": [
+        -7.882190080512502,
+        37.13739173208318,
+        27.911651652899923,
+        58.21798141355221
+    ],
+    "stac_extensions": [
+        "https://stac-extensions.github.io/file/v2.1.0/schema.json",
+        "https://crim-ca.github.io/mlm-extension/v1.2.0/schema.json"
+    ]
+}

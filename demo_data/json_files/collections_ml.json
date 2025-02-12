@@ -1,0 +1,99 @@
+{
+   "type":"Collection",
+   "id":"ml-models-rs",
+   "stac_version":"1.0.0",
+   "title":"ML Models for Remote Sensing",
+   "description":"ML Models for various remote sensing tasks",
+   "links":[
+      {
+         "rel":"self",
+         "type":"application/json",
+         "href":"/collections/ml-models"
+      },
+      {
+         "rel":"cite-as",
+         "href":"https://doi.org/10.1145/3681769.3698586",
+         "title":"Machine Learning Model Specification for Cataloging Spatio-Temporal Models"
+      },
+      {
+         "rel":"root",
+         "type":"application/json",
+         "href":"/"
+      },
+      {
+         "rel":"items",
+         "type":"application/geo+json",
+         "href":"/ml-models/items"
+      }
+   ],
+   "stac_extensions":[
+      "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
+      "https://stac-extensions.github.io/view/v1.0.0/schema.json",
+      "https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
+      "https://stac-extensions.github.io/file/v2.1.0/schema.json",
+      "https://stac-extensions.github.io/mlm/v1.2.0/schema.json"
+   ],
+   "item_assets": {
+    "weights": {
+      "title": "model weights",
+      "roles": [
+        "mlm:model",
+        "mlm:weights"
+      ]
+    }
+  },
+   "extent":{
+      "spatial":{
+         "bbox":[
+            [
+               -180,
+               -90,
+               180,
+               90
+            ]
+         ]
+      },
+      "temporal":{
+         "interval":[
+            [
+               "2010-01-01T00:00:00Z",
+               "9999-12-31T23:59:59Z"
+            ]
+         ]
+      }
+   },
+   "license":"proprietary",
+   "keywords":[
+      "machine learning",
+      "deep learning",
+      "ifgi"
+   ],
+   "providers":[
+      {
+         "name":"Wherebots",
+         "roles":[
+            "producer"
+         ],
+         "url":"https://wherobots.com/"
+      },
+      {
+         "name":"Terradue",
+         "roles":[
+            "producer"
+         ],
+         "url":"https://www.terradue.com/portal/"
+      },
+      {
+         "name":"IFGI",
+         "roles":[
+            "server"
+         ],
+         "url":"https://www.uni-muenster.de/Geoinformatics/"
+      }
+   ],
+   "summaries":{
+      "sci:doi":[
+         "10.1145/3681769.3698586"
+      ]
+   }
+}
