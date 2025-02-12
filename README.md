@@ -75,7 +75,7 @@ First you need to have Docker installed and running.
    ```
 
 ## Import Demo Data
-If you wish to use demo data:
+**If you wish to use demo data:**
 
 1. Navigate into the directory
    ```sh
@@ -88,7 +88,7 @@ If you wish to use demo data:
      ```
 <br />
 
-If Step 2 does not work
+**If Step 2 does not work:**
 
 2. Navigate into the directory in git bash:
     ```sh
