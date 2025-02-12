@@ -5,6 +5,9 @@ import ItemFormular from "./components/CollectionFormular";
 import useAuthStatus from "../shared/UserAuth";
 import { useNavigate } from "react-router-dom";
 
+/*
+* React component that renders the Add Collection page.
+*/
 const CollectionAdd = () => {
   const isLoggedIn = useAuthStatus();
   const navigate = useNavigate();

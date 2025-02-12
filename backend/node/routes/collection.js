@@ -4,6 +4,9 @@ const db = require("../db");
 
 const router = express.Router();
 
+/*
+* Endpoint to get all collections from the database
+*/
 router.get("/collections", async (req, res) => {
   const limit = req.query.limit || 20;
   const offset = req.query.offset || 0;
@@ -73,6 +76,10 @@ router.get("/collections", async (req, res) => {
       res.status(500).json({ message: "Internal server error" });
     });
 });
+
+/*
+* Endpoint to get a specific collection from the database by id
+*/
 
 router.get("/collections/:collectionid", async (req, res) => {
   const collectionId = req.params.collectionid;

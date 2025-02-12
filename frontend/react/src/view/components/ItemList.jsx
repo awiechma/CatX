@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import ListItem from "../../shared/ListItem";
 
+// Component to display a list of items
 const ItemList = ({ searchString, selectedTags }) => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -15,6 +16,7 @@ const ItemList = ({ searchString, selectedTags }) => {
     if (newPage >= 1 && newPage <= totalPages) setPage(newPage);
   };
 
+  // Fetch items from the backend with a search query and tags
   const fetchItems = async () => {
     setIsLoading(true);
     setError(null);

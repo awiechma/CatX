@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import ListCollection from "./ListCollection";
 
+// Component to display a list of collections
 const CollectionList = () => {
   const [collections, setCollections] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

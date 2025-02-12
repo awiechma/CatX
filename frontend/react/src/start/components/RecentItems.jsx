@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ListItem from "../../shared/ListItem";
 
+// Component to display the list of recent items
 const RecentItems = () => {
   const [recentItems, setRecentItems] = useState([]);
   const [loading, setLoading] = useState(true);

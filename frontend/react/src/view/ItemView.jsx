@@ -6,6 +6,7 @@ import SearchBar from "./components/SearchBar";
 import Filter from "./components/Filter";
 import ItemList from "./components/ItemList";
 
+// React component for the item view page
 const ItemView = () => {
   const location = useLocation();
   const [searchString, setSearchString] = useState(

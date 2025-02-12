@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+// React Component for displaying a single item in the list
 const ListItem = ({ item }) => {
   const formatDate = (dateString) => {
     const options = {

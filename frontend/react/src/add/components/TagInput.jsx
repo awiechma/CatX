@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+// TagInput component to add, update and delete tags
 const TagInput = () => {
   // state to save tags
   const [tags, setTags] = useState([""]);

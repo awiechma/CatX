@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-
+/*
+* AccountPage component that displays user data and logout button.
+*/
 const AccountPage = () => {
   const [userData, setUserData] = useState({ username: null, email: null }); // State to hold user data
 

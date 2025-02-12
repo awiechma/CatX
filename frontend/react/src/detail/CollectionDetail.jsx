@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import "../global.css";
 import { useState, useEffect } from "react";
 
+// Component to display detailed information about a collection
 const CollectionDetail = () => {
   const { collectionId } = useParams(); // Get collectionId from the URL
   const navigate = useNavigate(); // Use navigate for programmatic navigation

@@ -4,6 +4,9 @@ const db = require("../db");
 
 const router = express.Router();
 
+/*
+* Endpoint to get all tasks from the database
+*/
 router.get("/mlmtasks", async (req, res) => {
   const limit = req.query.limit || 20;
   const offset = req.query.offset || 0;
@@ -25,6 +28,9 @@ router.get("/mlmtasks", async (req, res) => {
     });
 });
 
+/*
+* Endpoint to get the most recent items from the database
+*/
 router.get("/recent-items", async (req, res) => {
   try {
     const result = await db.query(`
