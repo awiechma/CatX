@@ -83,12 +83,11 @@ router.get("/search", async (req, res) => {
     countQuery += ` WHERE ${filters.join(" AND ")}`;
   }
 
-  queryValues.push(limit+1, offset);
+  queryValues.push(limit + 1, offset);
 
   const finalQuery = {
-    text: `${baseQuery} LIMIT $${filters.length + 1} OFFSET $${
-      filters.length + 2
-    }`,
+    text: `${baseQuery} LIMIT $${filters.length + 1} OFFSET $${filters.length + 2
+      }`,
     values: queryValues,
   };
 
@@ -98,9 +97,8 @@ router.get("/search", async (req, res) => {
     links: [
       {
         rel: "self",
-        href: `http://localhost:3000/api/search?limit=${limit}&offset=${offset}${
-          tasks ? `&tasks=${tasks}` : ""
-        }${searchTerm ? `&search=${searchTerm}` : ""}`,
+        href: `http://localhost:3000/api/search?limit=${limit}&offset=${offset}${tasks ? `&tasks=${tasks}` : ""
+          }${searchTerm ? `&search=${searchTerm}` : ""}`,
       },
     ],
     context: {
@@ -123,11 +121,9 @@ router.get("/search", async (req, res) => {
   if (offset > 0) {
     itemcol.links.push({
       rel: "prev",
-      href: `http://localhost:3000/api/search?limit=${limit}&offset=${
-        offset - limit > 0 ? 0 : offset - limit
-      }${tasks ? `&tasks=${tasks}` : ""}${
-        searchTerm ? `&search=${searchTerm}` : ""
-      }`,
+      href: `http://localhost:3000/api/search?limit=${limit}&offset=${offset - limit > 0 ? 0 : offset - limit
+        }${tasks ? `&tasks=${tasks}` : ""}${searchTerm ? `&search=${searchTerm}` : ""
+        }`,
     });
   }
 
@@ -136,11 +132,9 @@ router.get("/search", async (req, res) => {
       if (items.length > limit) {
         itemcol.links.push({
           rel: "next",
-          href: `http://localhost:3000/api/search?limit=${limit}&offset=${
-            offset + limit
-          }${tasks ? `&tasks=${tasks}` : ""}${
-            searchTerm ? `&search=${searchTerm}` : ""
-          }`,
+          href: `http://localhost:3000/api/search?limit=${limit}&offset=${offset + limit
+            }${tasks ? `&tasks=${tasks}` : ""}${searchTerm ? `&search=${searchTerm}` : ""
+            }`,
         });
         items.pop();
       }
@@ -433,9 +427,14 @@ router.post(
         };
 
         errorMessage = "Exception while inserting tasks.";
-        for (const task of mlmTasks.split(",")) {
+        let newTasks = mlmTasks;
+        if (!Array.isArray(mlmTasks)) {
+          newTasks = newTasks.split(",");
+        }
+        for (const task of newTasks) {
           await db.query(insertTasksQuery, [id, collection, task.trim(), user]);
         }
+
       }
 
       // Commit the transaction
