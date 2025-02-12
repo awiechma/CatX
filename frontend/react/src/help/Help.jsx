@@ -5,8 +5,8 @@ import ScrollSpy from "./components/Scrollspy";
 
 const Help = () => {
   return (
-    <div className="content-div d-flex flex-column overflow-auto h-18">
-      <div className="p-2">
+    <div className="content-div d-flex flex-column overflow-auto h-80">
+      <div className="p-2 h-18">
         <h3>User Guide for STAC Metadata Integration</h3>
         <p>
           This guide introduces what STAC is and how to work with STAC clients

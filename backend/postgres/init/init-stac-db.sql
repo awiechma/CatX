@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS postgis;
+
 CREATE TABLE IF NOT EXISTS catalog (
     type TEXT DEFAULT 'Catalog' NOT NULL,
     stac_version TEXT NOT NULL,
@@ -61,7 +63,7 @@ CREATE TABLE IF NOT EXISTS items (
     stac_extensions TEXT [],
     id TEXT NOT NULL UNIQUE,
     collection TEXT REFERENCES collections(id) ON DELETE CASCADE,
-    geometry JSONB NOT NULL,
+    geometry GEOMETRY(Geometry, 4326) NOT NULL,
     bbox FLOAT8 [],
     assets JSONB NOT NULL,
     CREATION_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -121,7 +123,8 @@ FROM
 GROUP BY
     task
 ORDER BY
-    COUNT(*);
+    COUNT(*)
+DESC;
 
 CREATE VIEW catalog_complete_view AS
 SELECT
@@ -248,7 +251,7 @@ SELECT
     i.type,
     i.id,
     i.collection,
-    i.geometry,
+    ST_AsGeoJSON(i.geometry)::jsonb AS geometry,
     i.bbox,
     i.update_date,
     jsonb_strip_nulls(

@@ -4,59 +4,9 @@ const db = require("../db");
 
 const router = express.Router();
 
-/**
- * Endpoint to retrieve providers from the database
- * Accepts optional limit and offset parameters in the request body for pagination
- */
-router.get("/providers", (req, res) => {
-  const limit = req.params.limit || 20;
-  const offset = req.params.offset || 0;
-  const query = {
-    text: `
-      SELECT
-        *
-      FROM providers_view
-      LIMIT $1
-      OFFSET $2
-    `,
-    values: [limit, offset],
-  };
-  db.query(query)
-    .then(({ rows: providers }) => res.status(200).json(providers))
-    .catch((error) => {
-      console.error("Error during provider export", error);
-      res.status(500).json({ message: "Internal server error" });
-    });
-});
-
-/**
- * Endpoint to retrieve keywords from the database
- * Accepts optional limit and offset parameters in the request body for pagination
- */
-router.get("/keywords", async (req, res) => {
-  const limit = req.params.limit || 20;
-  const offset = req.params.offset || 0;
-  const query = {
-    text: `
-      SELECT 
-        *
-      FROM keywords_view
-      LIMIT $1
-      OFFSET $2
-    `,
-    values: [limit, offset],
-  };
-  db.query(query)
-    .then(({ rows: keywords }) => res.status(200).json(keywords))
-    .catch((error) => {
-      console.error("Error during keyword export", error);
-      res.status(500).json({ message: "Internal server error" });
-    });
-});
-
 router.get("/collections", async (req, res) => {
-  const limit = req.params.limit || 20;
-  const offset = req.params.offset || 0;
+  const limit = req.query.limit || 20;
+  const offset = req.query.offset || 0;
   const query = {
     text: `
       SELECT 
@@ -67,6 +17,7 @@ router.get("/collections", async (req, res) => {
     `,
     values: [limit + 1, offset],
   };
+
   const countQuery = {
     text: `SELECT COUNT(*) FROM collections_complete_view`,
   };
