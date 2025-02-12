@@ -1,7 +1,7 @@
 services:
-  postgres:
-    container_name: postgres
-    image: postgres:14.15-alpine3.20
+  postgis:
+    container_name: postgis
+    image: postgis/postgis:14-3.5-alpine
     environment:
       POSTGRES_DB: stac_db
       POSTGRES_USER: stac_user     
