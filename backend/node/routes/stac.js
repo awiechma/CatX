@@ -4,6 +4,9 @@ const db = require("../db");
 
 const router = express.Router();
 
+/*
+* Stac Endpoint
+*/
 router.get("/conformance", async (req, res) => {
   const query = {
     text: `
@@ -21,6 +24,9 @@ router.get("/conformance", async (req, res) => {
     });
 });
 
+/*
+* Stac Endpoint for retrieving the catalog
+*/
 router.get("", async (req, res) => {
   const query = {
     text: `

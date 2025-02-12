@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../global.css";
 
+// ItemDetail component to display detailed information of an item
 const ItemDetail = () => {
   const { itemId } = useParams(); // Get itemId from the URL
   const navigate = useNavigate(); // Use navigate for programmatic navigation
@@ -36,6 +37,7 @@ const ItemDetail = () => {
     fetchItem();
   }, [itemId]);
 
+  // Function to download JSON file
   const handleDownload = () => {
     const json = JSON.stringify(itemData, null, 2);
     const blob = new Blob([json], { type: "application/json" });
@@ -47,6 +49,7 @@ const ItemDetail = () => {
     URL.revokeObjectURL(url);
   };
 
+  // Function to copy JSON to clipboard
   const handleCopy = () => {
     const json = JSON.stringify(itemData, null, 2);
     navigator.clipboard.writeText(json).then(
@@ -59,6 +62,7 @@ const ItemDetail = () => {
     );
   };
 
+  // Function to handle right-click context menu
   const handleContextMenu = (event) => {
     event.preventDefault();
     console.log("Right-click detected");

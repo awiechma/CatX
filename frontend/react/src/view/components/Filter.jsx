@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 
+// Component to filter tasks by tags
 const Filter = ({ selectedTags, setSelectedTags }) => {
   //store existing tags
   const [tags, setTags] = useState();

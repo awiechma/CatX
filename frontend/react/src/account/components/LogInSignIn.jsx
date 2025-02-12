@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 
+/*
+* React component that renders the login and registration forms.
+*/
+
 const LogInSignIn = () => {
   // state for login form
   const [username, setUsername] = useState("");
@@ -15,6 +19,7 @@ const LogInSignIn = () => {
   const [regSuccess, setRegSuccess] = useState(null);
   const [regError, setRegError] = useState(null);
 
+  // Handler if user tries to login
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(null);
@@ -51,6 +56,7 @@ const LogInSignIn = () => {
     }
   };
 
+  // Handler if user tries to register
   const handleRegister = async (e) => {
     e.preventDefault();
     setRegError(null);

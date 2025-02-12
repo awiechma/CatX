@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const token = localStorage.getItem("catx-user-session-token");
 
+// List of optional fields that can be added to the form
 const optionalFieldOptions = [
   { name: "stac_extensions", label: "STAC Extensions" },
   { name: "bbox", label: "BBox" },
@@ -37,12 +38,16 @@ const optionalFieldOptions = [
   },
 ];
 
+/*
+* React component that renders the form for adding a new item.
+*/
 const ItemFormular = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ type: "Feature" }); // Default type is Feature
   const [optionalFields, setOptionalFields] = useState([]);
   const [collectionOptions, setCollectionOptions] = useState([]);
 
+  // Function to handle file upload
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -62,6 +67,7 @@ const ItemFormular = () => {
     }
   };
 
+  // Function to fetch all collections
   const fetchCollections = async () => {
     try {
       const response = await fetch("http://localhost:3000/api/collections", {
@@ -92,6 +98,7 @@ const ItemFormular = () => {
     fetchCollections();
   }, []);
 
+  // Function to handle input change in form fields
   const handleInputChange = (e) => {
     const { name, type, value, checked } = e.target;
     setFormData((prev) => ({
@@ -100,12 +107,14 @@ const ItemFormular = () => {
     }));
   };
 
+  // Function to add optional field to the form
   const handleAddOptionalField = (field) => {
     if (!optionalFields.includes(field)) {
       setOptionalFields([...optionalFields, field]);
     }
   };
 
+  // Function to set optional fields based on JSON data
   const setOptionFieldFromJson = (json) => {
     let fieldsToAdd = [];
     for (const field of optionalFieldOptions) {
@@ -121,6 +130,7 @@ const ItemFormular = () => {
     setOptionalFields(fieldsToAdd);
   };
 
+  // Function to populate form fields based on JSON data
   const populateFormFields = (json) => {
     setFormData((prev) => ({
       ...prev,
@@ -160,6 +170,7 @@ const ItemFormular = () => {
     }));
   };
 
+  // Remove empty fields from the JSON
   const removeEmpty = (obj) => {
     if (Array.isArray(obj)) {
       return obj
@@ -186,6 +197,7 @@ const ItemFormular = () => {
     return obj; // Return non-object values directly
   };
 
+  // Function to handle form submission
   const handleSubmit = async () => {
     try {
       let body = removeEmpty({

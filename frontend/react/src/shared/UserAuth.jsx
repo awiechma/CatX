@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+// Custom hook to check if the user is logged in
 const useAuth = () => {
     // State to track the user's authentication status
     const [isLoggedIn, setIsLoggedIn] = useState(null);

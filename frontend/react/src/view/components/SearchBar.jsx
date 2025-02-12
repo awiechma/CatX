@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 
+// Component to display a search bar
 const SearchBar = ({ searchString, setSearchString }) => {
   // Local state to manage the input field value
   const [searchTerm, setSearchTerm] = useState(searchString);

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const token = localStorage.getItem("catx-user-session-token");
 
+//STAC Collection optional fields
 const optionalFieldOptions = [
   {
     name: "stac_extensions",
@@ -20,6 +21,9 @@ const optionalFieldOptions = [
   { name: "summaries", label: "Summaries", type: "textarea" },
 ];
 
+/*
+* React component that renders the CollectionFormular page.
+*/
 const CollectionFormular = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ type: "Collection" });
@@ -27,6 +31,7 @@ const CollectionFormular = () => {
   const [createNewCollection, setChecked] = useState(false);
   const [optionalFields, setOptionalFields] = useState([]);
 
+  // Handle file upload
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -54,6 +59,7 @@ const CollectionFormular = () => {
     }));
   };
 
+  // Add optional field to form
   const handleAddOptionalField = (field) => {
     if (!optionalFields.includes(field)) {
       setOptionalFields([...optionalFields, field]);
@@ -64,6 +70,7 @@ const CollectionFormular = () => {
     setChecked(!createNewCollection);
   };
 
+  // Set optional fields based on JSON data
   const setOptionFieldFromJson = (json) => {
     let fieldsToAdd = [];
     for (const field of optionalFieldOptions) {
@@ -78,6 +85,7 @@ const CollectionFormular = () => {
     setOptionalFields(fieldsToAdd);
   };
 
+  // Populate form fields with JSON data
   const populateFormFields = (json) => {
     setFormData((prev) => ({
       ...prev,
@@ -95,6 +103,7 @@ const CollectionFormular = () => {
     }));
   };
 
+  // Remove empty fields from JSON object
   const removeEmpty = (obj) => {
     if (Array.isArray(obj)) {
       return obj
@@ -121,6 +130,7 @@ const CollectionFormular = () => {
     return obj; // Return non-object values directly
   };
 
+  // Handle form submit
   const handleSubmit = async () => {
     try {
       let body = removeEmpty({
@@ -169,6 +179,7 @@ const CollectionFormular = () => {
     }
   };
 
+  // Check if submit button should be disabled
   const isSubmitDisabled =
     !formData.title || !formData.geometry || !formData.type || !formData.id;
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+// Component to display all collections in a list
 const ListCollection = ({ collection }) => {
   const formatDate = (dateString) => {
     const options = {

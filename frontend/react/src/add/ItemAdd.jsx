@@ -5,6 +5,9 @@ import Formular from "./components/ItemFormular";
 import useAuthStatus from "../shared/UserAuth";
 import { useNavigate } from "react-router-dom";
 
+/*
+* React component that renders the Add Item page.
+*/
 const ItemAdd = () => {
   const isLoggedIn = useAuthStatus();
   const navigate = useNavigate();

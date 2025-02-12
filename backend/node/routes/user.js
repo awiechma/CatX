@@ -4,6 +4,9 @@ const db = require("../db");
 
 const router = express.Router();
 
+/*
+* Endpoint to get a specific userdata from the database
+*/
 router.get(
   "/user/:username",
   passport.authenticate("jwt", { session: false }),
