@@ -49,7 +49,7 @@ app.use("/api", collectionRoutes);
 app.use("/api", itemRoutes);
 app.use("/stac", stacRoutes);
 
-// Start the server and listen on the defined port
+// Start the server and listen on the defined port.
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

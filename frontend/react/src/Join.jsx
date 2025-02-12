@@ -13,7 +13,7 @@ import Account from "./account/Account";
 import Help from "./help/Help";
 import About from "./about/About";
 
-// linking betweeen pages react-style 😎
+// linking betweeen pages react-style  😎
 const Join = () => {
   return (
     <Router>
