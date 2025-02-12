@@ -74,10 +74,7 @@ First you need to have Docker installed and running.
     docker compose up --build
    ```
 
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
+## Import Demo Data
 If you wish to use demo data:
 
 1. Navigate into the directory
@@ -88,8 +85,22 @@ If you wish to use demo data:
 2. Run the script in the terminal:
     ```sh
     bash insert_demo.sh
-   ```
+     ```
+<br />
 
+If Step 2 does not work
+
+2. Navigate into the directory in git bash:
+    ```sh
+      cd CatX/demo_data
+    ```
+3. Run the script using git bash:
+    ```sh
+      insert_demo.sh
+    ```
+<!-- USAGE EXAMPLES -->
+## Usage
+      
 After starting the app, visit http://localhost:5173 in your browser. Use the intuitive interface to explore and upload ML models.
 
 
